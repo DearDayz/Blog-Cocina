@@ -31,13 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Librerias
+    'daphne',
+    'channels',
+    
+    # Módulos
+    'chat',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels'
 ]
 
 MIDDLEWARE = [
@@ -69,6 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ejemplo.wsgi.application'
+
 
 
 # Database
@@ -122,3 +129,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Importante agregar 
+# Daphne
+ASGI_APPLICATION = 'ejemplo.asgi.application'
