@@ -8,7 +8,7 @@ class Receta(models.Model):
     nombre = models.CharField(max_length=255, verbose_name="nombre")
     descripcion = models.TextField(verbose_name="descripcion")
     preparacion = models.TextField(verbose_name="preparacion")
-    imagen = models.ImageField(upload_to='imagenes/', blank=False, null=False, verbose_name="imagen")
+    imagen = models.ImageField(upload_to='imagenes/', blank=False, null=False, verbose_name="Imagen")
     puntuacion = models.FloatField(verbose_name="puntuacion")
     ingredientes = models.JSONField(verbose_name="ingredientes", default=list)  # Usamos JSONField para almacenar los ingredientes
 

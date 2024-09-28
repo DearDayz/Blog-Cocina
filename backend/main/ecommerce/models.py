@@ -17,7 +17,7 @@ class Factura(models.Model):
     id = models.AutoField(primary_key=True)
     codigo = models.CharField(max_length=255)
     cedula = models.IntegerField()
-    ingredientes = models.JSONField()  # Campo para almacenar ingredientes en formato JSON
+    ingredientes = models.JSONField(default=list)  # Campo para almacenar ingredientes en formato JSON
     total = models.FloatField()
     fecha = models.DateField(auto_now_add=True)  # Fecha de la factura, se establece automáticamente al crear la factura
     hora = models.TimeField(auto_now_add=True)  # Hora de la factura, se establece automáticamente al crear la factura

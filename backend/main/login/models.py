@@ -21,7 +21,7 @@ class Trabajador(models.Model):
     cedula = models.IntegerField(verbose_name="cedula")
     direccion = models.TextField(verbose_name="dirección")
     correro = models.EmailField(max_length=255, verbose_name="correo")
-    telefono = models.IntegerField(verbose_name="telefono")
+    telefono = models.BigIntegerField(verbose_name="telefono")
     cargo = models.CharField(max_length=255, verbose_name="cargo")
 
     def __str__(self):
