@@ -11,4 +11,9 @@ class IngredienteSerializer(serializers.ModelSerializer):
 class FacturaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Factura
-        fields = '__all__'
+        fields = ['id', 'codigo', 'cedula', 'total', 'ingredientes', 'fecha', 'hora']  # Campos para lectura
+
+class FacturaCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Factura
+        fields = ['cedula',"total" ,'ingredientes']  # Solo los campos necesarios para crear

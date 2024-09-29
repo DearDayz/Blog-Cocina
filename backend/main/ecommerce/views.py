@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from .models import Factura
 from .models import Ingrediente
-from .serializers import FacturaSerializer
+from .serializers import FacturaSerializer, FacturaCreateSerializer
 from .serializers import IngredienteSerializer
 from rest_framework import viewsets
 
@@ -24,5 +24,8 @@ class IngredienteAPIRetrieveName(generics.RetrieveAPIView):
 #Facturas
 class FacturaViewSet(viewsets.ModelViewSet):
     queryset = Factura.objects.all()
-    serializer_class = FacturaSerializer
+    def get_serializer_class(self):
+        if self.request.method in ['POST']:
+            return FacturaCreateSerializer  # Usa el serializer de creación para POST
+        return FacturaSerializer  # Usa el serializer de lectura para GET
 
