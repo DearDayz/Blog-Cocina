@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'ecommerce',
-    'login',
     'rest_framework',
-    "corsheaders",
+    "corsheaders"
 ]
 
 MIDDLEWARE = [

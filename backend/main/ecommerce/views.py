@@ -29,3 +29,9 @@ class FacturaViewSet(viewsets.ModelViewSet):
             return FacturaCreateSerializer  # Usa el serializer de creación para POST
         return FacturaSerializer  # Usa el serializer de lectura para GET
 
+class FacturaAPIRetrieveByCedula(generics.ListAPIView):
+    serializer_class = FacturaSerializer
+
+    def get_queryset(self):
+        cedula = self.kwargs.get('cedula')
+        return Factura.objects.filter(cedula=cedula)
