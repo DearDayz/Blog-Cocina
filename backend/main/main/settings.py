@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'ecommerce',
+    'login',
+    'login3',
     'rest_framework',
-    "corsheaders"
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -145,9 +147,15 @@ MEDIA_URL = '/imagenes/'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
 #vainas de cors
 # Permitir todos los dominios
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Modelo de Usuario personalizado
+AUTH_USER_MODEL = "login3.MyUser"
