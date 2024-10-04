@@ -10,7 +10,7 @@ from .views import (
 
 urlpatterns = [
     #endpoint que busca por nombre los ingredientes
-    path('ingredientes/<str:nombre>/', IngredienteAPIRetrieveName.as_view(), name="ingrediente-nombre"),
+    path('ingredientes-nombre/<str:nombre>/', IngredienteAPIRetrieveName.as_view(), name="ingrediente-nombre"),
     path('facturas/<int:cedula>/', FacturaAPIRetrieveByCedula.as_view(), name="factura-cedula"),
 ]
 

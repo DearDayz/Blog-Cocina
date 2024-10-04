@@ -68,8 +68,6 @@ class Receta(models.Model):
         return representation
 
     def delete(self, using=None, keep_parents=False):
-        if (self.imagen.name == ""):
-            pass
-        else:
-            self.imagen.storage.delete(self.imagen.name)
-            super().delete()
+        if self.imagen and self.imagen.name:
+            self.imagen.storage.delete(self.imagen.name)  # Solo eliminar la imagen si existe
+        super().delete(using=using, keep_parents=keep_parents)  # Siempre llama al método de eliminación del padre
