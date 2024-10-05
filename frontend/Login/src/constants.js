@@ -1,0 +1,2 @@
+export const ACESS_TOKEN = "access"; // Será el token JWT que buscaremos en el localStorage para ver si se está logeado
+export const REFRESH_TOKEN = "refresh"; // Token fijo que servirá para generar uno de acceso en caso que expire
