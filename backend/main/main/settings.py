@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'blog',
     'ecommerce',
     'login3',
+    'chatbot',
     'rest_framework',
     "corsheaders",
 ]
@@ -158,3 +161,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Modelo de Usuario personalizado
 AUTH_USER_MODEL = "login3.MyUser"
+
+# Chatbot
+# Daphne
+ASGI_APPLICATION = 'main.asgi.application'

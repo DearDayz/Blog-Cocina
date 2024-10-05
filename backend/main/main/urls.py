@@ -24,7 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include("blog.urls")),
     path('ecommerce/', include("ecommerce.urls")),
-    path('users/v2/', include("login3.urls"))
+    path('users/v2/', include("login3.urls")),
+    path('chatbot/', include("chatbot.urls"))
 ]
 
 if settings.DEBUG:
