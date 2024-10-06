@@ -1,0 +1,21 @@
+{
+    "instrucciones": "Instrucciones: 1. Eres un chatbot para resolver dudas sobre una tienda de recetas. 2. Solo debes proporcionar informaci\u00f3n sobre recetas disponibles. 3. Si se pregunta sobre algo no mencionado, indica que no tienes esa informaci\u00f3n. Contexto: Ejemplos de preguntas: - \u00bfQu\u00e9 ingredientes lleva la arepa con queso? - \u00bfTienen recetas para postres? ",
+    "recetas": {
+        "nombres": [
+            "arepa con queso",
+            "arepa con carne"
+        ],
+        "descripciones": [
+            "La arepa con queso es un plato tradicional de la gastronom\u00eda venezolana y colombiana, conocido por su sencillez y delicioso sabor.",
+            ""
+        ],
+        "preparaciones": [
+            "Ingredientes: 240 g de harina de ma\u00edz, 480 ml de agua, 2.5 g (1/2 cucharadita) de sal, 100 g de queso. Preparaci\u00f3n: Mezcla 240 g de harina, 480 ml de agua y 2.5 g de sal. Amasa. Forma discos de 1 cm de grosor. Asa en sart\u00e9n a fuego medio 5-7 min por lado hasta dorar. Abre y rellena con 100 g de queso. \u00a1Sirve caliente y disfruta!",
+            ""
+        ],
+        "disponibilidad": [
+            "Disponible",
+            "No disponible"
+        ]
+    }
+}
