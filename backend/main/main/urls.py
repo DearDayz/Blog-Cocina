@@ -25,6 +25,7 @@ urlpatterns = [
     path('blog-api/', include("blog.urls")),
     path('ecommerce-api/', include("ecommerce.urls")),
     path('users/v2/', include("login3.urls")),
+    path('chatbot/', include("chatbot.urls")),
     path('', include("views.urls"))
 ]
 

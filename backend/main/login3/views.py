@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.middleware.csrf import get_token
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import Permission
-from django.contrib.auth.decorators import login_required
-from rest_framework import generics, viewsets
+from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MyUserSerializer
@@ -13,6 +10,7 @@ from .models import MyUser
 # Iniciar sesión (adaptarse cuando se conecte con el front)
 def login_user(request):
     if request.method == "POST":
+        logout(request)
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request=request, username=username, password=password)
@@ -29,35 +27,53 @@ def login_user(request):
             return redirect("/login3/login")
     return render(request, "login3/login.html")
 
-# Cerrar sesión (adaptarse cuando se conecte con el front)
+# Cerrar sesión (cambiar el redirect a /home/)
 def logout_user(request):
     logout(request)
     return redirect("/admin/")
 
-# Registrarse (listo para usarse con el front)
-class register_user(APIView):
+# Registro
+class RegisterUser(APIView):
     def post(self, request):
         serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
-# Retorna los permisos del usuario logeado (listo para usarse con el front) (se usará para manejar permisos en el front)
 @login_required
-def user_permissions(request):
-    permissions = request.user.get_all_permissions()
-    print(permissions)
-    return JsonResponse({'permissions': list(permissions)})
+class UserDataView(APIView):
+    # Obtener datos de un usuario solo si es el mismo de la solicitud o se tiene el permiso
+    def get(self, request, username, format=None):
+        if request.user.username == username or request.user.has_perm("login3.ver_datos_usuario"):
+            try:
+                user = MyUser.objects.get(username=username)
+                serializer = MyUserSerializer(user)
+                return Response(serializer.data)
+            except MyUser.DoesNotExist:
+                return Response({"error": "User not found"}, status=404)
+        else:
+            return Response({"error", "No puede acceder a los datos de otros usuarios"}, status=403)
+        
+    def patch(self, request, username, format=None):
+    # Modificar datos de un usuario solo si es el mismo de la solicitud o se tiene el permiso
+        if request.user.username == username or request.user.has_perm("login3.modificar_datos_usuario"):
+            try:
+                user = MyUser.objects.get(username=username)
+                serializer = MyUserSerializer(user, data=request.data, partial=True)  # partial=True permite actualizaciones parciales
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+                return Response(serializer.errors, status=400)
+            except MyUser.DoesNotExist:
+                return Response({"error": "User not found"}, status=404)
+        else:
+            return Response({"error", "No puede acceder a los datos de otros usuarios"}, status=403)
 
 
 
-#ViewSets
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = MyUser.objects.all()
-    serializer_class = MyUserSerializer
-
-# Endpoint que busca por cedula usando lookup_field
-class UserAPIRetrieveIDCard(generics.RetrieveAPIView):
-    lookup_field = 'cedula'  # Cambia el campo de búsqueda a 'cedula'
-    queryset = MyUser.objects.all()
-    serializer_class = MyUserSerializer
+# Se usaba con React, se deja por si acaso
+# @login_required
+# def user_permissions(request):
+#     permissions = request.user.get_all_permissions()
+#     print(permissions)
+#     return JsonResponse({'permissions': list(permissions)})
