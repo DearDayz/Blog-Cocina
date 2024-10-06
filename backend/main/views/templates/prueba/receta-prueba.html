@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div id="card"></div>
+    <script>
+        window.recetaData = JSON.parse('{{ receta_json|escapejs }}');
+    </script>
+    <script src="{% static 'prueba/js/receta-prueba.js'%}"></script>
+</body>
+
+</html>

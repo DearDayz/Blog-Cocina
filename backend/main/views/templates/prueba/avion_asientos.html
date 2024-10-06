@@ -1,0 +1,582 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOLYSKY</title>
+    <link rel="stylesheet" href="{% static 'prueba/css/styleSheets.css' %}">
+    <link rel="stylesheet" href="{% static 'prueba/css/botones.css' %}">
+    <link rel="stylesheet" href="{% static 'prueba/css/panel_reserva.css' %}">
+    <link rel="stylesheet" href="{% static 'prueba/css/panel-pago.css' %}">
+
+</head>
+
+<body>
+    <section class="flight-reservation">
+      <!--PANEL PRINCIPAL-->
+        <header class="header" style="box-shadow: 0 2px 0 0 rgb(236, 236, 236);">HOLYSKY</header>
+        <section class="section_img" style="display: flex;">
+          <img src="{% static 'prueba/imagenes/image_cloud.png' %}" alt="" class="hero-image" />
+          <div class="content_img">
+            <h1 class="hero-title">Reservas</h1>
+            <p class="subtitle_img">Vuelos unicos</p>
+            <div class="botones_img">
+              <button class="boton_registro">Registro</button>
+              <button class="boton_reservar">Reservar</button>
+            </div>
+          </div>
+        </section>
+        <!--FORMULARIO DE CONTACTO-->
+        <main class="reservation-panel" style="display: none;">
+          <form class="reservation-form">
+            <button type="button" class="boton-volver-seccion-reservacion" id="botonVolverResInicio">
+              <img src="{% static 'prueba/imagenes/volver_icon.png' %}" alt="Ícono Volver" class="icono-volver">
+            </button>
+            <h2 class="form-title">Reserva de vuelo</h2>
+            <div class="form-row">
+              <div class="columna_izq">
+                <div class="form-group"> 
+                  <label for="contact" class="form-label">Contacto</label>
+                  <input id="contact" type="text" class="form-input" placeholder="Nombre y Apellido" style="margin-bottom: 15px;"/>
+                  <label for="passport" class="form-label">Pasaporte</label>
+                  <input id="passport" type="text" class="form-input" placeholder="AAA000000" />
+                </div>
+              </div>
+              <div class="columna_der">
+                <div class="form-group">
+                  <label for="phone" class="form-label">Telefono</label> 
+                  <input id="phone" type="tel" class="form-input" placeholder="+15551234567" style="margin-bottom: 15px; text-align: right;" />
+                  <label for="email" class="form-label">Correo</label>
+                  <input id="email" type="email" class="form-input" placeholder="correo electronico" />
+                </div>
+              </div>
+            </div>
+          </form>
+          <hr class="form-divider" />
+          <h3 class="luggage-section" style="margin-bottom: 30px ;">Información de Vuelo</h3>
+          <div class="luggage-container">
+            <div class="luggage-row">
+              <div class="luggage-column">
+                <!--FORMULARIO DE RESERVA DE VUELO-->
+                <div class="luggage-panel">
+                  <label class="luggage-item">Seleccione el tipo de asiento:</label>
+                  <select id="tipoAsiento" class="lista-despegable">
+                    <option value="" selected disabled hidden class="lista-despegable">Seleccione una clase</option>
+                    <option value="Economico bajo" class="lista-despegable">Economico Ligero</option>
+                    <option value="Economico normal" class="lista-despegable">Economico Ejecutivo</option>
+                    <option value="Economico plus" class="lista-despegable">Economico Premium</option>
+                  </select>
+
+                  <label id="seleccionado"></label>
+                  <label for="registered-luggage" class="luggage-item">Equipaje de Registrado</label>
+                  <input id="registered-luggage" type="number" class="luggage-input" value="0" min="0" max="10"/>
+                  <label for="hand-luggage" class="luggage-item">Equipaje de Mano</label>
+                  <input id="hand-luggage" type="number" class="luggage-input" value="0" min="0" max="10"/>
+                  <label for="adults" class="luggage-item">Adultos (+12 años)</label>
+                  <input id="adults" type="number" class="luggage-input" value="0" min="0" />
+                  <label for="children" class="luggage-item">Niños (11 a 2 años)</label>
+                  <input id="children" type="number" class="luggage-input" value="0" min="0" />
+                  <label for="infants" class="luggage-item">Infantes (1 a 0 años)</label>
+                  <input id="infants" type="number" class="luggage-input" value="0" min="0" />
+                  <label for="seats" class="luggage-item" >Asientos</label>
+                  <input id="seats" type="String" class="luggage-input" readonly/>
+                
+                </div>
+              </div>
+
+              <!--ASIENTOS-->
+              <div class="luggage-column">
+                <div class="seat-map">
+                  
+
+                  <div class="seat-row">
+                    <span class="seat-number">30</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="C30">C</span>
+                      <span class="seat" data-value="D30">D</span>
+                      <span class="seat" data-value="E30">E</span>
+                      <span class="seat" data-value="CF30">F</span>
+                      <span class="seat" data-value="G30">G</span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">31</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A31">A</span>
+                      <span class="seat" data-value="B31">B</span>
+                      <span class="seat" data-value="C31"></span>
+                      <span class="seat" data-value="D31"></span>
+                      <span class="seat" data-value="E31"></span>
+                      <span class="seat" data-value="F31"></span>
+                      <span class="seat" data-value="G31"></span>
+                      <span class="seat" data-value="H31">H</span>
+                      <span class="seat" data-value="J31">J</span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">32</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A32"></span>
+                      <span class="seat" data-value="B32"></span>
+                      <span class="seat" data-value="C32"></span>
+                      <span class="seat" data-value="D32"></span>
+                      <span class="seat" data-value="E32"></span>
+                      <span class="seat" data-value="F32"></span>
+                      <span class="seat" data-value="G32"></span>
+                      <span class="seat" data-value="H32"></span>
+                      <span class="seat" data-value="J32"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">33</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A33"></span>
+                      <span class="seat" data-value="B33"></span>
+                      <span class="seat" data-value="C33"></span>
+                      <span class="seat" data-value="D33"></span>
+                      <span class="seat" data-value="E33"></span>
+                      <span class="seat" data-value="F33"></span>
+                      <span class="seat" data-value="G33"></span>
+                      <span class="seat" data-value="H33"></span>
+                      <span class="seat" data-value="J33"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">34</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A34"></span>
+                      <span class="seat" data-value="B34"></span>
+                      <span class="seat" data-value="C34"></span>
+                      <span class="seat" data-value="D34"></span>
+                      <span class="seat" data-value="E34"></span>
+                      <span class="seat" data-value="F34"></span>
+                      <span class="seat" data-value="G34"></span>
+                      <span class="seat" data-value="H34"></span>
+                      <span class="seat" data-value="J34"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">35</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A35"></span>
+                      <span class="seat" data-value="B35"></span>
+                      <span class="seat" data-value="C35"></span>
+                      <span class="seat" data-value="D35"></span>
+                      <span class="seat" data-value="E35"></span>
+                      <span class="seat" data-value="F35"></span>
+                      <span class="seat" data-value="G35"></span>
+                      <span class="seat" data-value="H35"></span>
+                      <span class="seat" data-value="J35"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">36</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A36"></span>
+                      <span class="seat" data-value="B36"></span>
+                      <span class="seat" data-value="C36"></span>
+                      <span class="seat" data-value="D36"></span>
+                      <span class="seat" data-value="E36"></span>
+                      <span class="seat" data-value="F36"></span>
+                      <span class="seat" data-value="G36"></span>
+                      <span class="seat" data-value="H36"></span>
+                      <span class="seat" data-value="J36"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">37</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A37"></span>
+                      <span class="seat" data-value="B37"></span>
+                      <span class="seat" data-value="C37"></span>
+                      <span class="seat" data-value="D37"></span>
+                      <span class="seat" data-value="E37"></span>
+                      <span class="seat" data-value="F37"></span>
+                      <span class="seat" data-value="G37"></span>
+                      <span class="seat" data-value="H37"></span>
+                      <span class="seat" data-value="J37"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">38</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A38"></span>
+                      <span class="seat" data-value="B38"></span>
+                      <span class="seat" data-value="C38"></span>
+                      <span class="seat" data-value="D38"></span>
+                      <span class="seat" data-value="E38"></span>
+                      <span class="seat" data-value="F38"></span>
+                      <span class="seat" data-value="G38"></span>
+                      <span class="seat" data-value="H38"></span>
+                      <span class="seat" data-value="J38"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">39</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A39"></span>
+                      <span class="seat" data-value="B39"></span>
+                      <span class="seat" data-value="C39"></span>
+                      <span class="seat" data-value="D39"></span>
+                      <span class="seat" data-value="E39"></span>
+                      <span class="seat" data-value="F39"></span>
+                      <span class="seat" data-value="G39"></span>
+                      <span class="seat" data-value="H39"></span>
+                      <span class="seat" data-value="J39"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">40</span>
+                    <div class="seat-group">
+                      <span class="seat" data-value="A40"></span>
+                      <span class="seat" data-value="B40"></span>
+                      <span class="seat" data-value="C40"></span>
+                      <span class="seat" data-value="D40"></span>
+                      <span class="seat" data-value="E40"></span>
+                      <span class="seat" data-value="F40"></span>
+                      <span class="seat" data-value="G40"></span>
+                      <span class="seat" data-value="H40"></span>
+                      <span class="seat" data-value="J40"></span>
+                    </div>
+                  </div>
+                  <div class="seat-row">
+                    <span class="seat-number">41</span>
+                    <div class="seat-group">
+                      <span class="seat plus" data-value="A41"></span>
+                      <span class="seat plus" data-value="B41"></span>
+                      <span class="seat plus" data-value="C41">C</span>
+                      <span class="seat plus" data-value="D41">D</span>
+                      <span class="seat plus" data-value="F41">F</span>
+                      <span class="seat plus" data-value="G41">G</span>
+                      <span class="seat plus" data-value="H41"></span>
+                      <span class="seat plus" data-value="J41"></span>
+                    </div>
+                  </div>
+
+                  <div class="seat-row">
+                    <span class="seat-number">42</span>
+                    <div class="seat-group">
+                      <span class="seat plus" data-value="A42"></span>
+                      <span class="seat plus" data-value="B42"></span>
+                      <span class="seat plus" data-value="C42"></span>
+                      <span class="seat plus" data-value="D42"></span>
+                      <span class="seat plus" data-value="F42"></span>
+                      <span class="seat plus" data-value="G42"></span>
+                      <span class="seat plus" data-value="H42"></span>
+                      <span class="seat plus" data-value="J42"></span>
+                    </div>
+                  </div>
+                  
+                  <div class="seat-row">
+                    <span class="seat-number">43</span>
+                    <div class="seat-group">
+                      <span class="seat bajo" data-value="A43"></span>
+                      <span class="seat bajo" data-value="B43"></span>
+                      <span class="seat bajo" data-value="C43"></span>
+                      <span class="seat bajo" data-value="D43"></span>
+                      <span class="seat bajo" data-value="F43"></span>
+                      <span class="seat bajo" data-value="G43"></span>
+                      <span class="seat bajo" data-value="H43"></span>
+                      <span class="seat bajo" data-value="J43"></span>
+                    </div>
+                  </div>
+                  
+                  <div class="seat-row">
+                    <span class="seat-number">44</span>
+                    <div class="seat-group">
+                      <span class="area-sanitarios-insumos">Baño</span>
+                      <span class="seat bajo" data-value="C44"></span>
+                      <span class="seat bajo" data-value="D44"></span>
+                      <span class="seat bajo" data-value="F44"></span>
+                      <span class="seat bajo" data-value="G44"></span>
+                      <span class="area-sanitarios-insumos">Baño</span>
+                    </div>
+                  </div>
+                  
+                  <div class="seat-row">
+                    <span class="seat-number">45</span>
+                    <div class="seat-group">
+                      <span class="seat bajo" data-value="C45"></span>
+                      <span class="seat bajo" data-value="D45"></span>
+                      <span class="seat bajo" data-value="F45"></span>
+                      <span class="seat bajo" data-value="G45"></span>
+                    </div>
+                  </div>
+                  
+                  <div class="seat-row">
+                    <span class="seat-number">46</span>
+                    <div class="seat-group">
+                      <span class="area-sanitarios-insumos">cafe</span>
+                    </div>
+                  </div>
+
+                  <div class="leyenda">
+                    <div class="item">
+                        <span class="disponible"></span>
+                        <label>Disponible</label>
+                    </div>
+                    <div class="item">
+                        <span class="ocupado"></span>
+                        <label>Ocupado</label>
+                    </div>
+                    <div class="item">
+                        <span class="seleccionado"></span>
+                        <label>Seleccionado</label>
+                    </div>
+                    <div class="item">
+                        <span class="no-pertenece"></span>
+                        <label>No pertenece a la clase seleccionada</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button id="botonBorrarReserva" class="boton-borrar">Borrar</button>
+            <button id="botonGuardarReserva" class="boton-guardar">Guardar</button>
+          </div>
+      </main>
+
+
+        <!--TABLA DE REGISTRO-->
+        <section class="registro-panel" style="display: none;">
+       
+          <button type="button" class="boton-volver-tabla-registro" style="margin-top: 20px;">
+            <img src="{% static '/imagenes/volver_icon.png' %}" alt="Ícono Volver" class="icono-volver">
+          </button>
+          <table>
+            <thead>
+              <!--Encabezado de tabla de registro-->
+                <tr>
+                    <th class="left-align">Pasajero</th>
+                    <th class="columna-cantidades">Equipaje Registrado</th>
+                    <th class="columna-cantidades">Equipaje de Mano</th>
+                    <th class="columna-cantidades">Cantidad de Asientos</th>
+                    <th>Asiento(s)</th>
+                    <th class="columna-botones"></th>
+                </tr>
+            </thead>
+            <tbody id="tablaRegistro"> <!--cuerpo de la tabla, se empleara para usarlo en el ciclo-->
+                <tr>
+                    <td class="left-align">Pakita Barrios</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>A31</td>
+                    <td><button class="boton-eliminar">X</button></td>
+                </tr>         
+            </tbody>
+        </table>
+        </section>
+
+
+        <!--TABLA DE INFORMACION DEL VIAJE-->
+        <section class="costos-panel" style="display: none;">
+          <!--tabla de Informacion del vuelo-->
+          <h3 class="luggage-section">
+            Información sobre el vuelo
+          </h3>
+          <table>
+            <tbody> <!--cuerpo de la tabla, se empleara para usarlo en el ciclo-->
+              <!--Tipo de clase-->
+                <tr>
+                    <td class="left-align">Clase</td>
+                    <td class="tipoClaseSeleccionada" >Economico/light</td>
+                </tr> 
+              <!--fecha-->
+              <tr>
+                <td class="left-align" >Fecha</td>
+                <td>18/07/2024</td>
+              </tr>
+              <!--hora de vuelo-->
+              <tr>
+                <td class="left-align" >Hora</td>
+                <td >4:50pm-8:35pm</td>  
+              </tr>
+              <!--tiempo de vuelo-->
+              <tr>
+                <td class="left-align" >Tiempo de vuelo</td>
+                <td >3h 45min</td>  
+              </tr>
+              <!--Salida-->
+              <tr>
+                <td class="left-align" >Salida</td>
+                <td class="left-align" >Pekín, Aeropuerto Intl. Pekín Capital (PEK)
+                  China Continental. 
+                </td>  
+              </tr>
+              <!--Llegada-->
+              <tr>
+                <td class="left-align" >Llegada</td>
+                <td class="left-align" >Hong Kong, Aeropuerto Intl. Hong Kong (HKG)
+                  Región Administrativa Especial de Hong Kong. 
+                </td>  
+              </tr>
+              <!--Consideraciones sobre el equipaje-->
+              <tr>
+                <td class="left-align" >Consideraciones sobre el equipaje</td>
+                <td class="left-align" >
+                  <ul>
+                    <li>Equipaje de mano: tiene un peso maximo de 7kg.</li>
+                    <li>Equipaje Registrado: tiene un peso maximo de 23kg.</li>
+                  </ul>
+                   <br>
+                  Si presenta exceso de equipaje se realizara un cargo por el exceso de peso.
+                </td>  
+              </tr>
+              <!--Cargos extras segun los suceso-->
+              <tr>
+                <td class="left-align" >Cargos Extra</td>
+                <td class="left-align" >
+                  Economico Ligero
+                  <ul>
+                    <li>Tasa por cambio de vuelo CNY 500 + posible diferencia de tarifa.</li>
+                    <li>Tasa de cancelación de vuelo CNY 850.</li>
+                    <li>Tarifa de no presentación CNY CNY 800.</li>
+                  </ul>
+                   <br>
+                   Economico Ejecutivo
+                   <ul>
+                    <li>Tasa por cambio de vuelo CNY 300 + posible diferencia de tarifa.</li>
+                    <li>Tasa de cancelación de vuelo CNY 650.</li>
+                    <li>Tarifa de no presentación CNY CNY 800.</li>
+                  </ul>
+                  <br>
+                  Economico Premium
+                   <ul>
+                    <li>Tasa por cambio de vuelo GRATIS + posible diferencia de tarifa.</li>
+                    <li>Tasa de cancelación de vuelo CNY 550.</li>
+                    <li>Tarifa de no presentación CNY CNY 800.</li>
+                  </ul>
+                </td>  
+              </tr>
+            </tbody>
+        </table>
+
+          <!--INFORMACION DEL COSTO-->
+          <div>
+            <table>
+              <thead>
+                <!--Encabezado de tabla de COSTOS-->
+                  <tr>
+                      <th class="left-align">Cargos</th>
+                      <th class="columna-cantidades">Costo (CNY)</th>
+                      <th class="columna-cantidades">Cantidad (unid)</th>
+                      <th class="columna-cantidades"></th>
+                  </tr>
+              </thead>
+              <tbody> <!--cuerpo de la tabla, se empleara para usarlo en el ciclo-->
+                <!--fila 1-->
+                  <tr>
+                      <td class="left-align">Maleta Registrada</td>
+                      <td id="tablaMaletaRegistradaCosto">436.21</td>
+                      <td id="tablaMaletaRegistrada">0</td>
+                      <td id="tablaMaletaRegistradaPago">0</td>
+                  </tr> 
+                  <!--fila 2-->
+                  <tr>
+                    <td class="left-align">Maleta de Mano</td>
+                    <td id="tablaMaletaManoCosto">218.11</td>
+                    <td id="tablaMaletaMano">0</td>
+                    <td id="tablaMaletaManoPago">0</td>
+                  </tr> 
+                  <!--fila 3-->
+                  <tr>
+                    <td class="left-align">Adulto (+12 años)</td>
+                    <td id="tablaAdultoCosto">843.34</td>
+                    <td id="tablaAdulto">0</td>
+                    <td id="tablaAdultoPago">0</td>
+                </tr> 
+                <!--fila 4-->
+                <tr>
+                  <td class="left-align">Niños (11 a 2 años)</td>
+                  <td id="tablaNiñoCosto">814.26</td>
+                  <td id="tablaNiño">0</td>
+                  <td id="tablaNiñoPago">0</td>
+              </tr> 
+              <!--fila 5-->
+              <tr>
+                <td class="left-align">Infantes (1 a 0 años)</td>
+                <td id="tablaInfanteCosto">799.72</td>
+                <td id="tablaInfante">0</td>
+                <td id="tablaInfantePago">0</td>
+            </tr> 
+            
+            <!--fila 7-->
+            <tr>
+              <td class="left-align">Total </td>
+              <td></td>
+              <td></td>
+              <td id="tablaPago">0</td>
+          </tr>           
+          </tbody>
+          </table>
+          </div>
+        <button class="boton-volver-reserva" >Modificar reserva</button>
+        <button class="boton-aceptar">Aceptar</button>
+        </section>
+
+
+        <!--PANEL DE PAGO-->
+        <section class="payment-method" style="display: none;">
+          <div class="payment-container">
+            <button class="boton-volver-costos">X</button>
+            <div class="payment-content">
+              <div class="payment-options">
+                <div>
+                  <h2 class="payment-title">Metodo de Pago</h2>
+                  <p class="payment-subtitle">Elige bandera de tu tarjeta de credito o debito.</p>
+                  <div class="card-options">
+                      <!--primera opcion-->
+                      <img src="{% static 'prueba/imagenes/visa.png' %}" alt="Visa logo" class="card-logo" />
+      
+                      <!--segunda opcion-->
+                      <img src="{% static 'prueba/imagenes/mastercard.png' %}" alt="Mastercard logo" class="card-logo" />
+                      
+                      <!--tercera opcion-->
+                      <img src="{% static 'prueba/imagenes/american_express.png' %}" alt="American Express logo" class="card-logo" />
+                      <!--cuarta opcion-->
+                      <img src="{% static 'prueba/imagenes/jcb.png' %}" alt="Discover logo" class="card-logo" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form class="card-form" onsubmit="submitForm(event)">
+              <div class="payment-options">
+                <div>
+                  <h3 class="form-title-pay">Ingrese los datos de su tarjeta</h3>
+                  <div class="form-group-pay">
+                    <label for="cardNumber" class="form-label">Número de tarjeta</label>
+                    <input type="text" id="cardNumber" class="form-input-digitos-tarjeta" placeholder="Ingrese los digitos de la tarjeta" required />
+                  </div>
+                  <div class="form-group-pay">
+                    <label for="expiryDate" class="form-label">Fecha de vencimiento</label>
+                    <input type="date" id="expiryDate" class="form-date-input" required />
+                  </div>
+                  <div class="form-group-pay">
+                    <label for="securityCode" class="form-label">Codigo de seguridad</label>
+                    <input type="password" id="securityCode" class="form-security-input" required />
+                  </div>  
+                  <div class="form-group-pay">
+                    <label for="cardHolder" class="form-label">Titular de la tarjeta</label>
+                    <input type="text" id="cardHolder" class="form-input-nombre-tarjeta" placeholder="Nombres y Apellidos" required />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <button type="submit" class="boton-pagar">Realizar Pago</button>
+          </div>
+        </section>
+      </section>
+
+      <script src="{% static 'prueba/js/asientos_seleccion.js'%}" defer></script>
+      <script src="{% static 'prueba/js/global.js'%}"></script>
+      <script src="{% static 'prueba/js/panelPrincipal.js'%}"></script>
+      <script src="{% static 'prueba/js/panelReserva.js'%}"></script>
+      <script src="{% static 'prueba/js/panelCostos.js'%}"></script>
+      <script src="{% static 'prueba/js/panelPago.js'%}"></script>
+      <script src="{% static 'prueba/js/panelRegistro.js'%}"></script>
+
+</body>
+</html>

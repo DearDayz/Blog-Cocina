@@ -1,0 +1,313 @@
+.reservation-panel {
+    align-self: center;
+    background-color: #fff;
+    border: 1px solid rgba(245, 245, 245, 1);
+    border-radius: 10px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    max-width: 100%;
+    padding: 20px 50px;
+    width: 850px;
+  }
+  
+  .reservation-form {
+    padding: 20px;
+    max-width: 100%;
+    width: 700px;
+    
+    justify-content: center; 
+    align-items: center;
+  }
+  
+  .form-row {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+  }
+  
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    
+  }
+  
+  .columna_izq {
+    width: 45%;
+  }
+  
+  .columna_der {
+    width: 45%;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+    
+  }
+  
+  .form-title {
+    color: #000;
+    font: 28px/129% Roboto, sans-serif;
+    letter-spacing: 0;
+  }
+  
+  .form-label {
+    font-family: Inter, sans-serif;
+    margin-top: 16px;
+  }
+  
+  .form-input {
+    background-color: var(--sds-color-background-default-default);
+    border: 1px solid rgba(217, 217, 217, 1);
+    border-radius: 5px;
+    font-family: Inter, sans-serif;
+    justify-content: center;
+    line-height: 100%;
+    margin-top: 8px;
+    padding: 12px 16px;
+  }
+  
+
+  .luggage-section {
+    color: #000;
+    font: 400 24px/133% Roboto, sans-serif;
+    letter-spacing: 0;
+    margin: 47px 0 0 0;
+  }
+  
+  .luggage-container {
+    align-self: center;
+    max-width: 100%;
+    width: 677px;
+  }
+  
+  .luggage-row {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .luggage-column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 50%;
+  }
+  
+  .luggage-panel {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 140%;
+
+  }
+  
+  .luggage-item {
+    font-family: Inter, sans-serif;
+  }
+  
+  .luggage-input, .lista-despegable{
+    background-color: var(--sds-color-background-default-default);
+    border: 1px solid rgba(217, 217, 217, 1);
+    border-radius: 5px;
+    font-family: Inter, sans-serif;
+    justify-content: center;
+    line-height: 100%;
+    margin: 8px 0px 20px;
+    padding: 12px 20px;
+    text-align: left;
+  }
+   
+  .lista-despegable {
+    text-align: left;
+  }
+  .seat-map {
+    align-items: start;
+    background-color: #fff;
+    border: 1px solid rgba(217, 217, 217, 1);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 0 auto;
+    padding: 50px 35px 60px 30px;
+    width: 100%;
+}
+
+.leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espacio entre elementos */
+  margin-top: 5px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Espacio entre elementos */
+}
+
+.item span {
+  display: inline-block;
+  width: 7px; /* Ancho del símbolo */
+  height: 7px; /* Altura del símbolo */
+  margin-right: 5px; /* Espacio entre el símbolo y el texto */
+  border: 1px solid #ccc; /* Borde para el símbolo */
+}
+.leyenda label{
+  font: 400 16px Montserrat, sans-serif;
+}
+/* Estilos para los diferentes estados */
+.disponible {
+  background-color: rgb(255, 255, 255);
+}
+
+.ocupado {
+  background-color: rgb(203, 0, 0);
+}
+
+.seleccionado {
+  background-color: rgb(29, 0, 145);
+}
+
+.no-pertenece {
+  background-color: lightgray;
+}
+
+/* Estilos para las etiquetas */
+label {
+  font-size: 14px;
+  color: #333;
+}
+
+.seat-row {
+    align-self: center;
+    color: #452891;
+    display: flex;
+    gap: 4px;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 5px;
+}
+
+.seat-number {
+    flex-grow: 1;
+    font: 400 16px Montserrat, sans-serif;
+    margin: auto 0;
+}
+
+.seat-group {
+    display: flex;
+    font-size: 14px;
+    font-weight: 700;
+    gap: 0;
+}
+
+
+.seat {
+    background-color: #ffffff;
+    border: 1px solid rgb(32, 1, 110);
+    border-radius: 5px;
+    font-family: Montserrat, sans-serif;
+    justify-content: center;
+    padding: 8px 0;
+    width: 20px;
+    height: 10px;
+}
+
+/*transicion en las sillsas hover, active, visite*/
+.seat:hover{ /*cuando el mouse pasa por la silla*/
+  background-color: rgb(54, 3, 196);
+}
+.seat:active{
+  background-color: #3403b0;
+  border-color: #00fbff;
+}
+
+.seat-selected {
+  background-color: rgb(0, 61, 111);
+  color: #fff;
+  border-color: rgb(63, 0, 222);
+}
+
+.area-sanitarios-insumos {
+    background-color: #2292ee;
+    border-radius: 5px;
+    width: 41px;
+    height: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Reglas específicas para las filas con números 41 a 43 */
+.seat-row:nth-child(12) .seat-group span:nth-child(3),
+.seat-row:nth-child(13) .seat-group span:nth-child(3),
+.seat-row:nth-child(14) .seat-group span:nth-child(3)
+ {
+    margin-left: 11px;
+}
+
+.seat-row:nth-child(12) .seat-group span:nth-child(6),
+.seat-row:nth-child(13) .seat-group span:nth-child(6),
+.seat-row:nth-child(14) .seat-group span:nth-child(6),
+.seat-row:nth-child(15) .seat-group span:nth-child(6) {
+    margin-right: 11px;
+}
+
+/*caso de fila 15 es decir 44 */
+.seat-row:nth-child(15) .seat-group span:nth-child(1){
+    margin-right: 7px;
+    margin-left: 10px;
+}
+.seat-row:nth-child(15) .seat-group span:nth-child(6){
+    margin-left: 7px;
+}
+
+/* Reglas para filas generales que no deberían afectar a los números específicos */
+.seat-row:not(:nth-child(12)):not(:nth-child(13)):not(:nth-child(14)):not(:nth-child(15)) .seat-group span:nth-child(3) {
+    margin-left: 5px;
+}
+
+.seat-row:not(:nth-child(12)):not(:nth-child(13)):not(:nth-child(14)):not(:nth-child(15)) .seat-group span:nth-child(7) {
+    margin-right: 5px;
+}
+
+/* Asegurando que las reglas no afecten a los números 30 y 45 */
+.seat-row:nth-child(1) .seat-group span:nth-child(3),
+.seat-row:nth-child(16) .seat-group span:nth-child(3) {
+    margin-left: 0px;
+    gap: 2px;
+}
+
+  .action-buttons{
+    display: flex;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 20px;
+    letter-spacing: 0.1px;
+    line-height: 143%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    white-space: nowrap;
+    justify-content: center;
+    margin-left: 20%;
+  }
+
+  .seat.seleccionado {
+    background-color: rgb(54, 3, 196);
+  }
+  
+  .seat.ocupado{
+    background-color: #d00000;
+  }
+  
+  .seat.deshabilitado{
+    background-color: #e4e4e450;
+    border:  #ffffff;
+    color: #ffffff;
+  }
