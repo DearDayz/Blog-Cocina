@@ -4,7 +4,6 @@ import os
 def cargar_contexto_json_cliente(tablas):
     # tablas sería un diccionario de diccionarios con la info de cada tabla
 
-    # Se eliminan datos que no debe saber el cliente o la IA
     recetas = tablas["recetas"]
     context_json = {
         "instrucciones": "",
