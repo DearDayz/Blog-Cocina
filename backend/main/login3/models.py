@@ -52,11 +52,11 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     nombre = models.CharField(max_length=30, verbose_name="nombre", validators=[val.validar_nombre])
     apellido = models.CharField(max_length=30, verbose_name="apellido", validators=[val.validar_nombre])
-    cedula = models.IntegerField(unique=True, verbose_name="cedula", validators=[val.validar_cedula])  
+    cedula = models.CharField(max_length=8, unique=True, verbose_name="cedula", validators=[val.validar_cedula])  
     direccion = models.TextField(verbose_name="direccion", validators=[val.validar_direccion])  
     correo = models.EmailField(max_length=255, unique=True, verbose_name="correo", validators=[val.validar_correo]) 
-    telefono = models.BigIntegerField(unique=True, verbose_name="telefono", validators=[val.validar_telefono]) 
-    favoritos = models.JSONField(verbose_name="favoritos", validators=[val.validar_favoritos]) 
+    telefono = models.CharField(max_length=12, unique=True, verbose_name="telefono", validators=[val.validar_telefono]) 
+    favoritos = models.JSONField(verbose_name="favoritos", validators=[val.validar_favoritos], default=dict) 
     tipo = models.CharField(max_length=20, verbose_name="tipo", validators=[val.validar_tipo])
 
     

@@ -15,7 +15,7 @@ def validar_correo(valor):
         raise ValidationError('Debe ingresar un correo válido.')
     
 def validar_telefono(value):
-    if value > 4269999999 or value < 4120000000:
+    if not re.match(r'^(0412|0414|0416|0424|0426)-\d{7}$', value):
         raise ValidationError('Ingrese un número de teléfono válido')
 
 def validar_direccion(valor):
@@ -23,7 +23,7 @@ def validar_direccion(valor):
         raise ValidationError('Debe ingresar una dirección válida.')
     
 def validar_cedula(value):
-    if value > 40000000 or value < 10000000:
+    if not re.match(r'^\d{8}$', value):
         raise ValidationError('Debe ingresar una cédula válida')
 
 def validar_tipo(value):
