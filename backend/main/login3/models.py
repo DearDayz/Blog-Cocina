@@ -1,10 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-
-
+from .validadores import validador_user as val
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, username, cedula, password=None, nombre="",apellido="", direccion="", correo="", telefono=0, favoritos=dict, tipo=""):
+    def create_user(self, username, cedula, password=None, nombre="",apellido="", direccion="", correo="", telefono=0, tipo=""):
         """
         Creates and saves a User
         """
@@ -19,7 +18,6 @@ class MyUserManager(BaseUserManager):
             direccion=direccion,
             correo=correo,
             telefono=telefono,
-            favoritos=favoritos,
             tipo=tipo,
         )
 
@@ -28,7 +26,7 @@ class MyUserManager(BaseUserManager):
             
         return user
 
-    def create_superuser(self, username, cedula, password=None, nombre="", apellido="", direccion="", correo="", telefono=0, favoritos=dict, tipo=""):
+    def create_superuser(self, username, cedula, password=None, nombre="", apellido="", direccion="", correo="", telefono=0, tipo=""):
         """
         Creates and saves a superuser
         """
@@ -41,7 +39,6 @@ class MyUserManager(BaseUserManager):
             direccion=direccion,
             correo=correo,
             telefono=telefono,
-            favoritos=favoritos,
             tipo=tipo,
         )
         user.is_admin = True
@@ -51,16 +48,16 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(unique=True, max_length=40, default="admin")
+    username = models.CharField(unique=True, max_length=40)
 
-    nombre = models.CharField(max_length=255, verbose_name="nombre", blank=True)
-    apellido = models.CharField(max_length=255, verbose_name="apellido", blank=True)
-    cedula = models.IntegerField(unique=True, verbose_name="cedula", blank=True)  # Asegúrate de que la cédula sea única
-    direccion = models.TextField(verbose_name="direccion", blank=True)  # Para permitir texto largo
-    correo = models.EmailField(max_length=255, unique=True, verbose_name="correo", blank=True)  # Asegúrate de que el correo sea único
-    telefono = models.BigIntegerField(blank=True, null=True, unique=True, verbose_name="telefono")  # Cambiado a BigIntegerField para almacenar números grandes
-    favoritos = models.JSONField(blank=True, null=True, verbose_name="favoritos")  # Campo para almacenar favoritos en formato JSON
-    tipo = models.CharField(max_length=255, verbose_name="tipo", blank=True)
+    nombre = models.CharField(max_length=30, verbose_name="nombre", validators=[val.validar_nombre])
+    apellido = models.CharField(max_length=30, verbose_name="apellido", validators=[val.validar_nombre])
+    cedula = models.IntegerField(unique=True, verbose_name="cedula", validators=[val.validar_cedula])  
+    direccion = models.TextField(verbose_name="direccion", validators=[val.validar_direccion])  
+    correo = models.EmailField(max_length=255, unique=True, verbose_name="correo", validators=[val.validar_correo]) 
+    telefono = models.BigIntegerField(unique=True, verbose_name="telefono", validators=[val.validar_telefono]) 
+    favoritos = models.JSONField(verbose_name="favoritos", validators=[val.validar_favoritos]) 
+    tipo = models.CharField(max_length=20, verbose_name="tipo", validators=[val.validar_tipo])
 
     
     is_active = models.BooleanField(default=True)
@@ -69,7 +66,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["nombre", "apellido", "cedula", "direccion", "correo", "telefono", "favoritos", "tipo"]
+    REQUIRED_FIELDS = ["nombre", "apellido", "cedula", "direccion", "correo", "telefono", "tipo"]
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} - cedula: {self.cedula} - tipo: {self.tipo}"
