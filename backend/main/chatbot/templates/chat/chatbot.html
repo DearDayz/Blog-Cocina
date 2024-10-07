@@ -46,6 +46,9 @@
                     chat_log = document.getElementById("chat-log");
                     chat_log.appendChild(message_div)
                 }
+                else if (data.message === "Finished"){
+                    // Se usará para evitar que el usuario envíe mensajes solo después que la IA termine el suyo
+                }
                 else {
                     message_div = document.getElementById(`${counter}`)
                     message_div.textContent += data.message

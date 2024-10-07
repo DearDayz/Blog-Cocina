@@ -26,4 +26,4 @@ class ChatConsumer(WebsocketConsumer):
                 self.send(text_data=json.dumps({"type": "chatbot", "message": content}))
                 print(content, end="", flush=True)
         
-        self.send(text_data=json.dumps({"type": "user", "message": "Finished"}))
+        self.send(text_data=json.dumps({"type": "chatbot", "message": "Finished"}))
