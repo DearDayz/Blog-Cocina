@@ -19,6 +19,11 @@ from django.urls import path
 from django.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.documentation import include_docs_urls
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +31,15 @@ urlpatterns = [
     path('ecommerce-api/', include("ecommerce.urls")),
     path('users/v2/', include("login3.urls")),
     path('chatbot/', include("chatbot.urls")),
-    path('', include("views.urls"))
+    path('', include("views.urls")),
+    path('docs/',  include_docs_urls(title='API Documentation')),
+
+    #Documentacion
+    # YOUR PATTERNS
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 if settings.DEBUG:

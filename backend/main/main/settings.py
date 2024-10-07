@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework',
     "views",
     "corsheaders",
+    'coreapi',
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -159,6 +161,15 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API DOCUMENTATION',
+    'DESCRIPTION': 'Aqui se documentan las apis, y se explican con usarlas',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 #vainas de cors

@@ -1,6 +1,6 @@
 from openai import OpenAI
 
-client = OpenAI(base_url="http://localhost:1234/v1", api_key="not-needed")
+client = OpenAI(base_url="http://192.168.1.107:1234/v1", api_key="not-needed")
 
 def stream_response(pregunta):
     response = client.chat.completions.create(

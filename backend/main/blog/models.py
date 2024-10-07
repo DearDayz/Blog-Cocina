@@ -16,7 +16,7 @@ class Receta(models.Model):
     imagen = models.ImageField(upload_to='imagenes/', blank=True, null=True, verbose_name="Imagen")
     puntuacion = models.FloatField(verbose_name="puntuacion", validators=[validate_between_zero_and_five])
     ingredientes = models.ManyToManyField(Ingrediente, verbose_name="ingredientes")
-    cantidades = models.JSONField(verbose_name="cantidades", default=list, validators=[validate_cantidades])
+    cantidades = models.JSONField(verbose_name="cantidades", validators=[validate_cantidades], null=False , blank=False)
 
 
     def __str__(self):
@@ -34,9 +34,11 @@ class Receta(models.Model):
         """Método de clase para crear una receta con ingredientes."""
         ingredientes_nombres = validated_data.pop('ingredientes')
         receta = cls.objects.create(**validated_data)
-         # Realizar validaciones después de que la receta ha sido creada
+
         print(receta.cantidades)
         print(ingredientes_nombres)
+        print(len(receta.cantidades))
+        print(len(ingredientes_nombres))
 
         if len(receta.cantidades) != len(ingredientes_nombres):
             raise ValidationError('La longitud de "cantidades" debe coincidir con la cantidad de ingredientes.')

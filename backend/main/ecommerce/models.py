@@ -24,13 +24,13 @@ class Ingrediente(models.Model):
 
 class Factura(models.Model):
     id = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=255, unique=True)  # Este campo ahora se generará automáticamente
+    codigo = models.CharField(max_length=255, unique=True, blank=True)  # Este campo ahora se generará automáticamente
     nombreCliente = models.CharField(max_length=255, validators=[validador_factura.validar_solo_letras_con_espacio])
     formaPago = models.CharField(max_length=255, validators=[validador_factura.validar_solo_letras_con_espacio])
     cedula = models.IntegerField(validators=[validador_factura.cedula_longitud])
     ingredientes = models.ManyToManyField(Ingrediente, verbose_name="ingredientes")
     total = models.FloatField(validators=[MinValueValidator(0.0)])
-    cantidades = models.JSONField(verbose_name="cantidades", default=list, validators=[validador_factura.validate_cantidades])
+    cantidades = models.JSONField(verbose_name="cantidades", validators=[validador_factura.validate_cantidades])
     fecha = models.DateField(auto_now_add=True)  # Fecha de la factura, se establece automáticamente al crear la factura
     hora = models.TimeField(auto_now_add=True)  # Hora de la factura, se establece automáticamente al crear la factura
 
