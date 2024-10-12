@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "corsheaders",
     'coreapi',
+    'views',
     'drf_spectacular'
 ]
 
@@ -177,6 +178,6 @@ AUTH_USER_MODEL = "login3.MyUser"
 # Daphne
 ASGI_APPLICATION = 'main.asgi.application'
 
-# Para guardar el JSON con el contexto
+"""# Para guardar el JSON con el contexto
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')"""
