@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # Obtiene la ruta base del proyecto, la carpeta donde se encuentra el manage.py
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'chatbot',
     'rest_framework',
     "corsheaders",
-    'coreapi',
+    'coreapi', #Esta vaina no se usa creo
+    'views',
     'drf_spectacular'
 ]
 
@@ -66,7 +67,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'views' , "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,6 +134,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'views' ,'static'),
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -177,6 +181,6 @@ AUTH_USER_MODEL = "login3.MyUser"
 # Daphne
 ASGI_APPLICATION = 'main.asgi.application'
 
-# Para guardar el JSON con el contexto
+"""# Para guardar el JSON con el contexto
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')"""
