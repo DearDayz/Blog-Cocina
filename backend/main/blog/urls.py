@@ -2,7 +2,8 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 from .views import (
     RecetaAPIList,
-    RecetaViewSet
+    RecetaViewSet,
+    IngredienteViewSet
 )
 
 
@@ -14,4 +15,5 @@ urlpatterns = [
 #MultiApi
 router = DefaultRouter()
 router.register("recetas", RecetaViewSet, basename="recetas")
+router.register("ingredientes", IngredienteViewSet, basename="ingredientes")
 urlpatterns += router.urls 

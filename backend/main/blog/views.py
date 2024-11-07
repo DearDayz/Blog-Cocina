@@ -1,7 +1,7 @@
 
 from rest_framework import generics
-from .models import Receta
-from .serializers import RecetaSerializer
+from .models import Receta, Ingrediente
+from .serializers import RecetaSerializer, IngredienteSerializer
 from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiExample
 from .tablas import get_table, get_example, post_table, post_example
@@ -54,3 +54,7 @@ class RecetaViewSet(viewsets.ModelViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+    
+class IngredienteViewSet(viewsets.ModelViewSet):
+    queryset = Ingrediente.objects.all()
+    serializer_class = IngredienteSerializer

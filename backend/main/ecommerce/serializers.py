@@ -1,39 +1,50 @@
 from rest_framework import serializers
-from .models import Ingrediente
-from .models import Factura
-from rest_framework.exceptions import ValidationError as DRFValidationError
-from django.core.exceptions import ValidationError
+from .models import Producto, Factura, ProductoFacturado
+from login3.serializers import MyUserSerializer
+from login3.models import  MyUser
+
+
 
 #Serializador de modelo
-class IngredienteSerializer(serializers.ModelSerializer):
+class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ingrediente
-        fields = '__all__'
+        model = Producto
+        fields = ['id', 'nombre', 'unidad', 'cantidad_disponible', 'precio', 'unidades_vendidas']
 
+class ProductoFacturadoSerializer(serializers.ModelSerializer):
+    producto = serializers.SlugRelatedField(
+    queryset=Producto.objects.all(),
+    slug_field='id'
+    )
+    class Meta:
+        model = ProductoFacturado
+        fields = ['id', 'factura', 'producto', 'cantidad']
+    
+    def to_representation(self, instance):
+        # Usar la representación detallada solo al obtener una producto facturado
+        representation = super().to_representation(instance)
+        # Reemplazar el campo `producto` con el serializador completo del producto
+        representation['producto'] = ProductoSerializer(instance.producto).data
+        return representation
 
 class FacturaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Factura
-        fields = ['id', 'codigo',"nombreCliente", "formaPago" ,'cedula', 'total', 'ingredientes', 'fecha', 'hora', "cantidades"]  # Campos para lectura
-    def to_representation(self, instance):
-        # Utiliza el método de representación del modelo
-        return instance.to_representation()
-
-class FacturaCreateSerializer(serializers.ModelSerializer):
-    ingredientes = IngredienteSerializer(many=True, read_only=True)
-    # Campo para aceptar una lista de nombres de ingredientes al crear recetas
-    ingredientes = serializers.ListField(
-        child=serializers.CharField(),
-        write_only=True
+    productos_facturados = ProductoFacturadoSerializer(many=True, read_only=True)
+    user = serializers.SlugRelatedField(
+    queryset=MyUser.objects.all(),
+    slug_field='cedula'
     )
-
     class Meta:
         model = Factura
-        fields = ["nombreCliente", "formaPago", 'cedula',"total" ,'ingredientes', "cantidades"]  # Solo los campos necesarios para crear
+        fields = ['id', 'codigo', 'fecha', 'hora', 'user', 'productos_facturados', 'total']
 
-    def create(self, validated_data):
-        # Intenta crear la receta y maneja la validación de la longitud de cantidades
-        try:
-            return Factura.create_with_ingredients(validated_data)
-        except ValidationError as e:
-            raise DRFValidationError({'statusText': str(e)})
+    def to_representation(self, instance):
+        # Usar la representación detallada solo al obtener una factura
+        representation = super().to_representation(instance)
+        
+        # Reemplazar el campo `user` con el serializador completo del usuario
+        representation['user'] = MyUserSerializer(instance.user).data
+        # Eliminar los campos `password` y `tipo` si estásn presentes en la respuesta
+        representation['user'].pop('password', None)
+        representation['user'].pop('tipo', None)
+        
+        return representation

@@ -1,35 +1,30 @@
 from rest_framework import serializers
-from .models import Receta
-from ecommerce.serializers import IngredienteSerializer
-from rest_framework.exceptions import ValidationError as DRFValidationError
-from django.core.exceptions import ValidationError
+from .models import Receta, Ingrediente
+from ecommerce.models import Producto
+from ecommerce.serializers import ProductoSerializer
 
 
 
-#Serializador de modelo
+class IngredienteSerializer(serializers.ModelSerializer):
+    producto = serializers.SlugRelatedField(
+    queryset=Producto.objects.all(),
+    slug_field='id'
+    )
+    class Meta:
+        model = Ingrediente
+        fields = ['id', 'receta', 'producto', 'cantidad', 'unidad']
+    
+    def to_representation(self, instance):
+        # Usar la representación detallada solo al obtener una producto facturado
+        representation = super().to_representation(instance)
+        # Reemplazar el campo `producto` con el serializador completo del producto
+        representation['producto'] = ProductoSerializer(instance.producto).data
+        return representation
+
 
 # Serializer para Receta
 class RecetaSerializer(serializers.ModelSerializer):
-    # Usamos IngredienteSerializer para mostrar los objetos de los ingredientes
     ingredientes = IngredienteSerializer(many=True, read_only=True)
-
-    # Campo para aceptar una lista de nombres de ingredientes al crear recetas
-    ingredientes = serializers.ListField(
-        child=serializers.CharField(),
-        write_only=True
-    )
-
     class Meta:
         model = Receta
-        fields = ["id", 'nombre', 'descripcion', 'preparacion', 'imagen', 'puntuacion', 'ingredientes', "cantidades"]
-
-    def create(self, validated_data):
-        # Intenta crear la receta y maneja la validación de la longitud de cantidades
-        try:
-            return Receta.create_with_ingredients(validated_data)
-        except ValidationError as e:
-            raise DRFValidationError({'statusText': str(e)})
-
-    def to_representation(self, instance):
-        # Utiliza el método de representación del modelo
-        return instance.to_representation()
+        fields = ["id", 'nombre', 'descripcion', 'preparacion', 'imagen', 'puntuacion', 'ingredientes']

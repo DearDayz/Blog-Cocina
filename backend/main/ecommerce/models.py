@@ -2,9 +2,10 @@ from django.db import models
 from .validadores import validador_ingrediente, validador_factura
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
+from login3.models import MyUser
 
 # Create your models here.
-class Ingrediente(models.Model):
+class Producto(models.Model):
     id = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100, verbose_name="nombre", unique=True, validators=[validador_ingrediente.validar_solo_letras])
     unidad = models.CharField(max_length=50, verbose_name="unidad", validators=[validador_ingrediente.unidad])
@@ -22,15 +23,12 @@ class Ingrediente(models.Model):
         return f"{self.nombre} ({self.cantidad_disponible} {self.unidad})"
     
 
+
 class Factura(models.Model):
     id = models.AutoField(primary_key=True)
     codigo = models.CharField(max_length=255, unique=True, blank=True)  # Este campo ahora se generará automáticamente
-    nombreCliente = models.CharField(max_length=255, validators=[validador_factura.validar_solo_letras_con_espacio])
-    formaPago = models.CharField(max_length=255, validators=[validador_factura.validar_solo_letras_con_espacio])
-    cedula = models.IntegerField(validators=[validador_factura.cedula_longitud])
-    ingredientes = models.ManyToManyField(Ingrediente, verbose_name="ingredientes")
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE,  verbose_name="usuario", to_field="cedula")
     total = models.FloatField(validators=[MinValueValidator(0.0)])
-    cantidades = models.JSONField(verbose_name="cantidades", validators=[validador_factura.validate_cantidades])
     fecha = models.DateField(auto_now_add=True)  # Fecha de la factura, se establece automáticamente al crear la factura
     hora = models.TimeField(auto_now_add=True)  # Hora de la factura, se establece automáticamente al crear la factura
 
@@ -47,43 +45,12 @@ class Factura(models.Model):
     def __str__(self):
         return f"Factura {self.id} - Total: {self.total} - Fecha: {self.fecha} - Hora: {self.hora}"
 
-    def add_ingredients(self, ingredientes_nombres):
-        """Método para asociar ingredientes a la factura."""
-        for nombre in ingredientes_nombres:
-            ingrediente = Ingrediente.objects.get(nombre=nombre)
-            self.ingredientes.add(ingrediente)
 
-    @classmethod
-    def create_with_ingredients(cls, validated_data):
-        """Método de clase para crear una factura con ingredientes."""
-        ingredientes_nombres = validated_data.pop('ingredientes')
-        factura = cls.objects.create(**validated_data)
-         # Realizar validaciones después de que la factura ha sido creada
-        if len(factura.cantidades) != len(ingredientes_nombres):
-            raise ValidationError('La longitud de "cantidades" debe coincidir con la cantidad de ingredientes.')
-        factura.add_ingredients(ingredientes_nombres)
-        return factura
+class ProductoFacturado(models.Model):
+    id = models.AutoField(primary_key=True)
+    factura = models.ForeignKey(Factura, on_delete=models.CASCADE,  verbose_name="factura", related_name='productos_facturados')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE,  verbose_name="producto_facturado" , related_name='productos_facturados')
+    cantidad = models.FloatField(verbose_name="cantidad", validators=[MinValueValidator(0.0)])
 
-    def to_representation(self):
-        """Método para representar la factura, incluyendo los ingredientes completos."""
-        representation = {
-            "id": self.id,
-            "codigo": self.codigo,
-            "nombreCliente": self.nombreCliente,
-            "formaPago": self.formaPago,
-            "cedula": self.cedula,
-            "ingredientes": [
-            {
-                "id": ingrediente.id,
-                "nombre": ingrediente.nombre,
-                "unidad": ingrediente.unidad,
-                "precio": ingrediente.precio,
-            }
-            for ingrediente in self.ingredientes.all()
-        ],
-            "total": self.total,
-            "cantidades": self.cantidades,
-            "fecha": self.fecha,
-            "hora": self.hora
-        }
-        return representation
+    def __str__(self):
+        return f"{self.cantidad} de {self.producto.nombre} en factura {self.factura.codigo}"
