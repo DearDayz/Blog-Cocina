@@ -1,209 +1,199 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-  <head><script src="../assets/js/color-modes.js"></script>
+<head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.122.0">
-    <title>Blog Template · Bootstrap v5.3</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/blog/">
-
-    
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="style.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="blog.css" rel="stylesheet">
-    <style>
-      .star {
-          font-size: 2rem; /* Tamaño de la estrella */
-          color: #ccc; /* Color por defecto */
-          cursor: pointer; /* Cambia el cursor al pasar el mouse */
-      }
-      .star.selected {
-          color: gold; /* Color cuando está seleccionada */
-      }
-  </style>
-  </head>
-  <body>
-    
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.122.0">
+  <title>Blog Template · Bootstrap v5.3</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/blog/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Custom styles for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="blog.css" rel="stylesheet">
+  
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
             <img src="../icon/icono supermercado.png" alt="Logotipo de TuTienda" style="height: 40px; margin-right: 10px;">
             TuTienda
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Productos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Ofertas</a>
-              </li>
-            </ul>
+        </button>
     
-            <form class="d-flex" role="search">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#">Productos</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link disabled" aria-disabled="true">Ofertas</a>
+          </li>
+          </ul>
+  
+          <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Buscar ingredientes" aria-label="Buscar">
               <button class="btn btn-outline-success" type="submit">Buscar</button>
-            </form>
+          </form>
     
-            <!-- Iconos -->
-            <div style="margin-left: 10px;">
-              <button type="button" class="btn btn-sm btn-outline-secondary">
+          <!-- Iconos -->
+          <div style="margin-left: 10px;">
+            <button type="button" class="btn btn-sm btn-outline-secondary">
                 <i class="fa fa-globe"></i> <!-- Icono de "View" -->
-              </button>
-              <button type="button" class="btn btn-sm btn-outline-secondary">
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
                 <i class="fa fa-user"></i> <!-- Icono de "View" -->
-              </button>
-              <button type="button" class="btn btn-sm btn-outline-secondary">
-                <i class="fa fa-shopping-cart"></i> <!-- Icono de "View" -->
-              </button>
-            </div>
-    
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cartModal">
+                <i class="fa fa-shopping-cart"></i> <!-- Icono de "Shopping Cart" -->
+            </button>
           </div>
-        </div>
-      </nav>
-    </header>
-
-      
-    <main class="container">
-
-      <div class="row g-5">
-        <div class="col-md-8">
-          <h3 class="pb-4 mb-4 fst-italic border-bottom">
-            From the Firehose
-          </h3>
-
-          <article class="blog-post">
-            <h2 class="display-5 link-body-emphasis mb-1">Arepa Venezolana</h2>
-            <img src="../img/arepa.jpg" width="100%" height="300" alt="Arepas" style="object-fit: cover;" class="mb-4">
-            <p class="blog-post-meta">Enero 1, 2021 by <a href="#">Diego</a></p>
-
-            <p>Las arepas son un plato tradicional de la cocina venezolana y colombiana, perfectas para cualquier comida del día. Se pueden rellenar con una variedad de ingredientes.</p>
-
-            <h3>Ingredientes</h3>
-            <ul>
-                <li>2 tazas de harina de maíz precocida</li>
-                <li>2 tazas de agua</li>
-                <li>1 cucharadita de sal</li>
-                <li>1 cucharada de aceite (opcional)</li>
-                <li>Rellenos al gusto (queso, carne, pollo, etc.)</li>
-            </ul>
-
-            <h3>Preparación</h3>
-            <ol>
-                <li>En un bol grande, mezcla la harina de maíz y la sal.</li>
-                <li>Agrega el agua poco a poco y mezcla hasta obtener una masa suave.</li>
-                <li>Deja reposar la masa durante 5 minutos.</li>
-                <li>Divide la masa en porciones y forma bolas. Luego aplánalas para darles forma de disco.</li>
-                <li>Calienta una plancha o sartén a fuego medio y cocina las arepas durante 5-7 minutos por cada lado o hasta que estén doradas.</li>
-                <li>Retira del fuego y abre las arepas por la mitad para rellenarlas con los ingredientes deseados.</li>
-            </ol>
-          </article>
-            
-
-        </div>
-
-        <div class="col-md-4">
-          <div class="position-sticky" style="top: 2rem;">
-              <div class="p-4 mb-3 bg-body-tertiary rounded">
-                  <h4 class="fst-italic" style="margin-top: 5%;">Valoración</h4>
-                  <div id="star-rating" class="d-flex">
-                      <span class="star" data-value="1">&#9733;</span>
-                      <span class="star" data-value="2">&#9733;</span>
-                      <span class="star" data-value="3">&#9733;</span>
-                      <span class="star" data-value="4">&#9733;</span>
-                      <span class="star" data-value="5">&#9733;</span>
-                  </div>
-              </div>
-      
-              <div>
-                <h4 class="fst-italic">Post recientes</h4>
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                            <img src="../img/torta.jpg" width="100" height="96" alt="Torta de Chocolate" style="object-fit: cover;">
-                            <div class="col-lg-8">
-                                <h6 class="mb-0">Receta de Torta de Chocolate</h6>
-                                <small class="text-body-secondary">15 de enero, 2024</small>
-                            </div>
-                        </a>
-                    </li>
-                    <!-- Otras entradas recientes -->
-                </ul>
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                            <img src="../img/ensalada.jpg" width="100" height="96" alt="Ensalada Vegana" style="object-fit: cover;">
-                            <div class="col-lg-8">
-                                <h6 class="mb-0">Ensalada Vegana Fresca</h6>
-                                <small class="text-body-secondary">14 de enero, 2024</small>
-                            </div>
-                        </a>
-                    </li>
-                    <!-- Otras entradas recientes -->
-                </ul>
-                <ul class="list-unstyled">
-                    <li>
-                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                            <img src="../img/smuty.jpg" width="100" height="96" alt="Smoothie Saludable" style="object-fit: cover;">
-                            <div class="col-lg-8">
-                                <h6 class="mb-0">Smoothie Saludable de Frutas</h6>
-                                <small class="text-body-secondary">13 de enero, 2024</small>
-                            </div>
-                        </a>
-                    </li>
-                    <!-- Otras entradas recientes -->
-                </ul>
-            </div>
-      
-            <div class="p-4">
-              <h4 class="fst-italic">Visitanos en:</h4>
-              <ol class="list-unstyled">
-                  <li>
-                      <button type="button" class="btn btn-link d-flex align-items-center" onclick="window.location.href='https://github.com';">
-                          <i class="fab fa-github" aria-hidden="true"></i> GitHub
-                      </button>
-                  </li>
-                  <li>
-                      <button type="button" class="btn btn-link d-flex align-items-center" onclick="window.location.href='https://twitter.com';">
-                          <i class="fab fa-twitter" aria-hidden="true"></i> Twitter
-                      </button>
-                  </li>
-                  <li>
-                      <button type="button" class="btn btn-link d-flex align-items-center" onclick="window.location.href='https://facebook.com';">
-                          <i class="fab fa-facebook" aria-hidden="true"></i> Facebook
-                      </button>
-                  </li>
-              </ol>
-            </div>
+    
         </div>
       </div>
+    </nav>
+  </header>
+  
+  <main class="container">
 
-    </main>
+    <div class="row g-5">
+      <div class="col-md-8">
+        <h3 class="pb-4 mb-4 fst-italic border-bottom">
+          From the Firehose
+        </h3>
 
-   <!-- FOOTER -->
-   <footer class="py-3 my-4">
+        <article class="blog-post">
+          <h2 class="display-5 link-body-emphasis mb-1">Arepa Venezolana</h2>
+          <img src="../img/arepa.jpg" width="100%" height="300" alt="Arepas" style="object-fit: cover;" class="mb-4">
+          <p class="blog-post-meta">Enero 1, 2021 by <a href="#">Diego</a></p>
+
+          <p>Las arepas son un plato tradicional de la cocina venezolana y colombiana, perfectas para cualquier comida del día. Se pueden rellenar con una variedad de ingredientes.</p>
+
+          <h3>Ingredientes</h3>
+          <ul>
+              <li>2 tazas de harina de maíz precocida</li>
+              <li>2 tazas de agua</li>
+              <li>1 cucharadita de sal</li>
+              <li>1 cucharada de aceite (opcional)</li>
+              <li>Rellenos al gusto (queso, carne, pollo, etc.)</li>
+          </ul>
+
+          <h3>Preparación</h3>
+          <ol>
+              <li>En un bol grande, mezcla la harina de maíz y la sal.</li>
+              <li>Agrega el agua poco a poco y mezcla hasta obtener una masa suave.</li>
+              <li>Deja reposar la masa durante 5 minutos.</li>
+              <li>Divide la masa en porciones y forma bolas. Luego aplánalas para darles forma de disco.</li>
+              <li>Calienta una plancha o sartén a fuego medio y cocina las arepas durante 5-7 minutos por cada lado o hasta que estén doradas.</li>
+              <li>Retira del fuego y abre las arepas por la mitad para rellenarlas con los ingredientes deseados.</li>
+          </ol>
+        </article>
+
+        <div class="tooltip-container" style="margin-left: 90%;">
+          <button type="button" class="btn-tooltip" id="add-to-cart-btn" >
+              <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Agregar al carrito" -->
+          </button>
+          <span class="tooltip-message" id="tooltip-add-to-cart">Guardar ingredientes en carrito</span>
+        </div>
+          
+
+      </div>
+
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem;">
+            <div class="p-4 mb-3 bg-body-tertiary rounded">
+                <h4 class="fst-italic" style="margin-top: 5%;">Valora</h4>
+                <div id="star-rating" class="d-flex">
+                    <span class="star" data-value="1">&#9733;</span>
+                    <span class="star" data-value="2">&#9733;</span>
+                    <span class="star" data-value="3">&#9733;</span>
+                    <span class="star" data-value="4">&#9733;</span>
+                    <span class="star" data-value="5">&#9733;</span>
+                </div>
+            </div>
+    
+            <div>
+              <h4 class="fst-italic">Post recientes</h4>
+              <ul class="list-unstyled">
+                  <li>
+                      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+                          <img src="../img/torta.jpg" width="100" height="96" alt="Torta de Chocolate" style="object-fit: cover;">
+                          <div class="col-lg-8">
+                              <h6 class="mb-0">Receta de Torta de Chocolate</h6>
+                              <small class="text-body-secondary">15 de enero, 2024</small>
+                          </div>
+                      </a>
+                  </li>
+                  <!-- Otras entradas recientes -->
+              </ul>
+              <ul class="list-unstyled">
+                  <li>
+                      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+                          <img src="../img/ensalada.jpg" width="100" height="96" alt="Ensalada Vegana" style="object-fit: cover;">
+                          <div class="col-lg-8">
+                              <h6 class="mb-0">Ensalada Vegana Fresca</h6>
+                              <small class="text-body-secondary">14 de enero, 2024</small>
+                          </div>
+                      </a>
+                  </li>
+                  <!-- Otras entradas recientes -->
+              </ul>
+              <ul class="list-unstyled">
+                  <li>
+                      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+                          <img src="../img/smuty.jpg" width="100" height="96" alt="Smoothie Saludable" style="object-fit: cover;">
+                          <div class="col-lg-8">
+                              <h6 class="mb-0">Smoothie Saludable de Frutas</h6>
+                              <small class="text-body-secondary">13 de enero, 2024</small>
+                          </div>
+                      </a>
+                  </li>
+                  <!-- Otras entradas recientes -->
+              </ul>
+          </div>
+    
+          <div class="p-4">
+            <h4 class="fst-italic">Visitanos en:</h4>
+            <ol class="list-unstyled">
+                <li>
+                    <button type="button" class="btn btn-link d-flex align-items-center" onclick="window.location.href='https://github.com';">
+                        <i class="fab fa-github" aria-hidden="true"></i> GitHub
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-link d-flex align-items-center" onclick="window.location.href='https://twitter.com';">
+                        <i class="fab fa-twitter" aria-hidden="true"></i> Twitter
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-link d-flex align-items-center" onclick="window.location.href='https://facebook.com';">
+                        <i class="fab fa-facebook" aria-hidden="true"></i> Facebook
+                    </button>
+                </li>
+            </ol>
+          </div>
+      </div>
+    </div>
+
+  </main>
+
+
+
+  <!-- FOOTER -->
+  <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
       <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
@@ -214,22 +204,8 @@
     <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
   </footer>
   <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const stars = document.querySelectorAll('.star');
+  <script src="script.js"></script>
+  <script src="../assets/js/color-modes.js"></script>
 
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const rating = star.getAttribute('data-value'); // Obtener valor de la estrella
-            stars.forEach(s => {
-                s.classList.remove('selected'); // Limpiar selección
-                if (s.getAttribute('data-value') <= rating) {
-                    s.classList.add('selected'); // Marcar estrellas hasta la seleccionada
-                }
-            });
-            console.log(`Valoración: ${rating}`); // Aquí puedes manejar la valoración como desees
-        });
-    });
-  </script>
-
-  </body>
+</body>
 </html>
