@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>TuTienda</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom styles for this template -->
+    <link href="carousel.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="../icon/icono supermercado.png" alt="Logotipo de TuTienda" style="height: 40px; margin-right: 10px;">
+                    TuTienda
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Ofertas</a>
+                    </li>
+                    </ul>
+            
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Buscar ingredientes" aria-label="Buscar">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                    </form>
+            
+                    <!-- Iconos -->
+                    <div style="margin-left: 10px;">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                            <i class="fa fa-globe"></i> <!-- Icono de "View" -->
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                            <i class="fa fa-user"></i> <!-- Icono de "View" -->
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cartModal">
+                            <i class="fa fa-shopping-cart"></i> <!-- Icono de "Shopping Cart" -->
+                        </button>
+                    </div>
+            
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Modal del Carrito -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Carrito de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Ingrediente:</strong> Nombre del Ingrediente</p>
+                    <p><strong>Cantidad:</strong> 1</p>
+                    <p><strong>Precio:</strong> $10</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Comprar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" style="height: 100vh; margin-bottom: 10%;">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner" style="height: 100%;">
+                <div class="carousel-item active">
+                    <img src="../img/fondo_practica2.avif" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <div class="container">
+                        <div class="carousel-caption text-start">
+                            <h1>Ingredientes Frescos</h1>
+                            <p class="opacity-75">Descubre nuestra selección de ingredientes frescos y orgánicos, perfectos para tus recetas favoritas.</p>
+                            <p><a class="btn btn-lg btn-primary" href="#">Compra Ahora</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../img/mercado1.jpg" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Recetas Deliciosas</h1>
+                            <p>Explora nuestras recetas exclusivas que destacan los mejores ingredientes de nuestra tienda. ¡Cocina como un profesional!</p>
+                            <p><a class="btn btn-lg btn-primary" href="#">Ver Recetas</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../img/supermercado1.jpg" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <div class="container">
+                        <div class="carousel-caption text-end">
+                            <h1>Ofertas Especiales</h1>
+                            <p>No te pierdas nuestras ofertas especiales en ingredientes seleccionados. ¡Aprovecha y ahorra en tu próxima compra!</p>
+                            <p><a class="btn btn-lg btn-primary" href="#">Ver Ofertas</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    
+
+        <!-- Marketing messaging and featurettes
+        ================================================== -->
+        <!-- Wrap the rest of the page in another container to center all the content. -->
+
+        <div class="container marketing">
+            <div class="row" style="margin-bottom: 15%;">
+                <div class="col-lg-4">
+                    <img src="../img/pexels-vojtech-okenka-127162-1055272.jpg" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Dulces" style="object-fit: cover;">
+                    <h2 class="fw-normal">Comida Dulce</h2>
+                    <p>Descubre deliciosas recetas de postres que harán las delicias de todos. Desde pasteles hasta galletas, ¡tenemos todo lo que necesitas!</p>
+                    <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                
+                <div class="col-lg-4">
+                    <img src="../img/pexels-veganliftz-2377164.jpg" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Vegana" style="object-fit: cover;">
+                    <h2 class="fw-normal">Comida Vegana</h2>
+                    <p>Explora nuestras recetas veganas llenas de sabor y nutrientes. Perfectas para todos, sin importar si sigues una dieta vegana o simplemente quieres probar algo nuevo.</p>
+                    <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+                
+                <div class="col-lg-4">
+                    <img src="../img/pexels-markus-winkler-1430818-2862154.jpg" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Saludable" style="object-fit: cover;">
+                    <h2 class="fw-normal">Comida Saludable</h2>
+                    <p>Inspírate con nuestras recetas saludables que son tan deliciosas como nutritivas. Ideal para mantener un estilo de vida equilibrado.</p>
+                    <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
+                </div><!-- /.col-lg-4 -->
+            </div><!-- /.row -->
+
+            <!-- START THE FEATURETTES -->
+            <div class="album py-5 bg-body-tertiary">
+                <div class="dropdown" style="margin-left: 1%;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bars"></i> <!-- Ícono de hamburguesa -->
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVegano">
+                                <label class="form-check-label" for="flexSwitchCheckVegano">Vegano</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckSaludable">
+                                <label class="form-check-label" for="flexSwitchCheckSaludable">Saludable</label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVenezolana">
+                                <label class="form-check-label" for="flexSwitchCheckVenezolana">Venezolana</label>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                </div>
+                
+                <div class="container">
+                
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="../img/torta.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Torta de Chocolate"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Torta de Chocolate</h5>
+                                    <p class="card-text">Disfruta de esta deliciosa torta de chocolate, perfecta para cualquier celebración o simplemente para consentirte.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                            </button>
+                                        </div>
+                                        <i class="fa fa-star" aria-hidden="true"> 4.8</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="../img/ensalada.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Ensalada Vegana"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Ensalada Vegana</h5>
+                                    <p class="card-text">Una ensalada fresca y colorida, llena de ingredientes saludables y perfectas para un almuerzo ligero.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                            </button>
+                                        </div>
+                                        <i class="fa fa-star" aria-hidden="true"> 4.5</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="../img/smuty.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Smoothie Saludable"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Smoothie Saludable</h5>
+                                    <p class="card-text">Refresca tu día con este smoothie lleno de frutas y vegetales, ideal para un desayuno nutritivo.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                            </button>
+                                        </div>
+                                        <i class="fa fa-star" aria-hidden="true"> 4.7</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="../img/arepa.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Arepas"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Arepas</h5>
+                                    <p class="card-text">Deliciosas arepas rellenas con tus ingredientes favoritos, perfectas para cualquier comida del día.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                            </button>
+                                        </div>
+                                        <i class="fa fa-star" aria-hidden="true"> 4.9</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="../img/pabellon.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Pabellón Criollo"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Pabellón Criollo</h5>
+                                    <p class="card-text">El plato nacional de Venezuela, que combina carne, frijoles negros, arroz y plátano frito.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                            </button>
+                                        </div>
+                                        <i class="fa fa-star" aria-hidden="true"> 4.8</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src="../img/toston.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Tostones"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Tostones</h5>
+                                    <p class="card-text">Crujientes rodajas de plátano verde fritas, perfectas como aperitivo o acompañante.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                            </button>
+                                        </div>
+                                        <i class="fa fa-star" aria-hidden="true"> 4.6</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <!-- /END THE FEATURETTES -->
+        </div>
+
+        
+
+
+    </main>
+    <!-- FOOTER -->
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
+    </footer>
+
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script src="../assets/js/color-modes.js"></script>
+    
+</body>
+
+</html>
