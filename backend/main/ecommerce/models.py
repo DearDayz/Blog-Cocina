@@ -11,7 +11,7 @@ class Producto(models.Model):
     unidad = models.CharField(max_length=50, verbose_name="unidad", validators=[validador_ingrediente.unidad])
     cantidad_disponible = models.FloatField(verbose_name="cantidad_disponible", validators=[MinValueValidator(0.0)])
     precio = models.DecimalField(verbose_name="precio", validators=[MinValueValidator(0.0)], decimal_places=2, max_digits=6, default=0)
-    unidades_vendidas = models.DecimalField(verbose_name="unidades_vendidas", validators=[MinValueValidator(0.0)], decimal_places=2, default=0)
+    unidades_vendidas = models.DecimalField(verbose_name="unidades_vendidas",max_digits= 6, validators=[MinValueValidator(0.0)], decimal_places=2, default=0)
     
 
     def save(self, *args, **kwargs):

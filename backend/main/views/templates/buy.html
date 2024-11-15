@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
 <head>
@@ -10,17 +11,17 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/checkout/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <link href="dropdowns.css" rel="stylesheet">
-  <link href="checkout.css" rel="stylesheet">
+  <link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'buy/style.css' %}" rel="stylesheet">
+  <link href="{% static 'buy/dropdowns.css' %}" rel="stylesheet">
+  <link href="{% static 'buy/checkout.css' %}" rel="stylesheet">
 </head>
 <body>
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../icon/icono supermercado.png" alt="Logotipo de TuTienda" style="height: 40px; margin-right: 10px;">
+                <img src="{% static 'icon/icono supermercado.png' %}" alt="Logotipo de TuTienda" style="height: 40px; margin-right: 10px;">
                 TuTienda
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +67,7 @@
     <div class="container">
     
       <div class="py-5 text-center" style="margin-top: 10%;">
-        <img class="d-block mx-auto mb-4" src="../icon/money-management.png" alt="" width="72" height="57">
+        <img class="d-block mx-auto mb-4" src="{% static 'icon/money-management.png' %}" alt="" width="72" height="57">
         <h2>Registro de Compra</h2>
       </div>
 
@@ -301,8 +302,8 @@
     </ul>
   <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
   </footer>
-  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/color-modes.js"></script>
-  <script src="checkout.js"></script>
+  <script src=="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}" ></script>
+  <script src=="{% static 'assets/js/color-modes.js' %}" ></script>
+  <script src="{% static 'buy/checkout.js' %}"></script>
 </body>
 </html>
