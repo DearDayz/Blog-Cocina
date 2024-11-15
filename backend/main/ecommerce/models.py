@@ -12,10 +12,9 @@ class Producto(models.Model):
     cantidad_disponible = models.FloatField(verbose_name="cantidad_disponible", validators=[MinValueValidator(0.0)])
     precio = models.DecimalField(verbose_name="precio", validators=[MinValueValidator(0.0)], decimal_places=2, max_digits=6, default=0)
     unidades_vendidas = models.DecimalField(verbose_name="unidades_vendidas",max_digits= 6, validators=[MinValueValidator(0.0)], decimal_places=2, default=0)
-    
+    imagen = models.ImageField(upload_to='productos/', blank=True, null=True, verbose_name="Imagen")
 
     def save(self, *args, **kwargs):
-        self.nombre = self.nombre.lower()
         self.unidad = self.unidad.lower()
         super().save(*args, **kwargs)  # Llama al método save() original para guardar la instancia
         

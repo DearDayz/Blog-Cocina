@@ -6,7 +6,9 @@ from django.core.validators import MaxLengthValidator
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-
+    descripcion = models.TextField(verbose_name="descripcion", validators=[MaxLengthValidator(2000), validate_no_html], blank=True, null=True)
+    imagen = models.ImageField(upload_to='categorias/', blank=True, null=True, verbose_name="Imagen")
+    
     def __str__(self):
         return self.name
 
@@ -15,9 +17,9 @@ class Receta(models.Model):
     nombre = models.CharField(max_length=255, verbose_name="nombre", validators=[validar_solo_letras_con_espacio, validate_no_html])
     descripcion = models.TextField(verbose_name="descripcion", validators=[MaxLengthValidator(2000), validate_no_html])
     preparacion = models.TextField(verbose_name="preparacion", validators=[MaxLengthValidator(5000), validate_no_html])
-    imagen = models.ImageField(upload_to='imagenes/', blank=True, null=True, verbose_name="Imagen")
+    imagen = models.ImageField(upload_to='recetas/', blank=True, null=True, verbose_name="Imagen")
     puntuacion = models.FloatField(verbose_name="puntuacion", validators=[validate_between_zero_and_five])
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    category = models.ManyToManyField(Category, related_name='recetas')
     date_modified = models.DateTimeField(auto_now=True)
     
     def __str__(self):
@@ -32,12 +34,15 @@ class Ingrediente(models.Model):
     id = models.AutoField(primary_key=True)
     receta = models.ForeignKey(Receta, on_delete=models.CASCADE, null=False, blank=False, related_name='ingredientes')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=False, blank=False, related_name='ingredientes')
-    unidad = models.CharField(max_length=50, verbose_name="unidad")
+    unidad = models.CharField(max_length=50, verbose_name="unidad", blank=True)
     cantidad = cantidad = models.FloatField(verbose_name="cantidad")
 
     def __str__(self):
         return f"{self.cantidad} {self.unidad} de {self.producto.nombre} para {self.receta.nombre}"
 
+    def save(self, *args, **kwargs):
+        self.unidad = self.producto.unidad
+        super().save(*args, **kwargs)
 
 
 

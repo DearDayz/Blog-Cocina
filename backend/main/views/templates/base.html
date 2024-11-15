@@ -50,9 +50,17 @@
                             {% endif %}
                         {% endfor %}
                         <p><strong>Precio por {{ producto.unidad }}:</strong> {{ producto.precio }}$ </p>
+                        {% for key,value in subtotales.items %}
+                            {% if key == producto.id|slugify %}
+                                <p><strong>Sub total:</strong> {{ value }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <img src="{{ producto.imagen.url }}" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;">
                     </div>
                 {% endfor %}
-                <p><strong>Total:</strong> {{ totals }}$</p>
+                <div class="modal-body">
+                    <p><strong>Total:</strong> {{ totals }}$</p>
+                </div>
                 
 
                 <div class="modal-footer">

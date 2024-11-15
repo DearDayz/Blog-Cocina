@@ -18,8 +18,22 @@
                 <a class="nav-link" href="#">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Ofertas</a>
+                <a class="nav-link " aria-disabled="true">Ofertas</a>
             </li>
+            {% if user.is_authenticated %}    
+                <li class="nav-item">
+                    <a class="nav-link " aria-disabled="true" href="{% url 'logout' %}">Salir</a>
+                </li>
+            {% else %}
+            <li class="nav-item">
+                <li class="nav-item">
+                    <a class="nav-link " aria-disabled="true" href="Url Iniciar Sesion">Iniciar Sesion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " aria-disabled="true" href="Url regostrar">Registrar</a>
+                </li>
+            </li>
+            {% endif %}
             </ul>
     
             <form class="d-flex" role="search">

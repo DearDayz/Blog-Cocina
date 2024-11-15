@@ -58,26 +58,16 @@
 
         <div class="container marketing">
             <div class="row" style="margin-bottom: 15%;">
-                <div class="col-lg-4">
-                    <img src="../img/pexels-vojtech-okenka-127162-1055272.jpg" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Dulces" style="object-fit: cover;">
-                    <h2 class="fw-normal">Comida Dulce</h2>
-                    <p>Descubre deliciosas recetas de postres que harán las delicias de todos. Desde pasteles hasta galletas, ¡tenemos todo lo que necesitas!</p>
-                    <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-                
-                <div class="col-lg-4">
-                    <img src="../img/pexels-veganliftz-2377164.jpg" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Vegana" style="object-fit: cover;">
-                    <h2 class="fw-normal">Comida Vegana</h2>
-                    <p>Explora nuestras recetas veganas llenas de sabor y nutrientes. Perfectas para todos, sin importar si sigues una dieta vegana o simplemente quieres probar algo nuevo.</p>
-                    <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
-                
-                <div class="col-lg-4">
-                    <img src="../img/pexels-markus-winkler-1430818-2862154.jpg" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Saludable" style="object-fit: cover;">
-                    <h2 class="fw-normal">Comida Saludable</h2>
-                    <p>Inspírate con nuestras recetas saludables que son tan deliciosas como nutritivas. Ideal para mantener un estilo de vida equilibrado.</p>
-                    <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
-                </div><!-- /.col-lg-4 -->
+
+                {% for categoria in categorias %}
+                    <div class="col-lg-4">
+                        <img src="{{ categoria.imagen.url }}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Dulces" style="object-fit: cover;">
+                        <h2 class="fw-normal">{{ categoria.name }}</h2>
+                        <p>{{ categoria.descripcion }}</p>
+                        <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
+                    </div><!-- /.col-lg-4 -->
+                {% endfor %}
+
             </div><!-- /.row -->
 
             <!-- START THE FEATURETTES -->

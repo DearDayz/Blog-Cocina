@@ -141,10 +141,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Cosas nuevas
-
+"""
 MEDIA_ROOT = os.path.join(BASE_DIR, "")
 MEDIA_URL = '/imagenes/'
-
+"""
 
 
 #Esto es de las apis
@@ -179,6 +179,6 @@ AUTH_USER_MODEL = "login3.MyUser"
 # Daphne
 ASGI_APPLICATION = 'main.asgi.application'
 
-"""# Para guardar el JSON con el contexto
+# Para guardar el JSON con el contexto
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')"""
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

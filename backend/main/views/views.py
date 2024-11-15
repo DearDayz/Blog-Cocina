@@ -1,13 +1,16 @@
 #funciones que renderizan los html
 from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Receta, Ingrediente
+from blog.models import Receta, Ingrediente, Category
 from .cart import Cart
 from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, logout
 
 
 def mostrar_principal(request):
     recetas = Receta.objects.all()
-    return render(request, 'index.html', {"recetas": recetas})
+    categorias = Category.objects.all()
+    name_categorias = [ c.name.replace(" ", "-") for c in categorias ]
+    return render(request, 'index.html', {"recetas": recetas, "categorias": categorias, "name_categorias": name_categorias})
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
@@ -41,3 +44,8 @@ def cart_add(request):
         return response
     else:
         return redirect('home')
+
+def logout_user(request):
+    logout(request)
+    #messages.success(request, ("You have been logged out...Thanks"))
+    return redirect('vista pagina principal')

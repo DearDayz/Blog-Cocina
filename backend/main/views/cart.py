@@ -21,9 +21,9 @@ class Cart():
         for ingrediente in ingredientes:
             producto_id = str(ingrediente.producto.id)
             if producto_id in self.cart:
-                self.cart[producto_id] += quantity * ingrediente.cantidad
+                self.cart[producto_id] += round(quantity * ingrediente.cantidad, 2)
             else:
-                self.cart[producto_id] = quantity * ingrediente.cantidad
+                self.cart[producto_id] = round(quantity * ingrediente.cantidad, 2)
             self.session.modified = True
     def __len__(self):
         return len(self.cart)
@@ -43,7 +43,7 @@ class Cart():
             for product in products:
                 if product.id == key:
                     total += product.precio * Decimal(value)
-        return total
+        return Decimal(total)
 
     def get_prods(self):
         #Get ids from cart
@@ -52,3 +52,12 @@ class Cart():
         porducts = Producto.objects.filter(id__in = product_ids)
         #Return those looked up products
         return porducts
+    
+    def get_subtotales(self):
+        subotatles = {}
+        for key,value in self.cart.items():
+            key = int(key)
+            for product in self.get_prods():
+                if product.id == key:
+                    subotatles[str(key)] = round(float(product.precio) * value, 2) #product.precio * value
+        return subotatles
