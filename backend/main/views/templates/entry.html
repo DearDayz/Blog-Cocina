@@ -12,37 +12,35 @@
         </h3>
 
         <article class="blog-post">
-          <h2 class="display-5 link-body-emphasis mb-1">Arepa Venezolana</h2>
-          <img src="../img/arepa.jpg" width="100%" height="300" alt="Arepas" style="object-fit: cover;" class="mb-4">
-          <p class="blog-post-meta">Enero 1, 2021 by <a href="#">Diego</a></p>
+          <h2 class="display-5 link-body-emphasis mb-1">{{ receta.nombre }}</h2>
+          <img src="{{ receta.imagen.url }}" width="100%" height="300" style="object-fit: cover;" class="mb-4">
+          <small class="text-body-secondary">{{receta.date_modified}}</small>
 
-          <p>Las arepas son un plato tradicional de la cocina venezolana y colombiana, perfectas para cualquier comida del día. Se pueden rellenar con una variedad de ingredientes.</p>
+          <p>{{ receta.descripcion }}</p>
 
           <h3>Ingredientes</h3>
           <ul>
-              <li>2 tazas de harina de maíz precocida</li>
-              <li>2 tazas de agua</li>
-              <li>1 cucharadita de sal</li>
-              <li>1 cucharada de aceite (opcional)</li>
-              <li>Rellenos al gusto (queso, carne, pollo, etc.)</li>
+            {% for ingrediente in ingredientes %}
+                <li>{{ ingrediente.cantidad }} {{ ingrediente.unidad }} de {{ ingrediente.producto.nombre }}</li>
+            {% endfor %}
           </ul>
 
           <h3>Preparación</h3>
-          <ol>
-              <li>En un bol grande, mezcla la harina de maíz y la sal.</li>
-              <li>Agrega el agua poco a poco y mezcla hasta obtener una masa suave.</li>
-              <li>Deja reposar la masa durante 5 minutos.</li>
-              <li>Divide la masa en porciones y forma bolas. Luego aplánalas para darles forma de disco.</li>
-              <li>Calienta una plancha o sartén a fuego medio y cocina las arepas durante 5-7 minutos por cada lado o hasta que estén doradas.</li>
-              <li>Retira del fuego y abre las arepas por la mitad para rellenarlas con los ingredientes deseados.</li>
-          </ol>
+          <div>
+            {{ receta.preparacion }}
+          </div>
         </article>
 
         <div class="tooltip-container" style="margin-left: 90%;">
-          <button type="button" class="btn-tooltip" id="add-to-cart-btn" >
-              <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Agregar al carrito" -->
+          <button type="button" class="btn-tooltip" id="add-to-cart-btn" value="{{ receta.id }}">
+              <i class="fa fa-cart-arrow-down"></i>
           </button>
           <span class="tooltip-message" id="tooltip-add-to-cart">Guardar ingredientes en carrito</span>
+        </div>
+        <div class="input-container">
+            <button class="button" onclick="modificarValor(-1)">-</button>
+            <input type="text" id="campo" class="input-field" value="1" >
+            <button class="button" onclick="modificarValor(1)">+</button>
         </div>
           
 
@@ -63,42 +61,27 @@
     
             <div>
               <h4 class="fst-italic">Post recientes</h4>
-              <ul class="list-unstyled">
-                  <li>
-                      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                          <img src="../img/torta.jpg" width="100" height="96" alt="Torta de Chocolate" style="object-fit: cover;">
-                          <div class="col-lg-8">
-                              <h6 class="mb-0">Receta de Torta de Chocolate</h6>
-                              <small class="text-body-secondary">15 de enero, 2024</small>
-                          </div>
-                      </a>
-                  </li>
-                  <!-- Otras entradas recientes -->
-              </ul>
-              <ul class="list-unstyled">
-                  <li>
-                      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                          <img src="../img/ensalada.jpg" width="100" height="96" alt="Ensalada Vegana" style="object-fit: cover;">
-                          <div class="col-lg-8">
-                              <h6 class="mb-0">Ensalada Vegana Fresca</h6>
-                              <small class="text-body-secondary">14 de enero, 2024</small>
-                          </div>
-                      </a>
-                  </li>
-                  <!-- Otras entradas recientes -->
-              </ul>
-              <ul class="list-unstyled">
-                  <li>
-                      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
-                          <img src="../img/smuty.jpg" width="100" height="96" alt="Smoothie Saludable" style="object-fit: cover;">
-                          <div class="col-lg-8">
-                              <h6 class="mb-0">Smoothie Saludable de Frutas</h6>
-                              <small class="text-body-secondary">13 de enero, 2024</small>
-                          </div>
-                      </a>
-                  </li>
-                  <!-- Otras entradas recientes -->
-              </ul>
+
+              {% for receta in last_recetas %}
+                <ul class="list-unstyled">
+                    <li>
+                        
+                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="{% url 'vista entry' receta.id  %}">
+                            <img src="{{ receta.imagen.url }}" width="100" height="96" style="object-fit: cover;">
+                            <div class="col-lg-8">
+                                <h6 class="mb-0">{{ receta.nombre }}</h6>
+                                <small class="text-body-secondary">{{receta.date_modified}}</small>
+                            </div>
+                        </a>
+                       
+                    </li>
+                    <!-- Otras entradas recientes -->
+                </ul>
+              {% endfor %}
+
+              
+              
+              
           </div>
     
           <div class="p-4">
@@ -131,5 +114,31 @@
   <script src=="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}" ></script>
   <script src="{% static 'entry/script.js' %}"></script>
   <script src=="{% static 'assets/js/color-modes.js' %}" ></script>
+  <script>
+    //Inyectamos codigo jquery
+    $(document).on('click', '#add-to-cart-btn', function(e){
+        e.preventDefault(); // evita el comportamiento por defecto elemento html
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_add" %}',
+            data: {
+                receta_id: $('#add-to-cart-btn').val(),
+                receta_qty: $('#campo').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+            success: function(json){
+                //console.log(json)
+                //document.getElementById('cart_quantity').textContent = json.qty
+                location.reload();
+            },
+
+            error: function(xhr, errmsg, err){
+                
+            }
+        })
+    })
+  </script>
+
 
   {% endblock %}

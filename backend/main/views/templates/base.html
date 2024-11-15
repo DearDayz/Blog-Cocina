@@ -28,6 +28,7 @@
     <link href="{% static 'buy/style.css' %}" rel="stylesheet">
     <link href="{% static 'buy/dropdowns.css' %}" rel="stylesheet">
     <link href="{% static 'buy/checkout.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 <body>
     {% include 'navbar.html' %}
@@ -39,11 +40,21 @@
                     <h5 class="modal-title" id="cartModalLabel">Carrito de Compras</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p><strong>Ingrediente:</strong> Nombre del Ingrediente</p>
-                    <p><strong>Cantidad:</strong> 1</p>
-                    <p><strong>Precio:</strong> $10</p>
-                </div>
+                
+                {% for producto in cart_products %}
+                    <div class="modal-body">
+                        <p><strong>Ingrediente:</strong>{{ producto.nombre }}</p>
+                        {% for key,value in quantities.items %}
+                            {% if key == producto.id|slugify %}
+                                <p><strong>Cantidad:</strong> {{ value }} {{ producto.unidad }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p><strong>Precio por {{ producto.unidad }}:</strong> {{ producto.precio }}$ </p>
+                    </div>
+                {% endfor %}
+                <p><strong>Total:</strong> {{ totals }}$</p>
+                
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary">Comprar</button>
@@ -75,4 +86,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
     <script src="{% static 'assets/js/color-modes.js' %}" ></script>
+    <script src="{% static 'entry/script.js' %}"></script>
 </body>

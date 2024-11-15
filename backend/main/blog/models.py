@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from ecommerce.models import Producto
 from .validadores.validador_receta import validar_solo_letras_con_espacio, validate_no_html, validate_between_zero_and_five,validate_cantidades
@@ -5,6 +6,9 @@ from django.core.validators import MaxLengthValidator
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class Receta(models.Model):
     id = models.AutoField(primary_key=True)
@@ -14,6 +18,7 @@ class Receta(models.Model):
     imagen = models.ImageField(upload_to='imagenes/', blank=True, null=True, verbose_name="Imagen")
     puntuacion = models.FloatField(verbose_name="puntuacion", validators=[validate_between_zero_and_five])
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    date_modified = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         return self.nombre

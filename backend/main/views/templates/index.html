@@ -1,5 +1,6 @@
 
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
     <main>
         <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" style="height: 100vh; margin-bottom: 10%;">
@@ -10,7 +11,7 @@
             </div>
             <div class="carousel-inner" style="height: 100%;">
                 <div class="carousel-item active">
-                    <img src="../img/fondo_practica2.avif" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <img src="{% static 'img/a.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
                     <div class="container">
                         <div class="carousel-caption text-start">
                             <h1>Ingredientes Frescos</h1>
@@ -20,7 +21,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../img/mercado1.jpg" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <img src="{% static 'img/b.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
                     <div class="container">
                         <div class="carousel-caption">
                             <h1>Recetas Deliciosas</h1>
@@ -30,7 +31,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../img/supermercado1.jpg" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <img src="{% static 'img/c.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
                     <div class="container">
                         <div class="carousel-caption text-end">
                             <h1>Ofertas Especiales</h1>
@@ -109,133 +110,32 @@
                 </div>
                 
                 <div class="container">
-                
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="../img/torta.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Torta de Chocolate"> 
-                                <div class="card-body">
-                                    <h5 class="card-title">Torta de Chocolate</h5>
-                                    <p class="card-text">Disfruta de esta deliciosa torta de chocolate, perfecta para cualquier celebración o simplemente para consentirte.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
-                                            </button>
+                        {% for receta in recetas %}
+                            <div class="col">
+                                
+                                <div class="card shadow-sm">
+                                    <img src="{{ receta.imagen.url }}" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;"> 
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ receta.nombre }}</h5>
+                                        <p class="card-text">{{ receta.descripcion }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a href="{% url 'vista entry' receta.id  %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                                    </button>
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
+                                                </button>
+                                            </div>
+                                            <i class="fa fa-star" aria-hidden="true"> 4.8</i>
                                         </div>
-                                        <i class="fa fa-star" aria-hidden="true"> 4.8</i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="../img/ensalada.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Ensalada Vegana"> 
-                                <div class="card-body">
-                                    <h5 class="card-title">Ensalada Vegana</h5>
-                                    <p class="card-text">Una ensalada fresca y colorida, llena de ingredientes saludables y perfectas para un almuerzo ligero.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
-                                            </button>
-                                        </div>
-                                        <i class="fa fa-star" aria-hidden="true"> 4.5</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="../img/smuty.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Smoothie Saludable"> 
-                                <div class="card-body">
-                                    <h5 class="card-title">Smoothie Saludable</h5>
-                                    <p class="card-text">Refresca tu día con este smoothie lleno de frutas y vegetales, ideal para un desayuno nutritivo.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
-                                            </button>
-                                        </div>
-                                        <i class="fa fa-star" aria-hidden="true"> 4.7</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="../img/arepa.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Arepas"> 
-                                <div class="card-body">
-                                    <h5 class="card-title">Arepas</h5>
-                                    <p class="card-text">Deliciosas arepas rellenas con tus ingredientes favoritos, perfectas para cualquier comida del día.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
-                                            </button>
-                                        </div>
-                                        <i class="fa fa-star" aria-hidden="true"> 4.9</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="../img/pabellon.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Pabellón Criollo"> 
-                                <div class="card-body">
-                                    <h5 class="card-title">Pabellón Criollo</h5>
-                                    <p class="card-text">El plato nacional de Venezuela, que combina carne, frijoles negros, arroz y plátano frito.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
-                                            </button>
-                                        </div>
-                                        <i class="fa fa-star" aria-hidden="true"> 4.8</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src="../img/toston.jpg" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;" alt="Tostones"> 
-                                <div class="card-body">
-                                    <h5 class="card-title">Tostones</h5>
-                                    <p class="card-text">Crujientes rodajas de plátano verde fritas, perfectas como aperitivo o acompañante.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                                <i class="fa fa-cart-arrow-down"></i> <!-- Icono de "Edit" -->
-                                            </button>
-                                        </div>
-                                        <i class="fa fa-star" aria-hidden="true"> 4.6</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     
                     </div>
                 </div>

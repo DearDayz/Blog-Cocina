@@ -126,3 +126,18 @@ display: block !important;
 .star.selected {
     color: gold; /* Color cuando está seleccionada */
 }
+
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.button {
+    font-size: 20px;
+    cursor: pointer;
+}
+.input-field {
+    width: 50px;
+    text-align: center;
+    font-size: 20px;
+}
