@@ -19,7 +19,10 @@ def mostrar_entry(request, pk):
     return render(request, 'entry.html', {"receta": receta, "ingredientes": ingredientes, "last_recetas": last_recetas})
 
 def mostrar_buy(request):
-    return render(request, 'buy.html')
+    if request.user.is_authenticated:
+        return render(request, 'buy.html')
+    else:
+        return redirect("vista pagina principal")
 
 def cart_add(request):
     #Obtenemos el cart de la request

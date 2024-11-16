@@ -46,7 +46,7 @@
                         <p><strong>Ingrediente:</strong>{{ producto.nombre }}</p>
                         {% for key,value in quantities.items %}
                             {% if key == producto.id|slugify %}
-                                <p><strong>Cantidad:</strong> {{ value }} {{ producto.unidad }}</p>
+                                <p><strong>Cantidad:</strong> {{ value|floatformat:2 }} {{ producto.unidad }}</p>
                             {% endif %}
                         {% endfor %}
                         <p><strong>Precio por {{ producto.unidad }}:</strong> {{ producto.precio }}$ </p>
@@ -65,7 +65,11 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Comprar</button>
+                    {% if cart|length == 0 %}
+                    
+                    {% else %}
+                        <a href="{% url 'vista buy' %}"><button type="button" class="btn btn-primary">Comprar</button></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

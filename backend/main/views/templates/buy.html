@@ -14,34 +14,30 @@
         <div class="col-md-5 col-lg-4 order-md-last">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-primary">Tu Carrito</span>
-            <span class="badge bg-primary rounded-pill">3</span>
+            <span class="badge bg-primary rounded-pill">{{ cart|length }}</span>
           </h4>
           <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Harina Pan</h6>
-                <small class="text-body-secondary">1 Kg</small>
-              </div>
-              <span class="text-body-secondary">$12</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Tomates</h6>
-                <small class="text-body-secondary">6 Kg</small>
-              </div>
-              <span class="text-body-secondary">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-              <div>
-                <h6 class="my-0">Huevos</h6>
-                <small class="text-body-secondary">6 Unidades</small>
-              </div>
-              <span class="text-body-secondary">$5</span>
-            </li>
+            {% for producto in cart_products %}
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">{{ producto.nombre }}</h6>
+                  {% for key,value in quantities.items %}
+                    {% if key == producto.id|slugify %}
+                      <small class="text-body-secondary">{{ value|floatformat:2 }} {{ producto.unidad }}</small>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                {% for key,value in subtotales.items %}
+                  {% if key == producto.id|slugify %}
+                  <span class="text-body-secondary">({{ producto.precio }}$ c/u) ${{ value }}</span>
+                  {% endif %}
+                {% endfor %}
+              </li>
+            {% endfor %}
             
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>$20</strong>
+              <strong>${{ totals }}</strong>
             </li>
           </ul>
 
@@ -53,7 +49,7 @@
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="{{ user.nombre }}" required readonly>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
@@ -61,17 +57,23 @@
 
               <div class="col-sm-6">
                 <label for="lastName" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="{{ user.apellido }}" required readonly>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
               </div>
 
-              
+              <div class="col-sm-6">
+                <label for="firstName" class="form-label">Telefono</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="{{ user.telefono }}" required readonly>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
 
               <div class="col-12">
                 <label for="email" class="form-label">Correo <span class="text-body-secondary">(Optional)</span></label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                <input type="email" class="form-control" id="email" placeholder="you@example.com" readonly value="{{ user.correo }}">
                 <div class="invalid-feedback">
                   Please enter a valid email address for shipping updates.
                 </div>
@@ -79,7 +81,7 @@
 
               <div class="col-12">
                 <label for="address" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required readonly value="{{ user.direccion }}">
                 <div class="invalid-feedback">
                   Please enter your shipping address.
                 </div>
