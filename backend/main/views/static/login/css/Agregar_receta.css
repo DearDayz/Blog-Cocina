@@ -1,0 +1,144 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.Toubu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #37d777;
+    padding: 10px;
+}
+
+.Toubu h1{
+    color: white;
+}
+
+.como_boton{
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    gap: 5px;
+    border-radius: 40px;
+    background-color: #fff;
+}
+
+.modificar_login{
+    text-decoration: none;
+    color: black;
+}
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 85vh;
+}
+
+.Tianbiao{
+    margin: auto;
+    padding: 30px;
+    border: 3px solid#37d777;
+    border-radius: 40px;
+}
+
+.Tianbiao h1{
+    margin-top: -5px;
+}
+
+.xinxi{
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.xinxi label{
+    display: block;
+    text-align: left;
+}
+
+.xinxi input{
+    width: 100%;
+    background: transparent;
+    border: 2px solid #37d777;
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    padding: 10px;
+}
+
+.xinxi2{
+    position: relative;
+    padding: 5px;
+}
+
+.xinxi2 label{
+    display: block;
+    text-align: left;
+}
+
+.boton_foto{
+    position: relative;
+    width: 100%;
+}
+
+.xinxi2 input[type="file"] {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer; 
+}
+
+.upload-button {
+    display: block;
+    background-color: #37d777; 
+    color: white; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px; 
+    cursor: pointer; 
+}
+
+#imgPreview{
+    display: none;
+    width: 150px;
+    height: 115px;
+}
+
+.xinxi3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    margin-top: -10px;
+}
+
+.botones_interacciones{
+    padding: 5px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 14px;
+}
+
+.botones_interacciones .boton_regresarrr{
+    background-color: #37d777;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.botones_interacciones button{
+    background-color: #37d777;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+}

@@ -52,3 +52,21 @@ def logout_user(request):
     logout(request)
     #messages.success(request, ("You have been logged out...Thanks"))
     return redirect('vista pagina principal')
+
+
+# Rutas del login
+
+def admin_view(request):
+    return render(request, "login/Administrador_jefe.html")
+
+def add_recipe(request):
+    return render(request, "login/Agregar_receta.html")
+
+def client_view(request):
+    return render(request, "login/Cliente.html")
+
+def login_view(request):
+    return render(request, "login/login.html")
+
+def register_view(request):
+    return render(request, "login/registrar_cuenta.html")

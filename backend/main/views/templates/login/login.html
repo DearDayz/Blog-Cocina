@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+<head>
+    <title>Acceso a su cuenta</title>
+    <link rel="icon" type="image/jpg" href="{% static 'login/resource/icono supermercado.png' %}">
+    <link rel="stylesheet" href="{% static 'login/css/login.css' %}">
+</head>
+<body>
+    <div class='wrapper'>
+        <form action=''>
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" placeholder='Nombre de Usuario' required />
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder='Contraseña' required />
+            </div>
+
+            <div class="olvidar_contrasena">
+                <a href="#">¿Se olvidó la contraseña?</a>
+            </div>
+
+            <button type='submit'>Entrar</button>
+
+            <div class="registrar_cuenta">
+                <p>¿Qué? ¿No ha registrado una cuenta? <a href="#">¡Voy a crearlo!</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

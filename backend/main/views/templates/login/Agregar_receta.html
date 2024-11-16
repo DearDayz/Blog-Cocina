@@ -1,0 +1,65 @@
+{% load static %}
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar recetas</title>
+    <link rel="stylesheet" href="{% static 'login/css/Agregar_receta.css' %}">
+</head>
+
+<body>
+    <header class="Toubu">
+        <h1>Agregar Receta</h1>
+        <div class="como_boton">
+            <img src="{% static 'login/resource/icon login.png' %}" width="36px" height="36px">
+            <a href="" class="modificar_login">Salir</a>
+        </div>
+    </header>
+    <main>
+        <div class="contenedor">
+            <form action="" class="Tianbiao">
+                <h1>¡Agregar nueva recetas!</h1>
+
+                <div class="xinxi">
+                    <label for="">Nombre de recetas</label>
+                    <input type="text" placeholder="Ej: Pizza con manzana">
+                </div>
+
+                <div class="xinxi">
+                    <label for="">Descripcion de receta</label>
+                    <input type="text" placeholder="Ej: Manzana, Jamón...">
+                </div>
+
+                <div class="xinxi2">
+                    <label for="">Imagen de receta</label>
+                    <div class="boton_foto">
+                        <span class="upload-button">Subir Foto</span>
+                        <input type="file" accept="image/*" onchange="previewImage(event)">
+                    </div>
+                </div>
+
+                <div class="xinxi3">
+                    <h2>Foto previa:</h2>
+                    <img id="imgPreview" src="" alt="Vista previa de la imagen">
+                </div>
+
+                <div class="botones_interacciones">
+
+                    <div class="boton_regresarrr" id="boton_regresarrr">
+                        <span>Volver</span>
+                    </div>
+
+                    <button>
+                        ¡Montar el nuevo receta!
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+<script src="{% static 'login/js/Agregar_receta.js' %}"></script>
+
+</html>
