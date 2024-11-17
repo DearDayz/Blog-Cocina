@@ -5,6 +5,10 @@ from .cart import Cart
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 
+def search(request, input):
+    input = input.replace("-", " ")
+    return render(request, 'search.html', { "input": input })
+
 
 def mostrar_principal(request):
     recetas = Receta.objects.all()
