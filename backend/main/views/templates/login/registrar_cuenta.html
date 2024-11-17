@@ -26,11 +26,11 @@
                     <label for="username" class="inf_titulo">Nombre del Cuenta</label>
                     <input name="username" value="{% if user.is_authenticated %}{{user.username}}{% else %}{% endif %}"  type="text" placeholder='Ej: Alfredo100' class="input_mitad" required />
                 </div>
-                {% if user.is_authenticated == false %}
-                <div class="parte1">
-                    <label for="password" class="inf_titulo">Contraseña del Cuenta</label>
-                    <input name="password" type="password" class="input_mitad" placeholder="Mínimo 8 caracteres" required />
-                </div>
+                {% if not user.is_authenticated %}
+                    <div class="parte1">
+                        <label for="password" class="inf_titulo">Contraseña del Cuenta</label>
+                        <input name="password" type="password" class="input_mitad" placeholder="Mínimo 8 caracteres" required />
+                    </div>
                 {% endif %}
             </div>
 

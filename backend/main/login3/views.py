@@ -5,9 +5,9 @@ from django.contrib.auth.models import Permission
 from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MyUserSerializer
+from .serializers import MyUserSerializer, FavoritosSerializer
 from .models import MyUser
-from django.contrib.auth.mixins import LoginRequiredMixin
+from blog.models import Favoritos
 
 # Iniciar sesión (adaptarse cuando se conecte con el front)
 def login_user(request):
@@ -71,7 +71,22 @@ def user_data_view(request, username):
     # Manejo de métodos no permitidos
     return Response({"error": "Método no permitido"}, status=405)
 
+def favoritos_view(request, recetaId=None):
+    if request.method == 'GET':
+        favoritos = Favoritos.objects.filter(usuario=request.user)
+        favoritos_list = [{"id": favorito.id, "receta": favorito.receta.id} for favorito in favoritos]
+        return JsonResponse(favoritos_list, safe=False)
 
+    elif request.method == 'POST':
+        if Favoritos.objects.filter(usuario=request.user, receta_id=recetaId).exists():
+            Favoritos.objects.filter(usuario=request.user, receta_id=recetaId).delete()
+            return JsonResponse({"message": "Receta eliminada de favoritos"}, status=204)
+        else:
+            nuevo_favorito = Favoritos(usuario=request.user, receta_id=recetaId)
+            nuevo_favorito.save()
+            return JsonResponse({"id": nuevo_favorito.id, "receta": nuevo_favorito.receta.id}, status=201)
+
+    return JsonResponse({"error": "Método no permitido"}, status=405)
 
 # Se usaba con React, se deja por si acaso
 # @login_required
