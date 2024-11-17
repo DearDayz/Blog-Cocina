@@ -6,5 +6,5 @@ urlpatterns = [
     path("register/", views.RegisterUser.as_view(), name="register"),
     path("logout/", views.logout_user, name="logout"),
     #path("permissions/", views.user_permissions, name="permissions"),
-    path("userdata/<str:username>/", views.UserDataView, name="userdata"), # Recibe peticiones POST y PUT
+    path("userdata/<str:username>/", views.user_data_view, name="userdata"), # Recibe peticiones GET y PATCH
 ]

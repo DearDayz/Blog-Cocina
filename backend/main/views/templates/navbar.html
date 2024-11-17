@@ -27,10 +27,10 @@
             {% else %}
             <li class="nav-item">
                 <li class="nav-item">
-                    <a class="nav-link " aria-disabled="true" href="Url Iniciar Sesion">Iniciar Sesion</a>
+                    <a class="nav-link " aria-disabled="true" href="{% url 'login_view' %}">Iniciar Sesion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " aria-disabled="true" href="Url regostrar">Registrar</a>
+                    <a class="nav-link " aria-disabled="true" href="{% url 'register_view' %}">Registrar</a>
                 </li>
             </li>
             {% endif %}
@@ -46,7 +46,7 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary">
                     <i class="fa fa-globe"></i> <!-- Icono de "View" -->
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">
+                <button type="button" class="btn btn-sm btn-outline-secondary" id="profileBtn" onclick="redirigir('/user-data/')">
                     <i class="fa fa-user"></i> <!-- Icono de "User" -->
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cartModal">

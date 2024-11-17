@@ -7,13 +7,14 @@
 </head>
 <body>
     <div class='wrapper'>
-        <form action=''>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
             <h1>Login</h1>
             <div class="input-box">
-                <input type="text" placeholder='Nombre de Usuario' required />
+                <input name="username" type="text" placeholder='Nombre de Usuario' required />
             </div>
             <div class="input-box">
-                <input type="password" placeholder='Contraseña' required />
+                <input name="password" type="password" placeholder='Contraseña' required />
             </div>
 
             <div class="olvidar_contrasena">

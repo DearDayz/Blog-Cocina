@@ -60,14 +60,19 @@
                     <figure>
                         <img src="{% static 'login/resource/icon login.png' %}" width="48px" height="48px">
                     </figure>
-                    <p>Nombre: Link</p>
-                    <p>Apellido: Boluo</p>
-                    <p>Direccion: Teyvat</p>
-                    <button>Modificar Información Personal</button>
+                    <p>Nombre de usuario: {{ user.username }}</p>
+                    <p>Nombre: {{ user.nombre }}</p>
+                    <p>Apellido: {{ user.apellido }}</p>
+                    <p>Cédula: {{ user.cedula }}</p>
+                    <p>Dirección: {{ user.direccion }}</p>
+                    <p>Correo: {{ user.correo }}</p>
+                    <p>Teléfono: {{ user.telefono }}</p>
+                    <button onclick="redirigir('/register/')">Modificar Información Personal</button>
                 </div>
             </div>
         </div>
     </div>
+    <script src="{% static 'navbar/script.js' %}"></script>
 </body>
 
 </html>

@@ -15,8 +15,8 @@ urlpatterns = [
 
     # Login
     path('admin-view/', admin_view, name="admin"),
-    path('add_recipe/', add_recipe, name="add_recipe"),
-    path('client/', client_view, name="client_view"),
+    path('add-recipe/', add_recipe, name="add_recipe"),
+    path('user-data/', client_view, name="user_view"),
     path('login/', login_view, name="login_view"),
     path('register/', register_view, name="register_view"),
 ]

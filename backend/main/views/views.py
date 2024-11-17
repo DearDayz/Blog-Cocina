@@ -63,10 +63,17 @@ def add_recipe(request):
     return render(request, "login/Agregar_receta.html")
 
 def client_view(request):
-    return render(request, "login/Cliente.html")
-
+    if request.user.is_authenticated:
+        print(request.user)
+        return render(request, "login/Cliente.html", {"user": request.user})
+    else:
+        return redirect("login_view")
+    
 def login_view(request):
     return render(request, "login/login.html")
 
 def register_view(request):
+    return render(request, "login/registrar_cuenta.html")
+
+def modify_user_data_view(request):
     return render(request, "login/registrar_cuenta.html")

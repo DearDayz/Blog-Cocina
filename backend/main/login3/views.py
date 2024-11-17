@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import Permission
 from django.contrib.auth.decorators import login_required, permission_required
@@ -6,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import MyUserSerializer
 from .models import MyUser
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Iniciar sesión (adaptarse cuando se conecte con el front)
 def login_user(request):
@@ -22,15 +24,15 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return redirect("/admin/")
+            return redirect("/vista-pagina-principal/")
         else:
-            return redirect("/login3/login")
+            return redirect("/login")
     return render(request, "login3/login.html")
 
 # Cerrar sesión (cambiar el redirect a /home/)
 def logout_user(request):
     logout(request)
-    return redirect("/admin/")
+    return redirect("/login/")
 
 # Registro
 class RegisterUser(APIView):
@@ -38,36 +40,36 @@ class RegisterUser(APIView):
         serializer = MyUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        user = authenticate(request=request, username=request.data["username"], password=request.data["password"])
+        if user: login(request, user)
+        return redirect("/vista-pagina-principal/")
 
 @login_required
-class UserDataView(APIView):
-    # Obtener datos de un usuario solo si es el mismo de la solicitud o se tiene el permiso
-    def get(self, request, username, format=None):
+def user_data_view(request, username):
+    # Verifica si el método es GET o POST
+    if request.method == 'GET':
+        # Verifica si el usuario autenticado es el mismo que el que se solicita o tiene permiso
         if request.user.username == username or request.user.has_perm("login3.ver_datos_usuario"):
-            try:
-                user = MyUser.objects.get(username=username)
-                serializer = MyUserSerializer(user)
-                return Response(serializer.data)
-            except MyUser.DoesNotExist:
-                return Response({"error": "User not found"}, status=404)
+            user = get_object_or_404(MyUser, username=username)
+            serializer = MyUserSerializer(user)
+            return Response(serializer.data)
         else:
-            return Response({"error", "No puede acceder a los datos de otros usuarios"}, status=403)
-        
-    def patch(self, request, username, format=None):
-    # Modificar datos de un usuario solo si es el mismo de la solicitud o se tiene el permiso
+            return Response({"error": "No puede acceder a los datos de otros usuarios"}, status=403)
+
+    elif request.method == 'POST':
+        # Verifica si el usuario autenticado es el mismo que el que se solicita o tiene permiso
         if request.user.username == username or request.user.has_perm("login3.modificar_datos_usuario"):
-            try:
-                user = MyUser.objects.get(username=username)
-                serializer = MyUserSerializer(user, data=request.data, partial=True)  # partial=True permite actualizaciones parciales
-                if serializer.is_valid():
-                    serializer.save()
-                    return Response(serializer.data)
-                return Response(serializer.errors, status=400)
-            except MyUser.DoesNotExist:
-                return Response({"error": "User not found"}, status=404)
+            user = get_object_or_404(MyUser, username=username)
+            serializer = MyUserSerializer(user, data=request.POST, partial=True)  # Permite actualizaciones parciales
+            if serializer.is_valid():
+                serializer.save()
+                return redirect("user_view")
+            return Response(serializer.errors, status=400)
         else:
-            return Response({"error", "No puede acceder a los datos de otros usuarios"}, status=403)
+            return redirect("login")
+
+    # Manejo de métodos no permitidos
+    return Response({"error": "Método no permitido"}, status=405)
 
 
 
