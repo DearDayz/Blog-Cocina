@@ -6,8 +6,7 @@ from .views import (
     ProductoAPIRetrieveName,
     FacturaAPIRetrieveByCedula,
     FacturaViewSet,
-    ProductoFacturadoViewSet,
-    procesar_compra
+    ProductoFacturadoViewSet
 )
 
     
@@ -17,7 +16,6 @@ urlpatterns = [
     #endpoint que busca por nombre los producto
     path('producto-nombre/<str:nombre>/', ProductoAPIRetrieveName.as_view(), name="producto-nombre"),
     path('factura-cedula/<str:cedula>/', FacturaAPIRetrieveByCedula.as_view(), name="factura-cedula"),
-    path('procesar-compra/', procesar_compra, name='procesar_compra'),
 
 ]
 

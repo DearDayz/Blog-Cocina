@@ -74,3 +74,13 @@
   .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
   }
+
+  .modal-content {
+    font-family: Arial, sans-serif;
+  }
+  .modal-title {
+    font-weight: bold;
+  }
+  .modal-lg {
+    max-width: 900px;
+}

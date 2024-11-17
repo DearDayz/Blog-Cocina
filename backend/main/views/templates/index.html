@@ -77,24 +77,14 @@
                         <i class="fa fa-bars"></i> <!-- Ícono de hamburguesa -->
                     </button>
                     <ul class="dropdown-menu">
-                        <li>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVegano">
-                                <label class="form-check-label" for="flexSwitchCheckVegano">Vegano</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckSaludable">
-                                <label class="form-check-label" for="flexSwitchCheckSaludable">Saludable</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVenezolana">
-                                <label class="form-check-label" for="flexSwitchCheckVenezolana">Venezolana</label>
-                            </div>
-                        </li>
+
+                        {% for key,value in categ_dict.items %}
+                            <li>
+                                <a href="{% url 'catalog' key %}">{{ value }}
+                                    
+                                </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                     
                 </div>

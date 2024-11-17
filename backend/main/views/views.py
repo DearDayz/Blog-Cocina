@@ -4,17 +4,27 @@ from blog.models import Receta, Ingrediente, Category
 from .cart import Cart
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
+from ecommerce.models import Producto, Factura, ProductoFacturado
+from login3.models import MyUser
 
 def search(request, input):
     input = input.replace("-", " ")
-    return render(request, 'search.html', { "input": input })
+    recetas = Receta.objects.filter(Q(nombre__icontains = input) | Q(descripcion__icontains=input) | Q(preparacion__icontains=input))
+    if not recetas:
+        return render(request, "search.html", {"input": input})
+    else:
+        return render(request, 'search.html', { "input": input , "recetas": recetas})
 
 
 def mostrar_principal(request):
+    categorias = Category.objects.all()
+    categ_dict = {}
+    for categoria in categorias:
+        categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.all()
     categorias = Category.objects.all()
-    name_categorias = [ c.name.replace(" ", "-") for c in categorias ]
-    return render(request, 'index.html', {"recetas": recetas, "categorias": categorias, "name_categorias": name_categorias})
+    return render(request, 'index.html', {"recetas": recetas, "categorias": categorias, "categ_dict": categ_dict})
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
@@ -23,9 +33,26 @@ def mostrar_entry(request, pk):
     return render(request, 'entry.html', {"receta": receta, "ingredientes": ingredientes, "last_recetas": last_recetas})
 
 def mostrar_buy(request):
+    print("1")
     if request.user.is_authenticated:
-        return render(request, 'buy.html')
+        print("2")
+        if request.method == "POST":
+            print("3")
+            productos = request.session.get('session_key')
+            productos["cedula"] = request.user.cedula
+            factura = procesar_compra(productos)
+            if factura:
+                print("4")
+                print(factura)
+                return render(request, 'buy.html', {'factura': factura})
+            else:
+                print("No hay stock")
+                redirect('vista pagina principal')
+        else:
+            print("5")
+            return render(request, 'buy.html')
     else:
+        print("6")
         return redirect("vista pagina principal")
 
 def cart_add(request):
@@ -56,3 +83,67 @@ def logout_user(request):
     logout(request)
     #messages.success(request, ("You have been logged out...Thanks"))
     return redirect('vista pagina principal')
+
+#rederizar vista catalog
+def mostrar_catalog(request, input):
+    input = input.replace("-" , " ")
+    categ_dict = {}
+    categorias = Category.objects.all()
+    for categoria in categorias:
+        categ_dict[categoria.name.replace(" ", "-")] = categoria.name
+    recetas = Receta.objects.filter(category__name= input)
+
+    return render(request, 'catalog.html', {"recetas": recetas, "categ_dict": categ_dict})
+
+#rederizar vista chatbot
+
+def mostrar_chatbot(request):
+    return render(request, 'chatbot.html')
+
+
+def procesar_compra(data):
+    print("Dator Carrito: ", data)
+    productos = data
+    productos = dict(productos)
+    print(productos)
+    productos_dict = {}
+
+    for key,value in productos.items():
+        id_producto = key
+        cantidad = value
+        print(id_producto)
+        print(cantidad)
+        if id_producto not in productos_dict:
+            productos_dict[id_producto] = 0
+        productos_dict[id_producto] += cantidad
+
+    productos_list = [{"id": id_producto, "cantidad": cantidad} for id_producto, cantidad in productos_dict.items()]
+    print(producto_list)
+    band = True
+    producto_no_stock = ""
+    total = 0
+    disponible = float()
+    unidad = str()
+    for producto_list in productos_list:
+        producto = Producto.objects.get(id=producto_list["id"])
+        total += producto.precio * producto_list["cantidad"]
+        if producto.cantidad_disponible < producto_list["cantidad"]:
+            band = False
+            producto_no_stock = producto.nombre
+            disponible =  producto.cantidad_disponible
+            unidad = producto.unidad
+            break
+
+    if band:
+        user = MyUser.objects.get(cedula=data["cedula"])
+        factura  = Factura.objects.create(user=user, total=total)
+        for producto_list in productos_list:
+            producto = Producto.objects.get(id=producto_list["id"])
+            ProductoFacturado.objects.create(factura=factura, producto=producto, cantidad=producto_list["cantidad"])
+            producto.cantidad_disponible -= producto_list["cantidad"]
+            producto.unidades_vendidas += producto_list["cantidad"]
+            producto.save()
+        factura.save()
+        return factura
+    else:
+        return None

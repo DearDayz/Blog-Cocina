@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    Chatbot
+                </div>
+                <div class="card-body">
+                    <div class="chat-box" id="chat-box">
+                        <div class="chat-message">
+                            <div class="chat-message-content">
+                                <p>Hola, soy tu asistente virtual. ¿En qué puedo ayudarte?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <form id="chat-form">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="chat-input" placeholder="Escribe un mensaje...">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                
+
+
+
+
+
+
+{% endblock %}
