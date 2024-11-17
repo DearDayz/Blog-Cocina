@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Receta, Ingrediente
+from .models import Receta, Ingrediente, Favoritos
 from ecommerce.models import Producto
 from ecommerce.serializers import ProductoSerializer
 
@@ -28,3 +28,10 @@ class RecetaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Receta
         fields = ["id", 'nombre', 'descripcion', 'preparacion', 'imagen', 'puntuacion', 'ingredientes']
+
+
+class FavoritosSerializer(serializers.ModelSerializer):
+    receta = RecetaSerializer()
+    class Meta:
+        model = Favoritos
+        fields = ['id', 'usuario', 'receta']  
