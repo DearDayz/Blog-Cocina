@@ -19,7 +19,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ["username", "nombre", "apellido", "cedula","direccion", "correo", "telefono", "favoritos", "tipo"]
+        fields = ["username", "nombre", "apellido", "cedula","direccion", "correo", "telefono", "tipo"]
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -48,7 +48,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ["username", "nombre", "apellido", "cedula","direccion", "correo", "telefono", "favoritos", "password" ,"tipo", "is_active", "is_admin"]
+        fields = ["username", "nombre", "apellido", "cedula","direccion", "correo", "telefono", "password" ,"tipo", "is_active", "is_admin"]
 
 
 class UserAdmin(BaseUserAdmin):
@@ -59,11 +59,11 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ["username", "nombre", "apellido", "cedula","direccion", "correo", "telefono", "favoritos", "tipo", "is_admin"]
+    list_display = ["username", "nombre", "apellido", "cedula","direccion", "correo", "telefono", "tipo", "is_admin"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["username", "password"]}),
-        ("Personal info", {"fields": ["nombre", "apellido", "cedula","direccion", "correo", "telefono", "favoritos", "tipo",]}),
+        ("Personal info", {"fields": ["nombre", "apellido", "cedula","direccion", "correo", "telefono", "tipo",]}),
         ("Permissions", {"fields": ["is_admin"]}),
     ]
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -73,7 +73,7 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ["wide"],
-                "fields": ["username", "nombre", "apellido", "cedula", "direccion", "correo", "telefono", "favoritos", "tipo", "password1", "password2"],
+                "fields": ["username", "nombre", "apellido", "cedula", "direccion", "correo", "telefono", "tipo", "password1", "password2"],
             },
         ),
     ]

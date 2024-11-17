@@ -3,6 +3,7 @@ from django.db import models
 from ecommerce.models import Producto
 from .validadores.validador_receta import validar_solo_letras_con_espacio, validate_no_html, validate_between_zero_and_five,validate_cantidades
 from django.core.validators import MaxLengthValidator
+from login3.models import MyUser
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -45,5 +46,11 @@ class Ingrediente(models.Model):
         super().save(*args, **kwargs)
 
 
+class Favoritos(models.Model):
+    id = models.AutoField(primary_key=True)
+    usuario = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=False, blank=False, to_field="cedula", related_name='usuario')
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, null=False, blank=False, related_name='receta')
 
+    def __str__(self):
+        return f"{self.receta.nombre}"
 
