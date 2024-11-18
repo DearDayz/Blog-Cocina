@@ -1,4 +1,5 @@
 #funciones que renderizan los html
+from decimal import Decimal
 from django.shortcuts import render, get_object_or_404, redirect
 from blog.models import Receta, Ingrediente, Category
 from .cart import Cart
@@ -7,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from ecommerce.models import Producto, Factura, ProductoFacturado
 from login3.models import MyUser
+from django.contrib import messages
 
 def search(request, input):
     input = input.replace("-", " ")
@@ -33,26 +35,24 @@ def mostrar_entry(request, pk):
     return render(request, 'entry.html', {"receta": receta, "ingredientes": ingredientes, "last_recetas": last_recetas})
 
 def mostrar_buy(request):
-    print("1")
     if request.user.is_authenticated:
-        print("2")
         if request.method == "POST":
-            print("3")
             productos = request.session.get('session_key')
-            productos["cedula"] = request.user.cedula
-            factura = procesar_compra(productos)
-            if factura:
-                print("4")
-                print(factura)
-                return render(request, 'buy.html', {'factura': factura})
+            diccionario = { "productos": productos, "cedula": request.user.cedula }
+            factura = procesar_compra(diccionario, request)
+            if not(type(factura) == type(str())):
+                request.session['session_key'] = {}
+                request.session.modified = True
+                product_facturados = ProductoFacturado.objects.filter(factura=factura)
+                return render(request, 'buy.html', {'factura': factura, 'product_facturados': product_facturados})
             else:
-                print("No hay stock")
-                redirect('vista pagina principal')
+                messages.error(request, factura)
+                messages.error(request, "Error al procesar la compra...")
+                return redirect('vista pagina principal')
         else:
-            print("5")
             return render(request, 'buy.html')
     else:
-        print("6")
+        messages.success(request, "You Must Be Logged In To View That Page...")
         return redirect("vista pagina principal")
 
 def cart_add(request):
@@ -101,24 +101,18 @@ def mostrar_chatbot(request):
     return render(request, 'chatbot.html')
 
 
-def procesar_compra(data):
-    print("Dator Carrito: ", data)
-    productos = data
-    productos = dict(productos)
-    print(productos)
+def procesar_compra(data, request):
+    productos = data.get("productos")
     productos_dict = {}
 
     for key,value in productos.items():
         id_producto = key
         cantidad = value
-        print(id_producto)
-        print(cantidad)
         if id_producto not in productos_dict:
             productos_dict[id_producto] = 0
         productos_dict[id_producto] += cantidad
 
     productos_list = [{"id": id_producto, "cantidad": cantidad} for id_producto, cantidad in productos_dict.items()]
-    print(producto_list)
     band = True
     producto_no_stock = ""
     total = 0
@@ -126,7 +120,7 @@ def procesar_compra(data):
     unidad = str()
     for producto_list in productos_list:
         producto = Producto.objects.get(id=producto_list["id"])
-        total += producto.precio * producto_list["cantidad"]
+        total += float(producto.precio) * producto_list["cantidad"]
         if producto.cantidad_disponible < producto_list["cantidad"]:
             band = False
             producto_no_stock = producto.nombre
@@ -136,14 +130,14 @@ def procesar_compra(data):
 
     if band:
         user = MyUser.objects.get(cedula=data["cedula"])
-        factura  = Factura.objects.create(user=user, total=total)
+        factura  = Factura.objects.create(user=user, total=round(total, 2))
         for producto_list in productos_list:
             producto = Producto.objects.get(id=producto_list["id"])
-            ProductoFacturado.objects.create(factura=factura, producto=producto, cantidad=producto_list["cantidad"])
+            ProductoFacturado.objects.create(factura=factura, producto=producto, cantidad=producto_list["cantidad"], subtotal=Decimal( float(producto.precio) * producto_list["cantidad"]))
             producto.cantidad_disponible -= producto_list["cantidad"]
-            producto.unidades_vendidas += producto_list["cantidad"]
+            producto.unidades_vendidas += Decimal(producto_list["cantidad"])
             producto.save()
         factura.save()
         return factura
     else:
-        return None
+        return f"El producto {producto_no_stock} no tiene stock suficiente. Disponible: {disponible} {unidad}"

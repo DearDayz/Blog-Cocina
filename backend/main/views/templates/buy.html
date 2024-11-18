@@ -239,68 +239,65 @@
       </div>
     </div>
    <!-- Modal de Factura -->
-  <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="invoiceModalLabel">Factura</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Datos dinamicos de la factura -->
-                <h4>Factura de Compra</h4>
-                <!--fecha dinamica-->
-                <p><strong>Fecha:</strong> 17/11/2024</p>
-                <!--nombre dinamico-->
-                <p><strong>Nombre del Cliente:</strong> {{ user.nombre }} {{ user.apellido }}</p>
-                <hr>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      <!-- Datos dinámicos de la factura -->
-                      {% for producto in cart_products %}
-                        <tr>
-                            <td>{{ producto.nombre }}</td>
-                            {% for key,value in quantities.items %}
-                              {% if key == producto.id|slugify %}
-                                <td>{{ value|floatformat:2 }}</td>
-                              {% endif %}
-                            {% endfor %}
-                            <td>{{ producto.precio }}</td>
-                            {% for key,value in subtotales.items %}
-                              {% if key == producto.id|slugify %}
-                                <td>{{ value }}</td>
-                              {% endif %}
-                            {% endfor %}
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                    <tfoot>
-                        <!-- Total dinamico -->
-                        <tr>
-                            <th colspan="3" class="text-end">Total</th>
-                            <th>${{ totals }}</th>
-                        </tr>
-                        
-                    </tfoot>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button id="downloadPdfDirect" class="btn btn-primary">
-                  Descargar Factura
-                </button>
-            </div>
-        </div>
+   {% if factura %}
+    <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="invoiceModalLabel">Factura</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <!-- Datos dinamicos de la factura -->
+                  <h4>Factura de Compra</h4>
+                  <!--fecha dinamica-->
+                  <p><strong>Codigo de Factura:</strong> {{ factura.codigo }}</p>
+                  <p><strong>Fecha:</strong> {{ factura.fecha }} {{ factura.hora }}</p>
+                  <!--nombre dinamico-->
+                  <p><strong>Nombre del Cliente:</strong> {{ user.nombre }} {{ user.apellido }}</p>
+                  <hr>
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Producto</th>
+                              <th>Cantidad</th>
+                              <th>Precio Unitario</th>
+                              <th>Total</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Datos dinámicos de la factura -->
+                        {% for producto in product_facturados %}
+                          <tr>
+                              <td>{{ producto.producto.nombre }}</td>
+                              <td>{{ producto.cantidad }} {{ producto.producto.unidad }}</td>
+
+                              <td>{{ producto.producto.precio }}</td>
+                              <td>{{ producto.subtotal }}</td>
+
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                      <tfoot>
+                          <!-- Total dinamico -->
+                          <tr>
+                              <th colspan="3" class="text-end">Total</th>
+                              <th>${{ factura.total }}</th>
+                          </tr>
+                          
+                      </tfoot>
+                  </table>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button id="downloadPdfDirect" class="btn btn-primary">
+                    Descargar Factura
+                  </button>
+              </div>
+          </div>
+      </div>
     </div>
-  </div>
+   {% endif %}
 </main> 
   
   <script src=="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}" ></script>
