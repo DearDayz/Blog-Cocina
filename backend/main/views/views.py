@@ -1,9 +1,11 @@
 #funciones que renderizan los html
 from django.shortcuts import render, get_object_or_404, redirect
 from blog.models import Receta, Ingrediente, Category
+from ecommerce.models import Producto
 from .cart import Cart
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def mostrar_principal(request):
@@ -59,9 +61,27 @@ def logout_user(request):
 def admin_view(request):
     return render(request, "login/Administrador_jefe.html")
 
+@login_required
 def add_recipe(request):
-    return render(request, "login/Agregar_receta.html")
+    categorias = Category.objects.all()
+    productos = Producto.objects.all()
+    categorias_lista = [
+        {
+            "id": c.id,
+            "name": c.name,
+        }
+        for c in categorias
+    ]
+    productos_lista = [
+        {
+            "id": p.id,
+            "nombre": p.nombre,
+        }
+        for p in productos
+    ]
+    return render(request, "login/Agregar_receta.html", {"categorias": categorias_lista, "productos": productos_lista})
 
+@login_required
 def client_view(request):
     if request.user.is_authenticated:
         return render(request, "login/Cliente.html", {"user": request.user})
@@ -74,6 +94,6 @@ def login_view(request):
 def register_view(request):
     return render(request, "login/registrar_cuenta.html")
 
+@login_required
 def modify_user_data_view(request):
-    if request.user.is_authenticated:
-        return render(request, "login/registrar_cuenta.html")
+    return render(request, "login/registrar_cuenta.html")
