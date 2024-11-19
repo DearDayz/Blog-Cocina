@@ -13,6 +13,6 @@ urlpatterns = [
     path('logout/', logout_user, name="logout"),
     path('search/<str:input>/', search, name="search"),
     path('catalog/<str:input>/', mostrar_catalog, name="catalog"),
-    path('chatbot/', mostrar_chatbot, name="chatbot")
+    path('chatbot_produccion/', mostrar_chatbot, name="chatbot_produccion")
     
 ]

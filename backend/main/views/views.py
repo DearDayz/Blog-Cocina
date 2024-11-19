@@ -20,13 +20,13 @@ def search(request, input):
 
 
 def mostrar_principal(request):
-    categorias = Category.objects.all()
+    categorias1 = Category.objects.all()
     categ_dict = {}
-    for categoria in categorias:
+    for categoria in categorias1:
         categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.all()
-    categorias = Category.objects.all()
-    return render(request, 'index.html', {"recetas": recetas, "categorias": categorias, "categ_dict": categ_dict})
+    categorias2 = Category.objects.all()[:3]
+    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2  ,"categ_dict": categ_dict})
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)

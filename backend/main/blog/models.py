@@ -3,6 +3,7 @@ from django.db import models
 from ecommerce.models import Producto
 from .validadores.validador_receta import validar_solo_letras_con_espacio, validate_no_html, validate_between_zero_and_five,validate_cantidades
 from django.core.validators import MaxLengthValidator
+from login3.models import MyUser
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -47,3 +48,5 @@ class Ingrediente(models.Model):
 
 
 
+class Valoracion (models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE,  verbose_name="usuario", to_field="cedula")
