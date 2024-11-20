@@ -20,7 +20,7 @@ class Receta(models.Model):
     descripcion = models.TextField(verbose_name="descripcion", validators=[MaxLengthValidator(2000), validate_no_html])
     preparacion = models.TextField(verbose_name="preparacion", validators=[MaxLengthValidator(5000), validate_no_html])
     imagen = models.ImageField(upload_to='recetas/', blank=True, null=True, verbose_name="Imagen")
-    puntuacion = models.FloatField(verbose_name="puntuacion", validators=[validate_between_zero_and_five], blank=True)
+    puntuacion = models.FloatField(verbose_name="puntuacion", validators=[validate_between_zero_and_five], blank=True, default=0)
     category = models.ManyToManyField(Category, related_name='recetas')
     date_modified = models.DateTimeField(auto_now=True)
     
@@ -67,6 +67,9 @@ class Valoracion(models.Model):
 
     class Meta:
         verbose_name_plural = "valoraciones"
+    
+    def __str__(self):
+        return f"Valoración de {self.user.username} para {self.receta} de {self.puntuacion} estrellas"
 
 def create_puntuacion(sender, instance, created, **kwargs):
     val = instance

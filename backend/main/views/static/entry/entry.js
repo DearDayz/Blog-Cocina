@@ -11,6 +11,22 @@ const stars = document.querySelectorAll('.star');
                 }
             });
             console.log(`Valoración: ${rating}`); // Aquí puedes manejar la valoración como desees
+
+            //Obtenemos el id de la receta de la url
+            const path = window.location.pathname; // Obtiene la ruta de la URL actual
+            const lastNumber = path.match(/(\d+)$/); // Busca el último número en la ruta
+            const number = lastNumber ? parseInt(lastNumber[0]) : null; // Convierte a número o null si no encuentra
+            console.log(number);
+            // Guardar la valoración en tu base de datos
+            $.post(createValoracionUrl, {puntuacion: rating, csrfmiddlewaretoken: csrfToken, id_receta: number})
+            .done(response => {
+                // Manejo de la respuesta exitosa
+                console.log("Respuesta del servidor:", response);
+            })
+            .fail(error => {
+                // Manejo de errores
+                console.error("Error en la solicitud:", error);
+            })
         });
     });
 

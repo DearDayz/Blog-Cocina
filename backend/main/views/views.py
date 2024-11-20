@@ -1,7 +1,7 @@
 #funciones que renderizan los html
 from decimal import Decimal
 from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Receta, Ingrediente, Category
+from blog.models import Receta, Ingrediente, Category, Valoracion
 from .cart import Cart
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
@@ -9,6 +9,32 @@ from django.db.models import Q
 from ecommerce.models import Producto, Factura, ProductoFacturado
 from login3.models import MyUser
 from django.contrib import messages
+
+
+def create_valoracion(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            data = request.POST
+            puntuacion = data.get("puntuacion")
+            id_receta = data.get("id_receta")
+            
+            if not(puntuacion or id_receta or puntuacion.isnumeric() or id_receta.isnumeric() or int(puntuacion) > 5 or int(puntuacion) < 0):
+                return JsonResponse({"error": "Datos invalidos"}, status=400)
+            else:
+                receta = get_object_or_404(Receta, id=id_receta)
+                try:
+                    valoracion = Valoracion.objects.get(user=request.user, receta=receta)
+                    valoracion.puntuacion = int(puntuacion)
+                    valoracion.save()
+                except:
+                    Valoracion.objects.create(user=request.user, receta=receta, puntuacion=int(puntuacion))
+                return JsonResponse({"success": "Valoracion hecha correctamente"}, status=200)
+
+        else:
+            return JsonResponse({"error": "Método no permitido"}, status=405)
+    else:
+        messages.error(request, "Debes estar logeado para valorar...")
+        return redirect('login')
 
 def search(request, input):
     input = input.replace("-", " ")
@@ -32,7 +58,23 @@ def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
     last_recetas = Receta.objects.all().order_by('-date_modified')[:3]
     ingredientes = Ingrediente.objects.filter(receta=pk)
-    return render(request, 'entry.html', {"receta": receta, "ingredientes": ingredientes, "last_recetas": last_recetas})
+    if request.user.is_authenticated:
+        #Existe valoracion por parte del usuario
+        valoracion = Valoracion.objects.filter(user=request.user, receta=receta)
+        try:
+            valoracion = Valoracion.objects.get(user=request.user, receta=receta)
+            valoracion = valoracion.puntuacion
+        except Valoracion.DoesNotExist:
+            valoracion = 0
+    else:
+        valoracion = 0
+    
+    #Estrellas no marcadas
+    star = range(valoracion + 1, 6)
+
+    #Estrellas marcadas
+    stars_valoradas = range(1,valoracion+1)
+    return render(request, 'entry.html', {"receta": receta, "ingredientes": ingredientes, "last_recetas": last_recetas, "stars_valoradas": stars_valoradas, "star": star})
 
 def mostrar_buy(request):
     if request.user.is_authenticated:
