@@ -1,0 +1,55 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        
+       
+
+        <div class="container marketing">
+            
+            
+            <!-- START THE FEATURETTES -->
+            <div class="album py-5 bg-body-tertiary">
+            
+        
+                <h1>Busqueda: {{ input }}</h1>
+                
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        {% if recetas %}
+                        {% for receta in recetas %}
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <img src="{{ receta.imagen.url }}" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;"> 
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ receta.nombre }}</h5>
+                                        <p class="card-text">{{ receta.descripcion }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a href="{% url 'vista entry' receta.id  %}">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                        <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
+                                                    </button>
+                                                </a>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                                    <i class="fa-regular fa-heart"></i></i> <!-- Icono de "Edit" -->
+                                                </button>
+                                            </div>
+                                            <i class="fa fa-star" aria-hidden="true"> 4.8</i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% else %}
+                            <h1>Receta no existe</h1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- /END THE FEATURETTES -->
+
+    </main>
+{% endblock %}

@@ -1,6 +1,5 @@
 from django.urls import path
 from views.views_carpeta.views_prueba import mostrar_html1, mostrar_receta
-from .views import mostrar_principal, mostrar_entry, mostrar_buy, cart_add, logout_user
 from .views import *
 
 #Aqui configuramos las rutas de las vistas
@@ -19,4 +18,9 @@ urlpatterns = [
     path('user-data/', client_view, name="user_view"),
     path('login/', login_view, name="login_view"),
     path('register/', register_view, name="register_view"),
+    path('search/<str:input>/', search, name="search"),
+    path('catalog/<str:input>/', mostrar_catalog, name="catalog"),
+    path('chatbot_produccion/', mostrar_chatbot, name="chatbot_produccion"),
+    path('create_valoracion/', create_valoracion, name="create_valoracion"),
+    
 ]

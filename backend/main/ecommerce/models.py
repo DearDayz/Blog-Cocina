@@ -50,6 +50,6 @@ class ProductoFacturado(models.Model):
     factura = models.ForeignKey(Factura, on_delete=models.CASCADE,  verbose_name="factura", related_name='productos_facturados')
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE,  verbose_name="producto_facturado" , related_name='productos_facturados')
     cantidad = models.FloatField(verbose_name="cantidad", validators=[MinValueValidator(0.0)])
-
+    subtotal = models.DecimalField(verbose_name="subtotal",max_digits= 6, validators=[MinValueValidator(0.0)], decimal_places=2, default=0)
     def __str__(self):
         return f"{self.cantidad} de {self.producto.nombre} en factura {self.factura.codigo}"

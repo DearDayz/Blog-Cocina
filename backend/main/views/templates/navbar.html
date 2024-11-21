@@ -18,7 +18,7 @@
                 <a class="nav-link" href="#">Productos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " aria-disabled="true">Ofertas</a>
+                <a class="nav-link " aria-disabled="true" href="{% url 'chatbot_produccion' %}">Chatbot</a>
             </li>
             {% if user.is_authenticated %}    
                 <li class="nav-item">
@@ -36,10 +36,10 @@
             {% endif %}
             </ul>
     
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Buscar ingredientes" aria-label="Buscar">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
-            </form>
+            <div class="d-flex" role="search" >
+                <input id="searchInput" class="form-control me-2" type="search" placeholder="Buscar ingredientes" aria-label="Buscar">
+                <button class="btn btn-outline-success" id="searchButton" >Buscar</button>
+            </div>
     
             <!-- Iconos -->
             <div style="margin-left: 10px;">
@@ -69,3 +69,15 @@
         </div>
     </div>
 </nav>
+
+<script>
+    $(document).on('click', '#searchButton', function(e){
+        e.preventDefault(); // evita el comportamiento por defecto del formulario
+        let input = $('#searchInput');
+        let value = input.val();
+        let modifiedValue = value.trim().replace(/\s+/g, '-');
+
+        // Redirige el navegador a la nueva URL
+        window.location.href = '/search/' + modifiedValue + '/';
+    })
+</script>

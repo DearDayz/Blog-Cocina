@@ -118,61 +118,7 @@ class ProductoFacturadoViewSet(viewsets.ModelViewSet):
     queryset = ProductoFacturado.objects.all()
     serializer_class = ProductoFacturadoSerializer
 
-@csrf_exempt
-def procesar_compra(request):
-    if request.method == "POST":
-        try:
-            # Decodificar el cuerpo de la solicitud JSON
-            data = json.loads(request.body)
-            productos = data.get("productos", [])
-            productos_dict = {}
 
-            for producto in productos:
-                id_producto = producto["id"]
-                cantidad = producto["cantidad"]
-
-                if id_producto not in productos_dict:
-                    productos_dict[id_producto] = 0
-                productos_dict[id_producto] += cantidad
-
-            productos_list = [{"id": id_producto, "cantidad": cantidad} for id_producto, cantidad in productos_dict.items()]
-
-            band = True
-            producto_no_stock = ""
-            total = 0
-            disponible = float()
-            unidad = str()
-            for producto_list in productos_list:
-                producto = Producto.objects.get(id=producto_list["id"])
-                total += producto.precio * producto_list["cantidad"]
-                if producto.cantidad_disponible < producto_list["cantidad"]:
-                    band = False
-                    producto_no_stock = producto.nombre
-                    disponible =  producto.cantidad_disponible
-                    unidad = producto.unidad
-                    break
-
-            if band:
-                user = MyUser.objects.get(cedula=data["cedula"])
-                factura  = Factura.objects.create(user=user, total=total)
-                for producto_list in productos_list:
-                    producto = Producto.objects.get(id=producto_list["id"])
-                    ProductoFacturado.objects.create(factura=factura, producto=producto, cantidad=producto_list["cantidad"])
-                    producto.cantidad_disponible -= producto_list["cantidad"]
-                    producto.unidades_vendidas += producto_list["cantidad"]
-                    producto.save()
-                return JsonResponse({"message": "Compra realizada con éxito", "factura": factura.codigo}, status=201)
-            else:
-                return JsonResponse({"message": f"No hay stock del producto {producto_no_stock}, queda disponible {disponible}{unidad}"}, status=400)
-
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Cuerpo de solicitud no válido, debe ser JSON"}, status=400)
-        except Producto.DoesNotExist:
-            return JsonResponse({"error": "Producto no encontrado"}, status=404)
-        except KeyError:
-            return JsonResponse({"error": "Datos faltantes en la solicitud"}, status=400)
-
-    return JsonResponse({"error": "Método no permitido"}, status=405)
 
 
     
