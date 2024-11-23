@@ -56,11 +56,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     cedula = models.CharField(max_length=8, unique=True, verbose_name="cedula", validators=[val.validar_cedula])  
     direccion = models.TextField(verbose_name="direccion", validators=[val.validar_direccion])  
     correo = models.EmailField(max_length=255, unique=True, verbose_name="correo", validators=[val.validar_correo]) 
-<<<<<<< HEAD
-    telefono = models.CharField(max_length=12, unique=True, verbose_name="telefono", validators=[val.validar_telefono])
-=======
     telefono = models.CharField(max_length=12, unique=True, verbose_name="telefono", validators=[val.validar_telefono]) 
->>>>>>> origin/main
     tipo = models.CharField(max_length=20, verbose_name="tipo", validators=[val.validar_tipo])
 
     
