@@ -107,4 +107,5 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
             ("crear_recetas", "Puede crear nuevas recetas"),
             ("modificar_recetas", "Puede modificar las recetas existentes"),
             ("eliminar_recetas", "Puede eliminar recetas"),
+            ("puede_ver_vistas_admin", "Puede ver las vistas pq es empleado"),
         )
