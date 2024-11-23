@@ -58,7 +58,13 @@ class Ingrediente(models.Model):
         super().save(*args, **kwargs)
 
 
+class Favoritos(models.Model):
+    id = models.AutoField(primary_key=True)
+    usuario = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=False, blank=False, to_field="cedula", related_name='usuario')
+    receta = models.ForeignKey(Receta, on_delete=models.CASCADE, null=False, blank=False, related_name='receta')
 
+    def __str__(self):
+        return f"{self.receta.nombre}"
 
 class Valoracion(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE,  verbose_name="usuario", to_field="cedula")

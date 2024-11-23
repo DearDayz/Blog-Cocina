@@ -1,0 +1,164 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../resource/fondo_login.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.wrapper {
+    width: 420px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(70px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: white;
+    border-radius: 10px;
+    padding: 30px 40px;
+}
+
+.wrapper h1 {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.wrapper .input-box {
+    
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 10px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    padding: 20px;
+}
+
+.input-box input::placeholder {
+    color: white;
+}
+
+.wrapper button {
+    width: 100%;
+    height: 45px;
+    background-color: white;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: black;
+    font-weight: 700;
+}
+
+.wrapper .registrar_cuenta {
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.registrar_cuenta p a {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.registrar_cuenta p a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.inf_titulo{
+    display: block;
+}
+
+.input_mitad{
+    width: 50%;
+
+}
+
+.cuenta_real{
+    display: flex;
+}
+
+.parte1 input{
+    width: 95%;
+    height: 30%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    padding: 20px;
+    margin-top: 5px;
+}
+
+.parte1 input::placeholder{
+    color: white;
+}
+
+.ceshi_biaoti{
+    display: block;
+}
+
+.parte2{
+    margin: 10px 0;
+}
+
+.parte2 input{
+    width: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.parte2 input::placeholder{
+    color: white    ;
+}
+
+.area_telefono{
+    display: flex;
+    justify-content: space-around;
+}
+
+.area_telefono input{
+    width: 70%;
+}
+
+.area_telefono select{
+    width: 20%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.area_telefono option{
+    color: black;
+}
