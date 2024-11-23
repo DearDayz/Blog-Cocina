@@ -204,6 +204,11 @@ def mostrar_catalog(request, input):
 #rederizar vista chatbot
 
 def mostrar_chatbot(request):
+    # response = requests.get("http://127.0.0.1:8000/blog-api/recetas/")
+    # print(response.json())
+    # tabla = {"recetas": response.json()}
+    # cargar_contexto_json_cliente(tabla)
+    # contexto_json_a_string()
     return render(request, 'chatbot.html')
 
 

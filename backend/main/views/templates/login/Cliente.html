@@ -23,6 +23,28 @@
 
                 </div>
 
+                {% if user.tipo == "Administrador" %}
+                    <div class="bloque_opcion">
+                        <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
+                        <span>Inventario</span>
+                    </div>
+                    
+                    <div class="bloque_opcion" onclick="window.location.pathname = 'manage-recipes/'">
+                        <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
+                        <span>Recetas</span>
+                    </div>
+
+                    <div class="bloque_opcion">
+                        <img src="{% static 'login/resource/Admin/empleado icon.png' %}" alt="icono_login" width="24px" height="24px">
+                        <span>Empleado</span>
+                    </div>
+
+                    <div class="bloque_opcion">
+                        <img src="{% static 'login/resource/Admin/agregar icon.png' %}" alt="icono_login" width="24px" height="24px">
+                        <span>Agregar Empleado</span>
+                    </div>
+                {% endif %}
+
                 <div class="bloque_opcion">
                     <img src="{% static 'login/resource/Admin/pedido historial icon 2.png' %}" alt="icono_login" width="24px" height="24px">
                     <span>Pedido</span>
