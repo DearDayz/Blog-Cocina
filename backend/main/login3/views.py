@@ -18,10 +18,10 @@ def login_user(request):
         password = request.POST['password']
         user = authenticate(request=request, username=username, password=password)
 
-        if user.tipo == "Administrador":
-            permiso = Permission.objects.get(codename='puede_ver_vistas_admin')
-            # Asignar el permiso al usuario
-            user.user_permissions.add(permiso)
+        # if user.tipo == "Administrador":
+        #     permiso = Permission.objects.get(codename='puede_ver_vistas_admin')
+        #     # Asignar el permiso al usuario
+        #     user.user_permissions.add(permiso)
 
         if user is not None:
             login(request, user)

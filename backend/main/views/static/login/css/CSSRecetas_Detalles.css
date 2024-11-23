@@ -1,0 +1,118 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.Toubu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #37d777;
+    padding: 10px;
+}
+
+.Toubu h1{
+    color: white;
+}
+
+.como_boton{
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    gap: 5px;
+    border-radius: 40px;
+    background-color: #fff;
+}
+
+.modificar_login{
+    text-decoration: none;
+    color: black;
+}
+
+/*Tabla*/
+table {
+    width: 70%;
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 30px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: #37d777;
+}
+.pagination {
+    margin-top: 10px;
+    text-align: center;
+}
+.page-button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #37d777;
+    color: white;
+    border-radius: 5px;
+}
+.page-button:hover {
+    background-color: #2b834f;
+}
+
+.contenedor_tabla{
+    width: 100%;
+}
+
+.central{
+    text-align: center;
+    width: 500px;
+}
+
+.Botones_centrado{
+    display: flex;
+    justify-content: space-around;
+}
+
+.Botones_centrado button{
+    width: 120px;
+    height: 25px;
+}
+
+#abrir_modificacion{
+    background-color: #37d777;
+    border: none;
+    border-radius: 10px;
+    color:#fff;
+}
+
+#abrir_modificacion:hover{
+    background-color: #2b834f;
+    cursor: pointer;
+}
+
+.eliminar_boton{
+    background-color: #ff6e25;
+    border: none;
+    border-radius: 10px;
+    color:#fff;
+}
+
+.eliminar_boton:hover{
+    background-color: #da6226;
+    cursor: pointer;
+}
+
+.abrir_detalles{
+    background-color: #37a7d7;
+    border: none;
+    border-radius: 10px;
+    color:#fff;
+}
+
+.abrir_detalles:hover{
+    background-color: #2b6a83;
+    cursor: pointer;
+}
+/*Hasta aqui*/

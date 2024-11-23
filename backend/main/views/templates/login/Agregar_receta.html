@@ -40,8 +40,8 @@
                     </div>
     
                     <div class="xinxi">
-                        <label for="categoria">Categoría</label>
-                        <select name="categoria">
+                        <label for="category">Categoría</label>
+                        <select name="category">
                             <option value="">Elija una categoría</option>
                             {% for c in categorias %}
                                 <option value="{{ c.id }}">{{c.name}}</option>
@@ -122,6 +122,7 @@
         const formData = new FormData(this);
         let receta;
 
+        // Crear receta
         await fetch("http://127.0.0.1:8000/blog-api/recetas/", {
             method: 'POST',
             body: formData,
@@ -135,6 +136,7 @@
         .catch((err) => {
             console.error(err)
         })
+
         const productos = {
             "receta": receta.id,
             "producto": formData.getAll('producto'),
@@ -159,6 +161,7 @@
             })
             .then(async (res) => {
                 console.log(await res.json())
+                window.location.pathname = "vista-pagina-principal/"
             })
             .catch((err) => {
                 console.error(err)

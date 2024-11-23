@@ -175,6 +175,21 @@ def register_view(request):
 def modify_user_data_view(request):
     return render(request, "login/registrar_cuenta.html")
 
+@login_required
+def manage_recipes(request):
+    if request.user.tipo == "Administrador":
+        return render(request, "login/Admin_Recetas.html")
+    else:
+        return redirect("login_view")
+    
+@login_required
+def admin_view_recipes(request):
+    if request.user.tipo == "Administrador":
+        recetas = Receta.objects.all()
+        return render(request, "login/Recetas_Detalles.html", {"recetas": recetas})
+    else:
+        return redirect("login_view")
+
 #rederizar vista catalog
 def mostrar_catalog(request, input):
     input = input.replace("-" , " ")
