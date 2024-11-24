@@ -30,7 +30,7 @@
                     </div>
     
                     <div class="xinxi">
-                        <label for="descripcion">Descripcion de receta</label>
+                        <label for="descripcion">Descripción de receta</label>
                         <input name="descripcion" type="text" placeholder="Ej: Manzana, Jamón...">
                     </div>
     
@@ -39,14 +39,17 @@
                         <input name="preparacion" type="text" placeholder="Ej: Manzana, Jamón...">
                     </div>
     
-                    <div class="xinxi">
-                        <label for="category">Categoría</label>
-                        <select name="category">
-                            <option value="">Elija una categoría</option>
-                            {% for c in categorias %}
-                                <option value="{{ c.id }}">{{c.name}}</option>
-                            {% endfor %}
-                        </select>
+                    <div class="xinxi" id="categorias-cont">
+                        <div id="categorias">
+                            <label for="category">Categoría</label>
+                            <select name="category">
+                                <option value="">Elija una categoría</option>
+                                {% for c in categorias %}
+                                    <option value="{{ c.id }}">{{c.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="button" onclick="addCategoria(this)">+</button>
                     </div>
     
                     <div class="xinxi2">
@@ -80,8 +83,10 @@
                             <label for="cantidad">Cantidad</label>
                             <input name="cantidad" type="text" placeholder="Ej: 100">
                         </div>
-                        <button type="button" onclick="addIngrediente(this)">+</button>
                     </div>
+
+                    <button type="button" onclick="addIngrediente(this)">+</button>
+
                 </div>
 
                 <input type="hidden" name="puntuacion" value="0">
@@ -99,77 +104,108 @@
             </form>
         </div>
     </main>
-</body>
 
-<script>
-    function addIngrediente(boton) {
-        const contenedor = document.querySelector('.ingredientes');
-        
-        const nuevoIngrediente = contenedor.cloneNode(true);
-        
-        const inputs = nuevoIngrediente.querySelectorAll('input, select');
-        inputs.forEach(input => {
-            input.value = ''; 
-        });
-    
-        document.querySelector('.contenedor2').appendChild(nuevoIngrediente);
-        boton.remove()
-    }
-    
-    document.querySelector('.Tianbiao').addEventListener('submit', async function(event) {
-        event.preventDefault();
+    <!-- Script para manejar la adición y eliminación de ingredientes y categorías -->
+    <script>
+        function addIngrediente(boton) {
+            const contenedor = document.querySelector('.ingredientes');
+            
+            const nuevoIngrediente = contenedor.cloneNode(true);
+            
+            const inputs = nuevoIngrediente.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.value = ''; 
+            });
 
-        const formData = new FormData(this);
-        let receta;
+            const nuevoBoton = document.createElement('button');
+            nuevoBoton.type = 'button';
+            nuevoBoton.innerText = '-';
+            nuevoBoton.onclick = function() { removeElemento(nuevoIngrediente); };
 
-        // Crear receta
-        await fetch("http://127.0.0.1:8000/blog-api/recetas/", {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}' 
-            }
-        })
-        .then(async (res) => {
-            receta = await res.json();
-        })
-        .catch((err) => {
-            console.error(err)
-        })
-
-        const productos = {
-            "receta": receta.id,
-            "producto": formData.getAll('producto'),
-            "unidad": formData.getAll('unidad'),
-            "cantidad": formData.getAll('cantidad')
+            document.querySelector('.contenedor2').appendChild(nuevoIngrediente);
+            nuevoIngrediente.appendChild(nuevoBoton);
         }
-        for (let i = 0; i < productos.producto.length; i++) {
-            const productoJson = {
-                receta: productos.receta,
-                producto: productos.producto[i],
-                unidad: productos.unidad[i],
-                cantidad: productos.cantidad[i]
-            }
-            console.log(productoJson)
-            await fetch("http://127.0.0.1:8000/blog-api/ingredientes/", {
+
+        function addCategoria(boton) {
+            const categorias = document.querySelector('#categorias');
+            
+            const nuevaCategoria = categorias.cloneNode(true);
+            
+            const inputs = nuevaCategoria.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.value = ''; 
+            });
+
+            const nuevoBotonCategoria = document.createElement('button');
+            nuevoBotonCategoria.type = 'button';
+            nuevoBotonCategoria.innerText = '-';
+            nuevoBotonCategoria.onclick = function() { removeElemento(nuevaCategoria); };
+
+            document.querySelector('#categorias-cont').appendChild(nuevaCategoria);
+            nuevaCategoria.appendChild(nuevoBotonCategoria);
+        }
+
+        function removeElemento(elemento) {
+            elemento.remove();
+        }
+        
+        document.querySelector('.Tianbiao').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            let receta;
+
+            await fetch("http://127.0.0.1:8000/blog-api/recetas/", {
                 method: 'POST',
-                body: JSON.stringify(productoJson),
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}' 
                 }
             })
             .then(async (res) => {
-                console.log(await res.json())
-                window.location.pathname = "vista-pagina-principal/"
+                receta = await res.json();
             })
             .catch((err) => {
                 console.error(err)
             })
-            }
 
-    });
-</script>
-<script src="{% static 'login/js/Agregar_receta.js' %}"></script>
+            const productos = {
+                "receta": receta.id,
+                "producto": formData.getAll('producto'),
+                "unidad": formData.getAll('unidad'),
+                "cantidad": formData.getAll('cantidad')
+            }
+            
+            for (let i = 0; i < productos.producto.length; i++) {
+                const productoJson = {
+                    receta: productos.receta,
+                    producto: productos.producto[i],
+                    unidad: productos.unidad[i],
+                    cantidad: productos.cantidad[i]
+                }
+                
+                await fetch("http://127.0.0.1:8000/blog-api/ingredientes/", {
+                    method: 'POST',
+                    body: JSON.stringify(productoJson),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}' 
+                    }
+                })
+                .then(async (res) => {
+                    console.log(await res.json());
+                    window.location.pathname = "vista-pagina-principal/";
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+            }
+        });
+    </script>
+
+    <!-- Script adicional -->
+    <script src="{% static 'login/js/Agregar_receta.js' %}"></script>
+
+</body>
 
 </html>
