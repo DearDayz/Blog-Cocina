@@ -1,0 +1,93 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Recetas</title>
+    <link rel="icon" type="image/png" href="{% static 'login/resource/icono supermercado.png' %}">
+    <link rel="stylesheet" href="{% static 'login/css/Admin_Recetas.css' %}">
+</head>
+
+<body>
+    <div class="contenedor">
+        <div class="Div_caidan">
+            <nav class="Caidan">
+
+                <p class="biaoti">Super Calidad Market</p>
+
+                <div class="bloque_opcion">
+
+                    <img src="{% static 'login/resource/icon login.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Perfil</span>
+
+                </div>
+
+                <div class="bloque_opcion">
+                    <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Inventario</span>
+                </div>
+                
+                <div class="bloque_opcion">
+                    <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Recetas</span>
+                </div>
+
+                <div class="bloque_opcion">
+                    <img src="{% static 'login/resource/Admin/empleado icon.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Empleado</span>
+                </div>
+
+                <div class="bloque_opcion">
+                    <img src="{% static 'login/resource/Admin/agregar icon.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Agregar Empleado</span>
+                </div>
+
+                <div class="bloque_opcion">
+                    <img src="{% static 'login/resource/Admin/pedido historial icon.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Pedido Actual</span>
+                </div>
+
+
+                <div class="bloque_opcion">
+                    <img src="{% static 'login/resource/Admin/pedido historial icon 2.png' %}" alt="icono_login" width="24px" height="24px">
+                    <span>Pedido Historial</span>
+                </div>
+            </nav>
+
+        </div>
+        <div class="Div_otros">
+            <header class="Dingbu">
+                <p>Recetas</p>
+
+                <div class="como_boton">
+                    <img src="{% static 'login/resource/salir icon.png' %}" width="36px" height="36px">
+                    <a href="" class="modificar_login">Salir</a>
+                </div>
+            </header>
+            <div class="cuadro">
+                <h1>¿Que desea hacer?</h1>
+                <figure class="Recetas_Saludar">
+                    <img src="{% static 'login/resource/Admin_Recetas/mercancia.png' %}" alt="">
+                </figure>
+                <div class="cuadro_sub">
+                    <div class="boton1">
+                        <figure>
+                            <img src="{% static 'login/resource/Admin_Recetas/agregar.png' %}" alt="Agregar_img">
+                        </figure>
+                        <button id="Agregar_recetas">Agregar</button>
+                    </div>
+                    <div class="boton1" id="vermasdetalles">
+                        <figure>
+                            <img src="{% static 'login/resource/Admin_Recetas/ver_mas_detalles.png' %}" alt="Agregar_img">
+                        </figure>
+                        <button id="Detalles_recetas">Ver más detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'login/js/JS_Admin_Recetas.js' %}"></script>
+</script>
+
+</html>

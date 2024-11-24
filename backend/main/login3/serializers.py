@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import MyUser
-from blog.models import Favoritos
 
 #Serializador de modelo
 
@@ -31,9 +30,3 @@ class MyUserSerializer(serializers.ModelSerializer):
                instance.set_password(password)
           instance.save()
           return instance
-
-
-class FavoritosSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Favoritos
-        fields = ['id', 'usuario', 'receta']  

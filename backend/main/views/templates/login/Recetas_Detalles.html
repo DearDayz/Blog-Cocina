@@ -1,0 +1,54 @@
+{% load static %}
+
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetas Detalles</title>
+    <link rel="icon" type="image/png" href="{% static 'login/resource/icono supermercado.png' %}">
+    <link rel="stylesheet" href="{% static 'login/css/CSSRecetas_Detalles.css' %}">
+</head>
+
+<body>
+    <header class="Toubu">
+        <h1>Detalles de todas las Recetas</h1>
+        <div class="como_boton">
+            <img src="{% static 'login/resource/salir icon.png' %}" width="36px" height="36px">
+            <a href="" class="modificar_login">Salir</a>
+        </div>
+    </header>
+    <div class="contenedor_tabla">
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre_recetas</th>
+                    <th class="Central">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for receta in recetas %}
+                    <tr>
+                        <td>{{ receta.id }}</td>
+                        <td>{{ receta.nombre }}</td>
+                        <td class="Botones_centrado">
+                        <button id="abrir_modificacion">Modificar</button>
+                        <button class="abrir_detalles">Detalles</button>
+                        <button id="{{ receta.id }}" class="eliminar_boton" onclick="delete_receta(event)">Eliminar</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button class="page-button" onclick="changePage(-1)">Anterior</button>
+            <span id="pageInfo">Página 1 de 2</span>
+            <button class="page-button" onclick="changePage(1)">Siguiente</button>
+        </div>
+    </div>
+</body>
+<script src="{% static 'login/js/JSRecetas_Detalles.js' %}"></script>
+
+</html>

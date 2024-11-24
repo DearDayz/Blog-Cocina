@@ -19,31 +19,72 @@
     </header>
     <main>
         <div class="contenedor">
-            <form action="" class="Tianbiao">
+            <form action="{% url 'recetas-list' %}" method="post" class="Tianbiao" enctype="multipart/form-data">
+                {% csrf_token %} 
                 <h1>¡Agregar nueva recetas!</h1>
 
-                <div class="xinxi">
-                    <label for="">Nombre de recetas</label>
-                    <input type="text" placeholder="Ej: Pizza con manzana">
-                </div>
-
-                <div class="xinxi">
-                    <label for="">Descripcion de receta</label>
-                    <input type="text" placeholder="Ej: Manzana, Jamón...">
-                </div>
-
-                <div class="xinxi2">
-                    <label for="">Imagen de receta</label>
-                    <div class="boton_foto">
-                        <span class="upload-button">Subir Foto</span>
-                        <input type="file" accept="image/*" onchange="previewImage(event)">
+                <div class="contenedor2">
+                    <div class="xinxi">
+                        <label for="nombre">Nombre de recetas</label>
+                        <input name="nombre" type="text" placeholder="Ej: Pizza con manzana">
+                    </div>
+    
+                    <div class="xinxi">
+                        <label for="descripcion">Descripcion de receta</label>
+                        <input name="descripcion" type="text" placeholder="Ej: Manzana, Jamón...">
+                    </div>
+    
+                    <div class="xinxi">
+                        <label for="preparacion">Preparación</label>
+                        <input name="preparacion" type="text" placeholder="Ej: Manzana, Jamón...">
+                    </div>
+    
+                    <div class="xinxi">
+                        <label for="category">Categoría</label>
+                        <select name="category">
+                            <option value="">Elija una categoría</option>
+                            {% for c in categorias %}
+                                <option value="{{ c.id }}">{{c.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+    
+                    <div class="xinxi2">
+                        <label for="imagen">Imagen de receta</label>
+                        <div class="boton_foto">
+                            <span class="upload-button">Subir Foto</span>
+                            <input name="imagen" type="file" accept="image/*" onchange="previewImage(event)">
+                        </div>
+                    </div>
+    
+                    <div class="xinxi3">
+                        <h2>Foto previa:</h2>
+                        <img id="imgPreview" src="" alt="Vista previa de la imagen">
+                    </div>
+    
+                    <div class="ingredientes">
+                        <div class="xinxi">
+                            <label for="producto">Ingrediente (producto)</label>
+                            <select name="producto">
+                                <option value="">Elija un ingrediente</option>
+                                {% for p in productos %}
+                                    <option value="{{ p.id }}">{{p.nombre}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="xinxi">
+                            <label for="unidad">Unidad</label>
+                            <input name="unidad" type="text" placeholder="Ej: gramos, mililitros...">
+                        </div>
+                        <div class="xinxi">
+                            <label for="cantidad">Cantidad</label>
+                            <input name="cantidad" type="text" placeholder="Ej: 100">
+                        </div>
+                        <button type="button" onclick="addIngrediente(this)">+</button>
                     </div>
                 </div>
 
-                <div class="xinxi3">
-                    <h2>Foto previa:</h2>
-                    <img id="imgPreview" src="" alt="Vista previa de la imagen">
-                </div>
+                <input type="hidden" name="puntuacion" value="0">
 
                 <div class="botones_interacciones">
 
@@ -51,7 +92,7 @@
                         <span>Volver</span>
                     </div>
 
-                    <button>
+                    <button type="submit">
                         ¡Montar el nuevo receta!
                     </button>
                 </div>
@@ -60,6 +101,75 @@
     </main>
 </body>
 
+<script>
+    function addIngrediente(boton) {
+        const contenedor = document.querySelector('.ingredientes');
+        
+        const nuevoIngrediente = contenedor.cloneNode(true);
+        
+        const inputs = nuevoIngrediente.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.value = ''; 
+        });
+    
+        document.querySelector('.contenedor2').appendChild(nuevoIngrediente);
+        boton.remove()
+    }
+    
+    document.querySelector('.Tianbiao').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        let receta;
+
+        // Crear receta
+        await fetch("http://127.0.0.1:8000/blog-api/recetas/", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}' 
+            }
+        })
+        .then(async (res) => {
+            receta = await res.json();
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+
+        const productos = {
+            "receta": receta.id,
+            "producto": formData.getAll('producto'),
+            "unidad": formData.getAll('unidad'),
+            "cantidad": formData.getAll('cantidad')
+        }
+        for (let i = 0; i < productos.producto.length; i++) {
+            const productoJson = {
+                receta: productos.receta,
+                producto: productos.producto[i],
+                unidad: productos.unidad[i],
+                cantidad: productos.cantidad[i]
+            }
+            console.log(productoJson)
+            await fetch("http://127.0.0.1:8000/blog-api/ingredientes/", {
+                method: 'POST',
+                body: JSON.stringify(productoJson),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' 
+                }
+            })
+            .then(async (res) => {
+                console.log(await res.json())
+                window.location.pathname = "vista-pagina-principal/"
+            })
+            .catch((err) => {
+                console.error(err)
+            })
+            }
+
+    });
+</script>
 <script src="{% static 'login/js/Agregar_receta.js' %}"></script>
 
 </html>

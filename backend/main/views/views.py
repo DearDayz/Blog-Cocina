@@ -1,6 +1,12 @@
 #funciones que renderizan los html
 from decimal import Decimal
 from django.shortcuts import render, get_object_or_404, redirect
+from blog.models import Receta, Ingrediente, Category
+from ecommerce.models import Producto
+from .cart import Cart
+from django.http import JsonResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from blog.models import Receta, Ingrediente, Category, Valoracion
 from .cart import Cart
 from django.http import JsonResponse
@@ -126,6 +132,65 @@ def logout_user(request):
     #messages.success(request, ("You have been logged out...Thanks"))
     return redirect('vista pagina principal')
 
+
+# Rutas del login
+
+def admin_view(request):
+    return render(request, "login/Administrador_jefe.html")
+
+@login_required
+def add_recipe(request):
+    
+    categorias = Category.objects.all()
+    productos = Producto.objects.all()
+    categorias_lista = [
+        {
+            "id": c.id,
+            "name": c.name,
+        }
+        for c in categorias
+    ]
+    productos_lista = [
+        {
+            "id": p.id,
+            "nombre": p.nombre,
+        }
+        for p in productos
+    ]
+    return render(request, "login/Agregar_receta.html", {"categorias": categorias_lista, "productos": productos_lista})
+
+@login_required
+def client_view(request):
+    if request.user.is_authenticated:
+        return render(request, "login/Cliente.html", {"user": request.user})
+    else:
+        return redirect("login_view")
+    
+def login_view(request):
+    return render(request, "login/login.html")
+
+def register_view(request):
+    return render(request, "login/registrar_cuenta.html")
+
+@login_required
+def modify_user_data_view(request):
+    return render(request, "login/registrar_cuenta.html")
+
+@login_required
+def manage_recipes(request):
+    if request.user.tipo == "Administrador":
+        return render(request, "login/Admin_Recetas.html")
+    else:
+        return redirect("login_view")
+    
+@login_required
+def admin_view_recipes(request):
+    if request.user.tipo == "Administrador":
+        recetas = Receta.objects.all()
+        return render(request, "login/Recetas_Detalles.html", {"recetas": recetas})
+    else:
+        return redirect("login_view")
+
 #rederizar vista catalog
 def mostrar_catalog(request, input):
     input = input.replace("-" , " ")
@@ -140,6 +205,11 @@ def mostrar_catalog(request, input):
 #rederizar vista chatbot
 
 def mostrar_chatbot(request):
+    # response = requests.get("http://127.0.0.1:8000/blog-api/recetas/")
+    # print(response.json())
+    # tabla = {"recetas": response.json()}
+    # cargar_contexto_json_cliente(tabla)
+    # contexto_json_a_string()
     return render(request, 'chatbot.html')
 
 
@@ -183,27 +253,3 @@ def procesar_compra(data, request):
         return factura
     else:
         return f"El producto {producto_no_stock} no tiene stock suficiente. Disponible: {disponible} {unidad}"
-
-# Rutas del login
-
-def admin_view(request):
-    return render(request, "login/Administrador_jefe.html")
-
-def add_recipe(request):
-    return render(request, "login/Agregar_receta.html")
-
-def client_view(request):
-    if request.user.is_authenticated:
-        return render(request, "login/Cliente.html", {"user": request.user})
-    else:
-        return redirect("login_view")
-    
-def login_view(request):
-    return render(request, "login/login.html")
-
-def register_view(request):
-    return render(request, "login/registrar_cuenta.html")
-
-def modify_user_data_view(request):
-    if request.user.is_authenticated:
-        return render(request, "login/registrar_cuenta.html")

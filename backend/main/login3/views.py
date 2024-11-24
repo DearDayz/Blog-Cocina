@@ -5,9 +5,10 @@ from django.contrib.auth.models import Permission
 from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import MyUserSerializer, FavoritosSerializer
+from .serializers import MyUserSerializer
 from .models import MyUser
-from blog.models import Favoritos
+from blog.models import Favoritos, Receta
+from blog.serializers import FavoritosSerializer
 
 # Iniciar sesión (adaptarse cuando se conecte con el front)
 def login_user(request):
@@ -17,10 +18,10 @@ def login_user(request):
         password = request.POST['password']
         user = authenticate(request=request, username=username, password=password)
 
-        if user.tipo == "Administrador":
-            permiso = Permission.objects.get(codename='puede_ver_vistas_admin')
-            # Asignar el permiso al usuario
-            user.user_permissions.add(permiso)
+        # if user.tipo == "Administrador":
+        #     permiso = Permission.objects.get(codename='puede_ver_vistas_admin')
+        #     # Asignar el permiso al usuario
+        #     user.user_permissions.add(permiso)
 
         if user is not None:
             login(request, user)
@@ -71,20 +72,26 @@ def user_data_view(request, username):
     # Manejo de métodos no permitidos
     return Response({"error": "Método no permitido"}, status=405)
 
+@login_required
 def favoritos_view(request, recetaId=None):
+    
+    # Retorna todos los favoritos del usuario de la petición
     if request.method == 'GET':
         favoritos = Favoritos.objects.filter(usuario=request.user)
-        favoritos_list = [{"id": favorito.id, "receta": favorito.receta.id} for favorito in favoritos]
-        return JsonResponse(favoritos_list, safe=False)
+        serializer = FavoritosSerializer(favoritos, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
+    # Si la receta dada no está en los favoritos del usuario se agrega, si lo está, se elimina
     elif request.method == 'POST':
-        if Favoritos.objects.filter(usuario=request.user, receta_id=recetaId).exists():
-            Favoritos.objects.filter(usuario=request.user, receta_id=recetaId).delete()
+        if Favoritos.objects.filter(usuario=request.user, receta=recetaId).exists():
+            Favoritos.objects.filter(usuario=request.user, receta=recetaId).delete()
             return JsonResponse({"message": "Receta eliminada de favoritos"}, status=204)
-        else:
+        elif Receta.objects.filter(id=recetaId).exists():
             nuevo_favorito = Favoritos(usuario=request.user, receta_id=recetaId)
             nuevo_favorito.save()
             return JsonResponse({"id": nuevo_favorito.id, "receta": nuevo_favorito.receta.id}, status=201)
+        else:
+            return JsonResponse({"error": "No se ha encontrado una receta"}, status=404)
 
     return JsonResponse({"error": "Método no permitido"}, status=405)
 
