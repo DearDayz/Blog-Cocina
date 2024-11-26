@@ -76,5 +76,20 @@ z-index: 1500;
 display: block !important;
 }
 
+.offcanvas-body {
+    padding: 15px;
+    background-color: #f8f9fa; /* Fondo claro */
+}
+
+.list-group-item {
+    border: none; /* Sin bordes */
+    padding: 10px 15px;
+    font-size: 0.9rem;
+}
+
+.btn-primary.btn-sm {
+    font-size: 0.8rem; /* Botones compactos */
+}
+
 
 

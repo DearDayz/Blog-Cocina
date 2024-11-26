@@ -53,28 +53,19 @@ function funcionDeMierda(cambio) {
     /* QUE WEBOOOOOOOOOOOOOOOOOO */
 }
 
-
-// Variable global para mantener el valor dinámico
-let valorActual1 = 1; // Valor inicial
-
 function modificarCantidad(cambio, id) {
-    // Calcular el nuevo valor sumando el cambio
-    valorActual += cambio;
-
-    // Asegurarse de que el valor no sea menor que 1
-    if (valorActual1 < 1) {
-        valorActual1 = 1;
-    }
 
     // Obtener el campo input
-    
     const campo = document.getElementById("cantidad-" + id);
     
-    console.log(campo);
+    let valorActual = parseFloat(campo.value) + parseFloat(cambio)
+    // Asegurarse de que el valor no sea menor que 1
+    if (valorActual < 1) {
+        valorActual = 1;
+    }
     // Actualizar el valor del input usando setAttribute para modificar el atributo 'value'
-    campo.setAttribute("value", valorActual1);
+    campo.setAttribute("value", valorActual.toFixed(1));
 
     // Ver el valor actualizado en la consola
-    console.log("Nuevo valor de inputjkahsdkjahsjkdh:", campo.value); // Esto debería mostrar el valor en consola
-    console.log("NOJODAAAAA")
+    console.log("Nuevo valor de input", campo.value); // Esto debería mostrar el valor en consola
 }

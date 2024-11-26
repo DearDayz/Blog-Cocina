@@ -58,7 +58,7 @@ def mostrar_principal(request):
         categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.all()
     categorias2 = Category.objects.all()[:3]
-    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2  ,"categ_dict": categ_dict})
+    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2  ,"categ_dict": categ_dict, "categorias1": categorias1 })
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
@@ -92,6 +92,7 @@ def mostrar_buy(request):
                 request.session['session_key'] = {}
                 request.session.modified = True
                 product_facturados = ProductoFacturado.objects.filter(factura=factura)
+                print(product_facturados[0].subtotal)
                 return render(request, 'buy.html', {'factura': factura, 'product_facturados': product_facturados})
             else:
                 messages.error(request, factura)
@@ -200,7 +201,7 @@ def mostrar_catalog(request, input):
         categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.filter(category__name= input)
 
-    return render(request, 'catalog.html', {"recetas": recetas, "categ_dict": categ_dict})
+    return render(request, 'catalog.html', {"recetas": recetas, "categ_dict": categ_dict, "input": input})
 
 #rederizar vista chatbot
 

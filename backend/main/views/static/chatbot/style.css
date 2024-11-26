@@ -1,0 +1,57 @@
+/* Estilo para la caja de mensajes */
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+/* Estilo de los mensajes del chatbot */
+.chat-message {
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.chat-message.bot-message {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+}
+
+.chat-message.user-message {
+    background-color: #d1e7dd;
+    align-self: flex-end;
+}
+
+/* Divisor de mensajes */
+.chat-message + .chat-message {
+    border-top: 1px solid #ddd;
+}
+
+/* Input y botón */
+#chat-input {
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#chat-message-submit {
+    border-radius: 20px;
+}
+
+/* Estilo para la barra de navegación de chat largo */
+#chat-box {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+/* Icono en el header */
+.card-header i {
+    margin-right: 8px;
+}
+
+/* Estilo general */
+.card {
+    border: none;
+    border-radius: 10px;
+}
