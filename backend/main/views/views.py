@@ -119,13 +119,9 @@ def search(request, input):
 
 
 def mostrar_principal(request):
-    categorias1 = Category.objects.all()
-    categ_dict = {}
-    for categoria in categorias1:
-        categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.all()
     categorias2 = Category.objects.all()[:3]
-    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2  ,"categ_dict": categ_dict, "categorias1": categorias1 })
+    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2})
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
@@ -262,14 +258,8 @@ def admin_view_recipes(request):
 #rederizar vista catalog
 def mostrar_catalog(request, input):
     input = input.replace("-" , " ")
-    categorias1 = Category.objects.all()
-    categ_dict = {}
-    categorias = Category.objects.all()
-    for categoria in categorias:
-        categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.filter(category__name= input)
-
-    return render(request, 'catalog.html', {"recetas": recetas, "categ_dict": categ_dict, "input": input, "categorias1": categorias1})
+    return render(request, 'catalog.html', {"recetas": recetas, "input": input})
 
 #rederizar vista chatbot
 

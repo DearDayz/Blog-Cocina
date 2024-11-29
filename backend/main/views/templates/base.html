@@ -97,6 +97,31 @@
             </div>
         </div>
 
+        <!-- Sidebar de Catálogo -->
+        <div id="catalogSidebar" class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="catalogSidebarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="catalogSidebarLabel">Categorías</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="list-group">
+                    {% for key, value in categ_dict.items %}
+                        <a href="{% url 'catalog' key %}" class="list-group-item list-group-item-action d-flex flex-column align-items-center text-decoration-none">
+                            <!-- Imagen de la categoría -->
+                            {% for categoria in categorias1 %}
+                                {% if categoria.name == value %}
+                                    <img src="{{ categoria.imagen.url }}" alt="{{ categoria.name }}" style="width: 30px; height: 30px; object-fit: cover; margin-bottom: 10px;">
+                                {% endif %}
+                            {% endfor %}
+        
+                            <!-- Nombre de la categoría -->
+                            <span class="text-center">{{ value }}</span>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
     {% block content %}
 
         <!-- Contenido personalizado de cad pagina -->
