@@ -22,7 +22,7 @@ class Receta(models.Model):
     imagen = models.ImageField(upload_to='recetas/', blank=True, null=True, verbose_name="Imagen")
     puntuacion = models.FloatField(verbose_name="puntuacion", validators=[validate_between_zero_and_five], blank=True, default=0)
     category = models.ManyToManyField(Category, related_name='recetas')
-    date_modified = models.DateTimeField(auto_now=True)
+    date_modified = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.nombre

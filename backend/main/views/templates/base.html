@@ -49,15 +49,15 @@
                 <h5 class="offcanvas-title" id="cartSidebarLabel">Carrito de Compras</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
+            <div class="offcanvas-body" id="cartItemsContainer">
                 {% if cart_products %}
                     <!-- Contenedor con scroll para productos -->
                     <div class="cart-items" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
                         {% for producto in cart_products %}
-                            <div class="cart-item d-flex align-items-center mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                            <div class="cart-item d-flex align-items-center mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 10px;" id="cart-item-{{ producto.id }}">
                                 <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-thumbnail" style="width: 60px; height: 60px; object-fit: cover; margin-right: 10px;">
                                 <div class="cart-item-details flex-grow-1">
-                                    <p style="margin: 0; font-size: 0.9rem;"><strong>{{ producto.nombre }}</strong></p>
+                                    <p style="margin: 0; font-size: 0.9rem;"><strong>{{ producto.nombre }} ({{ producto.unidad }})</strong></p>
                                     {% for key, value in quantities.items %}
                                         {% if key == producto.id|slugify %}
                                             <p style="margin: 0; font-size: 0.8rem;">Cantidad:</p>
@@ -68,12 +68,13 @@
                                             </div>
                                         {% endif %}
                                     {% endfor %}
-                                    <p style="margin: 0; font-size: 0.8rem;">Precio: {{ producto.precio }}$</p>
+                                    <p style="margin: 0; font-size: 0.8rem;">Precio: {{ producto.precio }}$ (c/{{ producto.unidad }})</p>
                                     {% for key, value in subtotales.items %}
                                         {% if key == producto.id|slugify %}
-                                            <p style="margin: 0; font-size: 0.8rem; color: #555;">Subtotal: {{ value }}$</p>
+                                            <p id="subtotal-{{ key }}" style="margin: 0; font-size: 0.8rem; color: #555;">Subtotal: {{ value }}$</p>
                                         {% endif %}
                                     {% endfor %}
+                                    <p style="margin: 0; font-size: 0.8rem; color: #888;">Stock: {{ producto.cantidad_disponible|floatformat:1 }}</p>
                                 </div>
                                 <button class="btn btn-sm btn-danger" onclick="eliminarProducto('{{ producto.id }}')">X</button> <!-- Botón para eliminar -->
                             </div>
@@ -81,13 +82,13 @@
                     </div>
                     <!-- Total del carrito -->
                     <div class="cart-total mt-3">
-                        <p style="font-size: 1rem;"><strong>Total:</strong> {{ totals }}$</p>
+                        <p style="font-size: 1rem;"><strong>Total:</strong> <span id="total-carrito">{{ totals }}$</span></p>
                     </div>
                 {% else %}
                     <p>Tu carrito está vacío.</p>
                 {% endif %}
             </div>
-            <div class="offcanvas-footer">
+            <div class="offcanvas-footer" id="cartFooter">
                 {% if cart|length > 0 %}
                     <!-- Botón para vaciar el carrito -->
                     <button class="btn btn-outline-danger w-100 mb-2" onclick="vaciarCarrito()">Vaciar Carrito</button>
@@ -137,11 +138,105 @@
             if (valorActual < 1) {
                 valorActual = 1;
             }
-            // Actualizar el valor del input usando setAttribute para modificar el atributo 'value'
-            campo.setAttribute("value", valorActual.toFixed(1));
 
-            // Ver el valor actualizado en la consola
-            console.log("Nuevo valor de input", campo.value); // Esto debería mostrar el valor en consola
+            //Hacemos solicitud a la api para cambiar la cantidad del producto
+            $.post( "{% url 'cart_update' %}", {
+                product_id: id,
+                product_qty: valorActual,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            })
+            .done(response => {
+                // Manejo de la respuesta exitosa
+                console.log("Respuesta del servidor:", response.message);
+                // Actualizar el valor del input usando setAttribute para modificar el atributo 'value'
+                campo.setAttribute("value", valorActual.toFixed(1));
+
+                // Ver el valor actualizado en la consola
+                console.log("Nuevo valor de input", campo.value); // Esto debería mostrar el valor en consola
+
+                // Actualizar el total del carrito
+                const totalElement = document.getElementById("total-carrito");
+                totalElement.textContent = response.total.toFixed(2) + "$";
+
+                // Actualizar el subtotal del producto
+                const subtotalElement = document.getElementById("subtotal-" + id);
+                subtotalElement.textContent = "Subtotal: " + response.subtotal.toFixed(2) + "$";
+            })
+            .fail(error => {
+                // Manejo de errores
+                console.error("Error en la solicitud:", error.responseText);
+            })
+            
+        }
+
+        function eliminarProducto(id) {
+            $.post("{% url 'cart_delete' %}", {
+                product_id: id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            })
+            .done(response => {
+                // Manejo de la respuesta exitosa
+                console.log("Respuesta del servidor:", response.message);
+
+                // Actualizar el slider del carrito
+                const productCartElement = document.getElementById("cart-item-" + id);
+                productCartElement.remove(); 
+
+                // Actualizar el total del carrito
+                const totalElement = document.getElementById("total-carrito");
+                totalElement.textContent = response.total.toFixed(2) + "$";
+
+                //Actualizamos la longitud del carrito
+                console.log()
+                document.getElementById('cart-count').textContent = response.length
+
+                // Verificamos si ya no quedan productos en el carrito
+                if (response.total == 0) {
+                    // Ocultar el cartItemsContainer
+                    const cartItemsContainer = document.getElementById("cartItemsContainer");
+                    cartItemsContainer.innerHTML = "";
+                    const pElement = document.createElement("p");
+                    pElement.textContent = "Tu carrito está vacío.";
+                    cartItemsContainer.appendChild(pElement);
+
+                    //Ocultar el footer del slider del carrito
+                    const cartFooter = document.getElementById("cartFooter");
+                    cartFooter.remove();
+                }
+
+            })
+            .fail(error => {
+                // Manejo de errores
+                console.error("Error en la solicitud:", error.responseText);
+            })
+        }
+
+        function vaciarCarrito() {
+            $.post("{% url 'cart_clear' %}", {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            })
+            .done(response => {
+                // Manejo de la respuesta exitosa
+                console.log("Respuesta del servidor:", response.message);
+
+                // Actualizar el slider del carrito
+                const cartItemsContainer = document.getElementById("cartItemsContainer");
+                cartItemsContainer.innerHTML = "";
+                const pElement = document.createElement("p");
+                pElement.textContent = "Tu carrito está vacío.";
+                cartItemsContainer.appendChild(pElement);
+
+                //Ocultar el footer del slider del carrito
+                const cartFooter = document.getElementById("cartFooter");
+                cartFooter.remove();
+
+                //Actualizamos la longitud del carrito
+                document.getElementById('cart-count').textContent = response.length
+            })
+            .fail(error => {
+                // Manejo de errores
+                console.error("Error en la solicitud:", error.responseText);
+            })
         }
     </script>
 </body>
