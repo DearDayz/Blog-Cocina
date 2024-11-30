@@ -19,11 +19,8 @@ chatSocket.onmessage = function(e) {
         if (data.message === "Starting"){
             counter += 1
             message_div = document.createElement("div");
-            message_div.className = "chat-message";
-            message_content = document.createElement("div");
-            message_content.className = "chat-message-content";
             message_div.id = `${counter}`
-            message_div.appendChild(message_content)
+            message_div.classList.add('chat-message', 'bot-message');
             chat_log = document.getElementById("chat-box");
             chat_log.appendChild(message_div)
         }

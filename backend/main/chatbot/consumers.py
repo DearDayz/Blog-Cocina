@@ -11,6 +11,23 @@ class ChatConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         pass
 
+    # def receive(self, text_data):
+    #     text_data_json = json.loads(text_data)
+    #     message = text_data_json["message"]
+    #     response_stream = modeloIA.stream_response(message)
+
+    #     self.send(text_data=json.dumps({"type": "user", "message": message}))
+
+    #     self.send(text_data=json.dumps({"type": "chatbot", "message": "Starting"}))
+
+    #     for chunk in response_stream:
+    #         if chunk.choices and chunk.choices[0].delta.content:
+    #             content = chunk.choices[0].delta.content
+    #             self.send(text_data=json.dumps({"type": "chatbot", "message": content}))
+    #             print(content, end="", flush=True)
+        
+    #     self.send(text_data=json.dumps({"type": "chatbot", "message": "Finished"}))
+
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
@@ -21,9 +38,10 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({"type": "chatbot", "message": "Starting"}))
 
         for chunk in response_stream:
-            if chunk.choices and chunk.choices[0].delta.content:
-                content = chunk.choices[0].delta.content
-                self.send(text_data=json.dumps({"type": "chatbot", "message": content}))
-                print(content, end="", flush=True)
+            text = chunk.text
+            if text.lower().startswith("**Respuesta:** "):
+                text = text[len("**Respuesta:** "):].strip()
+            self.send(text_data=json.dumps({"type": "chatbot", "message": text}))
+            print(text, end="", flush=True)
         
         self.send(text_data=json.dumps({"type": "chatbot", "message": "Finished"}))
