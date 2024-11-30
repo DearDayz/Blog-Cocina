@@ -38,7 +38,7 @@
                             <td>{{ receta.id }}</td>
                             <td>{{ receta.nombre }}</td>
                             <td class="Botones_centrado">
-                            <button id="{{ receta.id }}" class="abrir_detalles" onclick="detalle_receta(e)">Detalles</button>
+                            <button id="{{ receta.id }}" class="abrir_detalles" onclick="detalle_receta(event)">Detalles</button>
                             <button id="{{ receta.id }}" class="eliminar_boton" onclick="delete_receta(event)">Eliminar</button>
                             </td>
                         </tr>
