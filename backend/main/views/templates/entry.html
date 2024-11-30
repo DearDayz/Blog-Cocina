@@ -31,16 +31,17 @@
           </div>
         </article>
 
-        <div class="tooltip-container" style="margin-left: 90%;">
+        <div class="tooltip-container" style="margin-left: 90%">
           <button type="button" class="btn-tooltip" id="add-to-cart-btn" value="{{ receta.id }}">
               <i class="fa fa-cart-arrow-down"></i>
           </button>
           <span class="tooltip-message" id="tooltip-add-to-cart">Guardar ingredientes en carrito</span>
         </div>
+        <span>Personas:</span>
         <div class="input-container">
-            <button class="button" onclick="modificarValor(-1)">-</button>
+            <button class="button" onclick="funcionDeMierda(-1)">-</button>
             <input type="text" id="campo" class="input-field" value="1" >
-            <button class="button" onclick="modificarValor(1)">+</button>
+            <button class="button" onclick="funcionDeMierda(1)">+</button>
         </div>
           
 
@@ -49,7 +50,7 @@
       <div class="col-md-4">
         <div class="position-sticky" style="top: 2rem;">
             <div class="p-4 mb-3 bg-body-tertiary rounded">
-                <h4 class="fst-italic" style="margin-top: 30%;">Valoración</h4>
+                <h4 class="fst-italic" style="margin-top: 30%;">Valorar:</h4>
                 <div id="star-rating" class="d-flex">
                   {% if user.is_authenticated and stars_valoradas %}
                     {% for i in stars_valoradas %}
@@ -122,7 +123,7 @@
 
 
   <script src=="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}" ></script>
-  <script src="{% static 'entry/entry.js' %}"></script>
+  <script src="{% static 'entry/entry1.js' %}"></script>
   <script src=="{% static 'assets/js/color-modes.js' %}" ></script>
   <script>
     //Inyectamos codigo jquery

@@ -71,22 +71,9 @@
 
             <!-- START THE FEATURETTES -->
             <div class="album py-5 bg-body-tertiary">
-                <div class="dropdown" style="margin-left: 1%;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-bars"></i> <!-- Ícono de hamburguesa -->
-                    </button>
-                    <ul class="dropdown-menu">
+                
 
-                        {% for key,value in categ_dict.items %}
-                            <li>
-                                <a href="{% url 'catalog' key %}">{{ value }}
-                                    
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    
-                </div>
+                
                 
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -105,6 +92,7 @@
                                                         <i class="fa fa-external-link-square"></i> <!-- Icono de "View" -->
                                                     </button>
                                                 </a>
+                                                
                                                 <button id="{{ receta.id }}" type="button" class="btn btn-sm btn-outline-secondary" onclick="add_favorite(event)">
                                                     <i class="fa-regular fa-heart"></i> <!-- Icono de "Edit" -->
                                                 </button>

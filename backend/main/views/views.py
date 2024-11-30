@@ -16,6 +16,73 @@ from ecommerce.models import Producto, Factura, ProductoFacturado
 from login3.models import MyUser
 from django.contrib import messages
 
+def cart_clear(request):
+    if request.method == "POST":
+        cart = Cart(request)
+        cart.clear()
+
+        #Pasamos la nueva longitud del carrito
+        new_length = len(cart)
+
+        return JsonResponse({"messages":"Carrito vaciado correctamente", "length": new_length}, status=200)
+    else:
+        return JsonResponse({"error": "Método no permitido"}, status=405)
+
+def cart_delete(request):
+    cart = Cart(request)
+    if request.method == "POST":
+        #Obtenemos el id
+        product_id = request.POST.get("product_id")
+
+        if not(product_id and product_id.isnumeric() and int(product_id) >= 1):
+            return JsonResponse({"error": "Datos invalidos"}, status=400)
+
+        product_id = int(product_id)
+        # Call delete Function in Cart
+        try:
+            cart.delete(product=product_id)
+        except:
+            return JsonResponse({"error": "Producto no encontrado"}, status=400)
+        
+        #Pasamos el nuevo total
+        new_total = float(round(cart.card_total(), 2))
+        #Pasamos la nueva longitud del carrito
+        new_length = len(cart)
+
+        response = JsonResponse({"message":"Producto eliminado correctamente", "total": new_total, "length": new_length}, status=200)
+        """ messages.success(request, ("Product has Been Delete of Cart...")) """
+        return response
+    else:
+        return JsonResponse({"error": "Método no permitido"}, status=405)
+
+
+def cart_update(request):    
+    cart = Cart(request)
+    if request.method == "POST":
+        #Obtenemos el id
+        product_id = request.POST.get("product_id")
+        product_qty = request.POST.get("product_qty")
+
+        if not(product_id and product_id.isnumeric() and int(product_id) >= 1 and product_qty and es_numerico_y_mayor_que_uno(product_qty)):
+            return JsonResponse({"error": "Datos invalidos"}, status=400)
+
+        product_id = int(product_id)
+        product_qty = float(product_qty)
+        try:
+            cart.update(product=product_id, quantity=product_qty)
+        except:
+            return JsonResponse({"error": "Receta no encontrada"}, status=400)
+        
+        #Pasamos el nuevo total
+        new_total = float(round(cart.card_total(), 2))
+        #Obtenemos el nuevo sub total
+        new_subtotal = round(cart.get_subtotales()[str(product_id)], 2)
+        
+        response = JsonResponse({"message": "Cantidad actualizada correctamente", "total": new_total, "subtotal": new_subtotal}, status=200)
+        """ messages.success(request, ("Your Cart Has Been Updated...")) """
+        return response
+    else:
+        return JsonResponse({"error": "Método no permitido"}, status=405)
 
 def create_valoracion(request):
     if request.user.is_authenticated:
@@ -24,7 +91,7 @@ def create_valoracion(request):
             puntuacion = data.get("puntuacion")
             id_receta = data.get("id_receta")
             
-            if not(puntuacion or id_receta or puntuacion.isnumeric() or id_receta.isnumeric() or int(puntuacion) > 5 or int(puntuacion) < 0):
+            if not(puntuacion and id_receta and puntuacion.isnumeric() and id_receta.isnumeric() and int(puntuacion) <= 5 and int(puntuacion) > 0):
                 return JsonResponse({"error": "Datos invalidos"}, status=400)
             else:
                 receta = get_object_or_404(Receta, id=id_receta)
@@ -52,13 +119,9 @@ def search(request, input):
 
 
 def mostrar_principal(request):
-    categorias1 = Category.objects.all()
-    categ_dict = {}
-    for categoria in categorias1:
-        categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.all()
     categorias2 = Category.objects.all()[:3]
-    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2  ,"categ_dict": categ_dict})
+    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2})
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
@@ -92,6 +155,7 @@ def mostrar_buy(request):
                 request.session['session_key'] = {}
                 request.session.modified = True
                 product_facturados = ProductoFacturado.objects.filter(factura=factura)
+                print(product_facturados[0].subtotal)
                 return render(request, 'buy.html', {'factura': factura, 'product_facturados': product_facturados})
             else:
                 messages.error(request, factura)
@@ -214,13 +278,8 @@ def admin_view_empleados(request):
 #rederizar vista catalog
 def mostrar_catalog(request, input):
     input = input.replace("-" , " ")
-    categ_dict = {}
-    categorias = Category.objects.all()
-    for categoria in categorias:
-        categ_dict[categoria.name.replace(" ", "-")] = categoria.name
     recetas = Receta.objects.filter(category__name= input)
-
-    return render(request, 'catalog.html', {"recetas": recetas, "categ_dict": categ_dict})
+    return render(request, 'catalog.html', {"recetas": recetas, "input": input})
 
 #rederizar vista chatbot
 
@@ -273,3 +332,14 @@ def procesar_compra(data, request):
         return factura
     else:
         return f"El producto {producto_no_stock} no tiene stock suficiente. Disponible: {disponible} {unidad}"
+
+#Validacion
+def es_numerico_y_mayor_que_uno(cadena):
+    try:
+        # Intentar convertir la cadena a un número flotante
+        numero = float(cadena)
+        # Verificar si es mayor o igual a 1
+        return numero >= 1
+    except ValueError:
+        # Si no se puede convertir a float, no es numérico
+        return False

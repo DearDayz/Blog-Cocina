@@ -2,36 +2,37 @@
 {% load static %}
 {% block content %}
 
-
-<div class="container">
+<!-- Contenedor con la imagen y el chatbot -->
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    Chatbot
+        <!-- Columna para la imagen del robot -->
+        <div class="col-md-6" style="padding:0">
+            <img src="{% static 'img/bit.png' %}" class="img-fluid" alt="Chatbot" style="width: 100%; height: auto;">
+        </div>
+
+        <!-- Columna para el chatbot -->
+        <div class="col-md-6" style="margin-top: 10%;padding:0">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-question-circle"></i> Asistente Virtual
                 </div>
-                <div class="card-body">
-                    <div class="chat-box" id="chat-box">
-                        <div class="chat-message">
-                            <div class="chat-message-content">
-                                <p>Hola, soy tu asistente virtual. ¿En qué puedo ayudarte?</p>
-                            </div>
+                <div class="card-body" style="height: 400px; overflow-y: auto;" id="chat-box">
+                    <div class="chat-message bot-message">
+                        <div class="chat-message-content">
+                            <p>Hola, soy tu asistente virtual. ¿En qué puedo ayudarte?</p>
                         </div>
                     </div>
+                    <!-- Aquí se agregan más mensajes del chatbot dinámicamente -->
                 </div>
                 <div class="card-footer">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="chat-input" placeholder="Escribe un mensaje...">
-                            <button id="chat-message-submit" class="btn btn-primary">Enviar</button>
-                        </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="chat-input" placeholder="Escribe un mensaje...">
+                        <button id="chat-message-submit" class="btn btn-primary">Enviar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-                
-
-
-
 
 {% endblock %}

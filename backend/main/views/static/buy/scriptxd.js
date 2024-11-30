@@ -1,5 +1,7 @@
-//ver si esta abriendo el script
+
+ //ver si esta abriendo el script
 console.log("script.js cargado");
+console.log("HOLAAAA")
 
 window.addEventListener('load', function() {
     // Mostrar el modal automáticamente cuando la página se carga
@@ -38,4 +40,3 @@ document.getElementById("downloadPdfDirect").addEventListener("click", function 
     // Guardar el archivo PDF
     doc.save("Factura.pdf");
 });
-  

@@ -50,31 +50,45 @@ function funcionDeMierda(cambio) {
 
     // Ver el valor actualizado en la consola
     console.log("Nuevo valor de input:", campo.value); // Esto debería mostrar el valor en consola
-    /* QUE WEBOOOOOOOOOOOOOOOOOO */
 }
 
-
-// Variable global para mantener el valor dinámico
-let valorActual1 = 1; // Valor inicial
-
 function modificarCantidad(cambio, id) {
-    // Calcular el nuevo valor sumando el cambio
-    valorActual += cambio;
-
-    // Asegurarse de que el valor no sea menor que 1
-    if (valorActual1 < 1) {
-        valorActual1 = 1;
-    }
 
     // Obtener el campo input
-    
     const campo = document.getElementById("cantidad-" + id);
     
-    console.log(campo);
-    // Actualizar el valor del input usando setAttribute para modificar el atributo 'value'
-    campo.setAttribute("value", valorActual1);
+    let valorActual = parseFloat(campo.value) + parseFloat(cambio)
+    // Asegurarse de que el valor no sea menor que 1
+    if (valorActual < 1) {
+        valorActual = 1;
+    }
 
-    // Ver el valor actualizado en la consola
-    console.log("Nuevo valor de inputjkahsdkjahsjkdh:", campo.value); // Esto debería mostrar el valor en consola
-    console.log("NOJODAAAAA")
+    //Hacemos solicitud a la api para cambiar la cantidad del producto
+    $.post( "{% url 'cart_update' %}", {
+        product_id: id,
+        product_qty: valorActual,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+    })
+    .done(response => {
+        // Manejo de la respuesta exitosa
+        console.log("Respuesta del servidor:", response.message);
+        // Actualizar el valor del input usando setAttribute para modificar el atributo 'value'
+        campo.setAttribute("value", valorActual.toFixed(1));
+
+        // Ver el valor actualizado en la consola
+        console.log("Nuevo valor de input", campo.value); // Esto debería mostrar el valor en consola
+
+        // Actualizar el total del carrito
+        const totalElement = document.getElementById("total-carrito");
+        totalElement.textContent = response.total.toFixed(2) + "$";
+
+        // Actualizar el subtotal del producto
+        const subtotalElement = document.getElementById("subtotal-" + id);
+        subtotalElement.textContent = "Subtotal: " + response.subtotal.toFixed(1) + "$";
+    })
+    .fail(error => {
+        // Manejo de errores
+        console.error("Error en la solicitud:", error.responseText);
+    })
+    
 }

@@ -15,8 +15,15 @@
                 <a class="nav-link active" aria-current="page" href="{% url 'vista pagina principal' %}">Inicio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Productos</a>
+                <a 
+                    class="nav-link" 
+                    data-bs-toggle="offcanvas" 
+                    data-bs-target="#catalogSidebar" 
+                    href="#">
+                    Categorías
+                </a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link " aria-disabled="true" href="{% url 'chatbot_produccion' %}">Chatbot</a>
             </li>
@@ -49,21 +56,23 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary" id="profileBtn" onclick="redirigir('/user-data/')">
                     <i class="fa fa-user"></i> <!-- Icono de "User" -->
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#cartModal">
-                   
+                <!-- Botón para abrir el sidebar del carrito -->
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar" aria-controls="cartSidebar">
                     <i class="fa fa-shopping-cart"></i> <!-- Icono de "Shopping Cart" -->
                     <span id="cart-count" style="
-        font-size: 0.75rem;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        text-align: center;
-        position: absolute;
-        width: 1.5em;
-        height: 1.5em;
-        line-height: 1.5em; /* Centra verticalmente el texto */
-        display: inline-block;
-    ">{{ cart|length }}</span>
+                        font-size: 0.75rem;
+                        background-color: red;
+                        color: white;
+                        border-radius: 50%;
+                        text-align: center;
+                        position: absolute;
+                        width: 1.5em;
+                        height: 1.5em;
+                        line-height: 1.5em; /* Centra verticalmente el texto */
+                        display: inline-block;
+                    ">
+                        {{ cart|length }}
+                    </span>
                 </button>
             </div>
         </div>
