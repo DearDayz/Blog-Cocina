@@ -24,28 +24,59 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre_recetas</th>
+                    <th>Nombre</th>
                     <th class="Central">Acción</th>
+                    {% if uso == "empleados" %}
+                        <th>Activo</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
-                {% for receta in recetas %}
-                    <tr>
-                        <td>{{ receta.id }}</td>
-                        <td>{{ receta.nombre }}</td>
-                        <td class="Botones_centrado">
-                        <button id="abrir_modificacion">Modificar</button>
-                        <button class="abrir_detalles">Detalles</button>
-                        <button id="{{ receta.id }}" class="eliminar_boton" onclick="delete_receta(event)">Eliminar</button>
-                        </td>
-                    </tr>
-                {% endfor %}
+                {% if uso == "recetas" %}
+                    {% for receta in recetas %}
+                        <tr>
+                            <td>{{ receta.id }}</td>
+                            <td>{{ receta.nombre }}</td>
+                            <td class="Botones_centrado">
+                            <button id="{{ receta.id }}" class="abrir_detalles" onclick="detalle_receta(e)">Detalles</button>
+                            <button id="{{ receta.id }}" class="eliminar_boton" onclick="delete_receta(event)">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                
+                {% if uso == "empleados" %}
+                    {% for empleado in empleados %}
+                        <tr>
+                            <td>{{ empleado.cedula }}</td>
+                            <td>{{ empleado.nombre }} {{ empleado.nombre }}</td>
+                            <td>{{ empleado.is_active }}</td>
+                            <td class="Botones_centrado">
+                                <form id="activar" action="{% url 'userdata' username=empleado.username %}">
+                                    {% csrf_token %}
+                                    <input type="checkbox" hidden>
+                                    <button class="abrir_detalles" type="submit">Desactivar</button>
+                                </form>
+                                <form id="activar" action="{% url 'userdata' username=empleado.username %}">
+                                    {% csrf_token %}
+                                    <input type="checkbox" checked hidden>
+                                    <button class="abrir_detalles" type="submit">Activar</button>
+                                </form>
+                            <button id="{{ empleado.cedula }}" class="abrir_detalles" onclick="employee_data(event)">Detalles</button>
+                            <button id="{{ empleado.username }}" class="eliminar_boton" onclick="delete_employee(event)">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
         <div class="pagination">
             <button class="page-button" onclick="changePage(-1)">Anterior</button>
             <span id="pageInfo">Página 1 de 2</span>
             <button class="page-button" onclick="changePage(1)">Siguiente</button>
+            {% if uso == "empleados" %}
+                    <button class="page-button" onclick="window.location.pathname = 'register-employee/'">Agregar empleado</button>
+            {% endif %}
         </div>
     </div>
 </body>

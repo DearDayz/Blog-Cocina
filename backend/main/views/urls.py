@@ -19,11 +19,14 @@ urlpatterns = [
     path('admin-view/', admin_view, name="admin"),
     path('add-recipe/', add_recipe, name="add_recipe"),
     path('user-data/', client_view, name="user_view"),
+    path('user-data/<str:cedula>', employee_details_view, name="user_view"),
     path('login/', login_view, name="login_view"),
     path('register/', register_view, name="register_view"),
+    path('register-employee/', register_empleado_view, name="register-employee-view"),
     path('logout/', logout_user, name="logout"),
     path('manage-recipes/', manage_recipes, name="manage-recipes"),
     path('admin-view-recipes/', admin_view_recipes, name="admin-view-recipes"),
+    path('admin-view-employees/', admin_view_empleados, name="admin-view-employees"),
     
     
 ]

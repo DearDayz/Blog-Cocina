@@ -42,10 +42,6 @@ displayTable();
 
 var abrir_modificacion = document.getElementById('abrir_modificacion');
 
-abrir_modificacion.addEventListener('click',function(){
-    window.location.href = 'Modificar_recetas.html';
-})
-
 async function delete_receta(e) {
     const csrfToken = getCookie("csrftoken")
     await fetch(`http://127.0.0.1:8000/blog-api/recetas/${e.currentTarget.id}/`, {
@@ -62,6 +58,31 @@ async function delete_receta(e) {
     .catch((err) => {
         console.error(err)
     })
+}
+async function delete_employee(e) {
+    const csrfToken = getCookie("csrftoken")
+    await fetch(`http://127.0.0.1:8000/users/v2/delete/${e.currentTarget.id}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken 
+        },
+    })
+    .then(async (res) => {
+        location.reload();
+        console.log(res)
+    })
+    .catch((err) => {
+        console.error(err)
+    })
+}
+
+function employee_data(e) {
+    window.location.pathname = `user-data/${e.currentTarget.id}`
+}
+
+function detalle_receta(e) {
+    window.location.pathname = `vista-entry/${e.currentTarget.id}`
 }
 
 function getCookie(name) {

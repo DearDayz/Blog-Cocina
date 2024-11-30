@@ -166,15 +166,27 @@ def client_view(request):
     else:
         return redirect("login_view")
     
+@login_required
+def employee_details_view(request, cedula):
+    if request.user.is_authenticated and request.user.tipo == "Administrador":
+        empleado = MyUser.objects.get(cedula=cedula)
+        if empleado:
+            return render(request, "login/Cliente.html", {"user": empleado})
+    else:
+        return redirect("login_view")
+    
 def login_view(request):
     return render(request, "login/login.html")
 
 def register_view(request):
-    return render(request, "login/registrar_cuenta.html")
+    return render(request, "login/registrar_cuenta.html", {"uso": "add_cliente"})
+
+def register_empleado_view(request):
+    return render(request, "login/registrar_cuenta.html", {"uso": "add_empleado"})
 
 @login_required
 def modify_user_data_view(request):
-    return render(request, "login/registrar_cuenta.html")
+    return render(request, "login/registrar_cuenta.html", {"uso": "modificar"})
 
 @login_required
 def manage_recipes(request):
@@ -187,7 +199,15 @@ def manage_recipes(request):
 def admin_view_recipes(request):
     if request.user.tipo == "Administrador":
         recetas = Receta.objects.all()
-        return render(request, "login/Recetas_Detalles.html", {"recetas": recetas})
+        return render(request, "login/Recetas_Detalles.html", {"recetas": recetas, "uso": "recetas"})
+    else:
+        return redirect("login_view")
+    
+@login_required
+def admin_view_empleados(request):
+    if request.user.tipo == "Administrador":
+        empleados = MyUser.objects.filter(tipo = "Administrador")
+        return render(request, "login/Recetas_Detalles.html", {"empleados": empleados, "uso": "empleados"})
     else:
         return redirect("login_view")
 

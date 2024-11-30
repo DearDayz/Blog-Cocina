@@ -13,7 +13,7 @@
 <body>
 
     <div class='wrapper'>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and uso == 'modificar' %}
             <form method="post" action="{% url 'userdata' username=user.username %}">
         {% else %}
             <form method="post" action="{% url 'register' %}">
@@ -24,9 +24,9 @@
             <div class="Cuenta_Real">
                 <div class="parte1">
                     <label for="username" class="inf_titulo">Nombre del Cuenta</label>
-                    <input name="username" value="{% if user.is_authenticated %}{{user.username}}{% else %}{% endif %}"  type="text" placeholder='Ej: Alfredo100' class="input_mitad" required />
+                    <input name="username" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.username}}{% else %}{% endif %}"  type="text" placeholder='Ej: Alfredo100' class="input_mitad" required />
                 </div>
-                {% if not user.is_authenticated %}
+                {% if uso != 'modificar'  %}
                     <div class="parte1">
                         <label for="password" class="inf_titulo">Contraseña del Cuenta</label>
                         <input name="password" type="password" class="input_mitad" placeholder="Mínimo 8 caracteres" required />
@@ -37,22 +37,22 @@
             <div class="Cuenta_Real">
                 <div class="parte1">
                     <label for="nombre" class="inf_titulo">Nombre del Usuario</label>
-                    <input name="nombre" value="{% if user.is_authenticated %}{{user.nombre}}{% else %}{% endif %}" type="text" placeholder='Ej: Alfredo' class="input_mitad" required />
+                    <input name="nombre" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.nombre}}{% else %}{% endif %}" type="text" placeholder='Ej: Alfredo' class="input_mitad" required />
                 </div>
                 <div class="parte1">
                     <label for="apellido" class="inf_titulo">Apellido del Usuario</label>
-                    <input name="apellido" value="{% if user.is_authenticated %}{{user.apellido}}{% else %}{% endif %}" type="text" class="input_mitad" placeholder="Ej: Rodriguez" required />
+                    <input name="apellido" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.apellido}}{% else %}{% endif %}" type="text" class="input_mitad" placeholder="Ej: Rodriguez" required />
                 </div>
             </div>
 
             <div class="parte2">
                 <label for="cedula" class="ceshi_biaoti">Cédula</label>
-                <input name="cedula" type="text" value="{% if user.is_authenticated %}{{user.cedula}}{% else %}{% endif %}" placeholder='Ej: 30948291' required />
+                <input name="cedula" type="text" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.cedula}}{% else %}{% endif %}" placeholder='Ej: 30948291' required />
             </div>
 
             <div class="parte2">
                 <label for="correo" class="ceshi_biaoti">Correo del Usuario</label>
-                <input name="correo" value="{% if user.is_authenticated %}{{user.correo}}{% else %}{% endif %}" type="text" placeholder='Ej: Alfredowuuuu@example.com' required />
+                <input name="correo" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.correo}}{% else %}{% endif %}" type="text" placeholder='Ej: Alfredowuuuu@example.com' required />
             </div>
 
             <div class="parte2">
@@ -66,16 +66,16 @@
                         <option value="">0426</option>
                         <option value="">0212</option>
                     </select> -->
-                    <input name="telefono" type="text" value="{% if user.is_authenticated %}{{user.telefono}}{% else %}{% endif %}" placeholder='Ej: 8888-8888888' required />
+                    <input name="telefono" type="text" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.telefono}}{% else %}{% endif %}" placeholder='Ej: 8888-8888888' required />
                 </div>
             </div>
 
             <div class="parte2">
                 <label for="direccion" class="ceshi_biaoti">Dirección del Usuario</label>
-                <input name="direccion" value="{% if user.is_authenticated %}{{user.direccion}}{% else %}{% endif %}" type="text" placeholder='Ej: San Diego' required />
+                <input name="direccion" value="{% if user.is_authenticated and uso == 'modificar'%}{{user.direccion}}{% else %}{% endif %}" type="text" placeholder='Ej: San Diego' required />
             </div>
 
-            <input type="text" name="tipo" value="Cliente" style="display: none;">
+            <input type="text" name="tipo" value="{% if uso == 'add_cliente' %}Cliente{% elif uso == 'add_empleado' %}Administrador{% endif %}" style="display: none;">
 
             <button type='submit'>Entrar</button>
         </form>

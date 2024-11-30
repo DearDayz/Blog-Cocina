@@ -9,6 +9,7 @@ from .serializers import MyUserSerializer
 from .models import MyUser
 from blog.models import Favoritos, Receta
 from blog.serializers import FavoritosSerializer
+from rest_framework.decorators import api_view
 
 # Iniciar sesión (adaptarse cuando se conecte con el front)
 def login_user(request):
@@ -42,15 +43,16 @@ class RegisterUser(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         user = authenticate(request=request, username=request.data["username"], password=request.data["password"])
-        if user: login(request, user)
+        if user and not request.user.is_authenticated: login(request, user)
         return redirect("/vista-pagina-principal/")
 
 @login_required
+@api_view(["GET", "POST"])
 def user_data_view(request, username):
     # Verifica si el método es GET o POST
     if request.method == 'GET':
         # Verifica si el usuario autenticado es el mismo que el que se solicita o tiene permiso
-        if request.user.username == username or request.user.has_perm("login3.ver_datos_usuario"):
+        if request.user.username == username or request.user.tipo == "Administrador":
             user = get_object_or_404(MyUser, username=username)
             serializer = MyUserSerializer(user)
             return Response(serializer.data)
@@ -59,7 +61,7 @@ def user_data_view(request, username):
 
     elif request.method == 'POST':
         # Verifica si el usuario autenticado es el mismo que el que se solicita o tiene permiso
-        if request.user.username == username or request.user.has_perm("login3.modificar_datos_usuario"):
+        if request.user.username == username or request.user.tipo == "Administrador":
             user = get_object_or_404(MyUser, username=username)
             serializer = MyUserSerializer(user, data=request.POST, partial=True)  # Permite actualizaciones parciales
             if serializer.is_valid():
@@ -71,6 +73,15 @@ def user_data_view(request, username):
 
     # Manejo de métodos no permitidos
     return Response({"error": "Método no permitido"}, status=405)
+
+@login_required
+def delete_user_view(request, username):
+    if request.method == 'DELETE' and request.user.tipo == "Administrador":
+        user = get_object_or_404(MyUser, username=username)
+        user.delete() 
+        return JsonResponse({"message": "Usuario eliminado correctamente."}, status=204)
+    
+    return JsonResponse({"error": "Método no permitido."}, status=405)
 
 @login_required
 def favoritos_view(request, recetaId=None):
