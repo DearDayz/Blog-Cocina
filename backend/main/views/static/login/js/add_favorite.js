@@ -1,6 +1,8 @@
 async function add_favorite(e) {
     const csrfToken = getCookie("csrftoken")
-    await fetch(`http://127.0.0.1:8000/users/v2/favorites/${e.currentTarget.id}/`, {
+    const button = e.currentTarget; // El botón clickeado
+    const icon = document.getElementById(`heart-icon-${button.id}`);  // Icono del corazón
+    await fetch(`/users/v2/favorites/${e.currentTarget.id}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -8,12 +10,34 @@ async function add_favorite(e) {
         }
     })
     .then(async (res) => {
-        console.log(res)
+        if (res.status === 201) {
+            console.log("Receta agregada a favoritos");
+
+            // Cambiar el icono a un corazón relleno (rojo)
+            icon.classList.remove("fa-regular", "fa-heart");
+            icon.classList.add("fa-solid", "fa-heart");  // Cambiar a corazón relleno
+
+            // Cambiar el color del corazón a rojo
+            icon.style.color = "red";  // Cambiar color al hacer clic
+        } else if (res.status === 204) {
+            console.log("Rceta eliminada de favoritos");
+
+            // Cambiar el icono a un corazón vacío (gris)
+            icon.classList.remove("fa-solid", "fa-heart");
+            icon.classList.add("fa-regular", "fa-heart");  // Cambiar a corazón vacío
+
+            // Cambiar el color del corazón a gris
+            icon.style.color = "gray";
+        }
+        else {
+            console.error('Error: No se esperaba este estado:', res.status);
+        }
     })
     .catch((err) => {
         console.error(err)
     })
 }
+
 
 function getCookie(name) {
     let cookieValue = null;

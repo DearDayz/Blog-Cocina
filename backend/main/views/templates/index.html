@@ -94,7 +94,7 @@
                                                 </a>
                                                 
                                                 <button id="{{ receta.id }}" type="button" class="btn btn-sm btn-outline-secondary" onclick="add_favorite(event)">
-                                                    <i class="fa-regular fa-heart"></i> <!-- Icono de "Edit" -->
+                                                    <i id="heart-icon-{{ receta.id }}" class="fa-regular fa-heart"></i> <!-- Icono de "Edit" -->
                                                 </button>
                                             </div>
                                             <i class="fa fa-star" aria-hidden="true"> {{ receta.puntuacion }}</i>
