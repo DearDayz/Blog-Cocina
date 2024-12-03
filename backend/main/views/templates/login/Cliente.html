@@ -24,7 +24,7 @@
                 </div>
 
                 {% if user.tipo == "Administrador" %}
-                    <div class="bloque_opcion">
+                    <div class="bloque_opcion" onclick="window.location.pathname = 'admin-view-products/'">
                         <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
                         <span>Inventario</span>
                     </div>
@@ -45,12 +45,7 @@
                     </div>
                 {% endif %}
 
-                <div class="bloque_opcion">
-                    <img src="{% static 'login/resource/Admin/pedido historial icon 2.png' %}" alt="icono_login" width="24px" height="24px">
-                    <span>Pedido</span>
-                </div>
-
-                <div class="bloque_opcion">
+                <div class="bloque_opcion" onclick="window.location.pathname = 'facturas-view/'">
                     <img src="{% static 'login/resource/Admin/pedido historial icon.png' %}" alt="icono_login" width="24px" height="24px">
                     <span>Historial</span>
                 </div>

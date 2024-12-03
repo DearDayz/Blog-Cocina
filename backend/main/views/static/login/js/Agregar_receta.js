@@ -1,9 +1,3 @@
-const Regresar_anterior = document.getElementById('boton_regresarrr');
-
-Regresar_anterior.addEventListener('click',function(){
-    window.location.href = 'Cliente.html';
-})
-
 function previewImage(event) {
     const fileInput = event.target;
     const imgPreview = document.getElementById('imgPreview');

@@ -204,24 +204,42 @@ def admin_view(request):
 
 @login_required
 def add_recipe(request):
+    if request.user.tipo == "Administrador":
+        categorias = Category.objects.all()
+        productos = Producto.objects.all()
+        categorias_lista = [
+            {
+                "id": c.id,
+                "name": c.name,
+            }
+            for c in categorias
+        ]
+        productos_lista = [
+            {
+                "id": p.id,
+                "nombre": p.nombre,
+            }
+            for p in productos
+        ]
+        return render(request, "login/Agregar_receta.html", {"categorias": categorias_lista, "productos": productos_lista, "uso": "agg_recetas"})
+    else:
+        return redirect("login_view")
     
-    categorias = Category.objects.all()
-    productos = Producto.objects.all()
-    categorias_lista = [
-        {
-            "id": c.id,
-            "name": c.name,
-        }
-        for c in categorias
-    ]
-    productos_lista = [
-        {
-            "id": p.id,
-            "nombre": p.nombre,
-        }
-        for p in productos
-    ]
-    return render(request, "login/Agregar_receta.html", {"categorias": categorias_lista, "productos": productos_lista})
+@login_required
+def add_product(request):
+    if request.user.tipo == "Administrador":
+        return render(request, "login/Agregar_receta.html", {"uso": "agg_productos"})
+    else:
+        return redirect("login_view")
+    
+@login_required
+def modify_product(request, producto_id):
+    if request.user.tipo == "Administrador":
+        producto = Producto.objects.get(id = producto_id)
+        print(producto, producto_id)
+        return render(request, "login/Agregar_receta.html", {"uso": "agg_productos", "producto": producto})
+    else:
+        return redirect("login_view")
 
 @login_required
 def client_view(request):
@@ -245,8 +263,12 @@ def login_view(request):
 def register_view(request):
     return render(request, "login/registrar_cuenta.html", {"uso": "add_cliente"})
 
+@login_required
 def register_empleado_view(request):
-    return render(request, "login/registrar_cuenta.html", {"uso": "add_empleado"})
+    if request.user.tipo == "Administrador":
+        return render(request, "login/registrar_cuenta.html", {"uso": "add_empleado"})
+    else:
+        return redirect("login_view")
 
 @login_required
 def modify_user_data_view(request):
@@ -258,6 +280,12 @@ def manage_recipes(request):
         return render(request, "login/Admin_Recetas.html")
     else:
         return redirect("login_view")
+
+@login_required
+def facturas_view(request):
+    facturas = Factura.objects.filter(user = request.user.cedula)
+    print(facturas)
+    return render(request, "login/Recetas_Detalles.html", {"facturas": facturas, "uso": "facturas"})
     
 @login_required
 def admin_view_recipes(request):
@@ -272,6 +300,14 @@ def admin_view_empleados(request):
     if request.user.tipo == "Administrador":
         empleados = MyUser.objects.filter(tipo = "Administrador")
         return render(request, "login/Recetas_Detalles.html", {"empleados": empleados, "uso": "empleados"})
+    else:
+        return redirect("login_view")
+    
+@login_required
+def admin_view_productos(request):
+    if request.user.tipo == "Administrador":
+        productos = Producto.objects.all()
+        return render(request, "login/Recetas_Detalles.html", {"productos": productos, "uso": "productos"})
     else:
         return redirect("login_view")
 
@@ -343,3 +379,6 @@ def es_numerico_y_mayor_que_uno(cadena):
     except ValueError:
         # Si no se puede convertir a float, no es numérico
         return False
+    
+def redirect_to_main(request):
+    return redirect("vista pagina principal")

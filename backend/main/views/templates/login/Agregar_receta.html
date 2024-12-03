@@ -19,193 +19,258 @@
     </header>
     <main>
         <div class="contenedor">
-            <form action="{% url 'recetas-list' %}" method="post" class="Tianbiao" enctype="multipart/form-data">
-                {% csrf_token %} 
-                <h1>¡Agregar nueva recetas!</h1>
+                {% if uso == "agg_recetas" %}
+                <form action="{% url 'recetas-list' %}" method="post" class="Tianbiao" enctype="multipart/form-data">
+                    {% csrf_token %} 
+                    <h1>¡Agregar nueva recetas!</h1>
 
-                <div class="contenedor2">
-                    <div class="xinxi">
-                        <label for="nombre">Nombre de recetas</label>
-                        <input name="nombre" type="text" placeholder="Ej: Pizza con manzana">
-                    </div>
-    
-                    <div class="xinxi">
-                        <label for="descripcion">Descripción de receta</label>
-                        <input name="descripcion" type="text" placeholder="Ej: Manzana, Jamón...">
-                    </div>
-    
-                    <div class="xinxi">
-                        <label for="preparacion">Preparación</label>
-                        <input name="preparacion" type="text" placeholder="Ej: Manzana, Jamón...">
-                    </div>
-    
-                    <div class="xinxi" id="categorias-cont">
-                        <div id="categorias">
-                            <label for="category">Categoría</label>
-                            <select name="category">
-                                <option value="">Elija una categoría</option>
-                                {% for c in categorias %}
-                                    <option value="{{ c.id }}">{{c.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <button type="button" onclick="addCategoria(this)">+</button>
-                    </div>
-    
-                    <div class="xinxi2">
-                        <label for="imagen">Imagen de receta</label>
-                        <div class="boton_foto">
-                            <span class="upload-button">Subir Foto</span>
-                            <input name="imagen" type="file" accept="image/*" onchange="previewImage(event)">
-                        </div>
-                    </div>
-    
-                    <div class="xinxi3">
-                        <h2>Foto previa:</h2>
-                        <img id="imgPreview" src="" alt="Vista previa de la imagen">
-                    </div>
-    
-                    <div class="ingredientes">
+                    <div class="contenedor2">
                         <div class="xinxi">
-                            <label for="producto">Ingrediente (producto)</label>
-                            <select name="producto">
-                                <option value="">Elija un ingrediente</option>
-                                {% for p in productos %}
-                                    <option value="{{ p.id }}">{{p.nombre}}</option>
-                                {% endfor %}
-                            </select>
+                            <label for="nombre">Nombre de recetas</label>
+                            <input name="nombre" type="text" placeholder="Ej: Pizza con manzana">
                         </div>
+        
+                        <div class="xinxi">
+                            <label for="descripcion">Descripción de receta</label>
+                            <input name="descripcion" type="text" placeholder="Ej: Manzana, Jamón...">
+                        </div>
+        
+                        <div class="xinxi">
+                            <label for="preparacion">Preparación</label>
+                            <input name="preparacion" type="text" placeholder="Ej: Manzana, Jamón...">
+                        </div>
+        
+                        <div class="xinxi" id="categorias-cont">
+                            <div id="categorias">
+                                <label for="category">Categoría</label>
+                                <select name="category">
+                                    <option value="">Elija una categoría</option>
+                                    {% for c in categorias %}
+                                        <option value="{{ c.id }}">{{c.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="button" onclick="addCategoria(this)">+</button>
+                        </div>
+        
+                        <div class="xinxi2">
+                            <label for="imagen">Imagen de receta</label>
+                            <div class="boton_foto">
+                                <span class="upload-button">Subir Foto</span>
+                                <input name="imagen" type="file" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
+        
+                        <div class="xinxi3">
+                            <h2>Foto previa:</h2>
+                            <img id="imgPreview" src="" alt="Vista previa de la imagen">
+                        </div>
+        
+                        <div class="ingredientes">
+                            <div class="xinxi">
+                                <label for="producto">Ingrediente (producto)</label>
+                                <select name="producto">
+                                    <option value="">Elija un ingrediente</option>
+                                    {% for p in productos %}
+                                        <option value="{{ p.id }}">{{p.nombre}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="xinxi">
+                                <label for="unidad">Unidad</label>
+                                <input name="unidad" type="text" placeholder="Ej: gramos, mililitros...">
+                            </div>
+                            <div class="xinxi">
+                                <label for="cantidad">Cantidad</label>
+                                <input name="cantidad" type="text" placeholder="Ej: 100">
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="addIngrediente(this)">+</button>
+
+                    </div>
+
+                    <input type="hidden" name="puntuacion" value="0">
+
+                    <div class="botones_interacciones">
+
+                        <div class="boton_regresarrr" id="boton_regresarrr">
+                            <span>Volver</span>
+                        </div>
+
+                        <button type="submit">
+                            ¡Montar el nuevo receta!
+                        </button>
+                    </div>
+                </form>
+            {% elif uso == "agg_productos" %}
+                <form id="{% if producto %}{{ producto.id }}{% endif %}" action="{% url 'productos-list' %}" method="post" class="Tianbiao" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="contenedor2">
+                        <div class="xinxi">
+                            <label for="nombre">Nombre</label>
+                            <input name="nombre" type="text" value="{% if producto %}{{ producto.nombre }}{% endif %}" placeholder="Ej: Harina, tomate">
+                        </div>
+        
                         <div class="xinxi">
                             <label for="unidad">Unidad</label>
-                            <input name="unidad" type="text" placeholder="Ej: gramos, mililitros...">
+                            <input name="unidad" type="text" value="{% if producto %}{{ producto.unidad }}{% endif %}" placeholder="Ej: Gramos, mililitros...">
                         </div>
+        
                         <div class="xinxi">
-                            <label for="cantidad">Cantidad</label>
-                            <input name="cantidad" type="text" placeholder="Ej: 100">
+                            <label for="cantidad_disponible">Cantidad disponible</label>
+                            <input name="cantidad_disponible" value="{% if producto %}{{ producto.cantidad_disponible }}{% endif %}" type="text" placeholder="0">
                         </div>
+        
+                        <div class="xinxi">
+                            <label for="precio">Precio</label>
+                            <input name="precio" value="{% if producto %}{{ producto.precio }}{% endif %}" type="text" placeholder="0">
+                        </div>
+        
+                        <div class="xinxi2">
+                            <label for="imagen">Imagen del producto</label>
+                            <div class="boton_foto">
+                                <span class="upload-button">Subir Foto</span>
+                                <input name="imagen" type="file" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
+        
+                        <div class="xinxi3">
+                            <h2>Foto previa:</h2>
+                            <img id="imgPreview" src="{% if producto %}/media/{{ producto.imagen }}{% endif %}" alt="Vista previa de la imagen">
+                        </div>
+
+                        <button type="submit">
+                            Crear producto
+                        </button>
                     </div>
-
-                    <button type="button" onclick="addIngrediente(this)">+</button>
-
-                </div>
-
-                <input type="hidden" name="puntuacion" value="0">
-
-                <div class="botones_interacciones">
-
-                    <div class="boton_regresarrr" id="boton_regresarrr">
-                        <span>Volver</span>
-                    </div>
-
-                    <button type="submit">
-                        ¡Montar el nuevo receta!
-                    </button>
-                </div>
-            </form>
+                </form>
+            {% endif %}
         </div>
     </main>
 
-    <!-- Script para manejar la adición y eliminación de ingredientes y categorías -->
-    <script>
-        function addIngrediente(boton) {
-            const contenedor = document.querySelector('.ingredientes');
-            
-            const nuevoIngrediente = contenedor.cloneNode(true);
-            
-            const inputs = nuevoIngrediente.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.value = ''; 
-            });
-
-            const nuevoBoton = document.createElement('button');
-            nuevoBoton.type = 'button';
-            nuevoBoton.innerText = '-';
-            nuevoBoton.onclick = function() { removeElemento(nuevoIngrediente); };
-
-            document.querySelector('.contenedor2').appendChild(nuevoIngrediente);
-            nuevoIngrediente.appendChild(nuevoBoton);
-        }
-
-        function addCategoria(boton) {
-            const categorias = document.querySelector('#categorias');
-            
-            const nuevaCategoria = categorias.cloneNode(true);
-            
-            const inputs = nuevaCategoria.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.value = ''; 
-            });
-
-            const nuevoBotonCategoria = document.createElement('button');
-            nuevoBotonCategoria.type = 'button';
-            nuevoBotonCategoria.innerText = '-';
-            nuevoBotonCategoria.onclick = function() { removeElemento(nuevaCategoria); };
-
-            document.querySelector('#categorias-cont').appendChild(nuevaCategoria);
-            nuevaCategoria.appendChild(nuevoBotonCategoria);
-        }
-
-        function removeElemento(elemento) {
-            elemento.remove();
-        }
-        
-        document.querySelector('.Tianbiao').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const formData = new FormData(this);
-            let receta;
-
-            await fetch("http://127.0.0.1:8000/blog-api/recetas/", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}' 
-                }
-            })
-            .then(async (res) => {
-                receta = await res.json();
-            })
-            .catch((err) => {
-                console.error(err)
-            })
-
-            const productos = {
-                "receta": receta.id,
-                "producto": formData.getAll('producto'),
-                "unidad": formData.getAll('unidad'),
-                "cantidad": formData.getAll('cantidad')
-            }
-            
-            for (let i = 0; i < productos.producto.length; i++) {
-                const productoJson = {
-                    receta: productos.receta,
-                    producto: productos.producto[i],
-                    unidad: productos.unidad[i],
-                    cantidad: productos.cantidad[i]
-                }
-                
-                await fetch("http://127.0.0.1:8000/blog-api/ingredientes/", {
-                    method: 'POST',
-                    body: JSON.stringify(productoJson),
+    {% if producto %}
+        <script>
+            document.querySelector('.Tianbiao').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                console.log(formData)
+                await fetch(`/ecommerce-api/productos/${this.id}/`, {
+                    method: 'PATCH',
+                    body: formData,
                     headers: {
-                        'Content-Type': 'application/json',
                         'X-CSRFToken': '{{ csrf_token }}' 
                     }
                 })
                 .then(async (res) => {
-                    console.log(await res.json());
-                    window.location.pathname = "vista-pagina-principal/";
+                    producto = await res.json();
                 })
                 .catch((err) => {
-                    console.error(err);
+                    console.error(err)
+                })
+            });
+        </script>
+    {% endif %}
+
+    {% if uso == "agg_recetas" %}
+        <script>
+            function addIngrediente(boton) {
+                const contenedor = document.querySelector('.ingredientes');
+                
+                const nuevoIngrediente = contenedor.cloneNode(true);
+                
+                const inputs = nuevoIngrediente.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.value = ''; 
                 });
+
+                const nuevoBoton = document.createElement('button');
+                nuevoBoton.type = 'button';
+                nuevoBoton.innerText = '-';
+                nuevoBoton.onclick = function() { removeElemento(nuevoIngrediente); };
+
+                document.querySelector('.contenedor2').appendChild(nuevoIngrediente);
+                nuevoIngrediente.appendChild(nuevoBoton);
             }
-        });
-    </script>
 
-    <!-- Script adicional -->
+            function addCategoria(boton) {
+                const categorias = document.querySelector('#categorias');
+                
+                const nuevaCategoria = categorias.cloneNode(true);
+                
+                const inputs = nuevaCategoria.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.value = ''; 
+                });
+
+                const nuevoBotonCategoria = document.createElement('button');
+                nuevoBotonCategoria.type = 'button';
+                nuevoBotonCategoria.innerText = '-';
+                nuevoBotonCategoria.onclick = function() { removeElemento(nuevaCategoria); };
+
+                document.querySelector('#categorias-cont').appendChild(nuevaCategoria);
+                nuevaCategoria.appendChild(nuevoBotonCategoria);
+            }
+
+            function removeElemento(elemento) {
+                elemento.remove();
+            }
+            
+            document.querySelector('.Tianbiao').addEventListener('submit', async function(event) {
+                event.preventDefault();
+
+                const formData = new FormData(this);
+                let receta;
+
+                await fetch("/blog-api/recetas/", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}' 
+                    }
+                })
+                .then(async (res) => {
+                    receta = await res.json();
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+
+                const productos = {
+                    "receta": receta.id,
+                    "producto": formData.getAll('producto'),
+                    "unidad": formData.getAll('unidad'),
+                    "cantidad": formData.getAll('cantidad')
+                }
+                
+                for (let i = 0; i < productos.producto.length; i++) {
+                    const productoJson = {
+                        receta: productos.receta,
+                        producto: productos.producto[i],
+                        unidad: productos.unidad[i],
+                        cantidad: productos.cantidad[i]
+                    }
+                    
+                    await fetch("/blog-api/ingredientes/", {
+                        method: 'POST',
+                        body: JSON.stringify(productoJson),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}' 
+                        }
+                    })
+                    .then(async (res) => {
+                        console.log(await res.json());
+                        window.location.pathname = "vista-pagina-principal/";
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
+                }
+            });
+        </script>
+    {% endif %}
     <script src="{% static 'login/js/Agregar_receta.js' %}"></script>
-
 </body>
 
 </html>

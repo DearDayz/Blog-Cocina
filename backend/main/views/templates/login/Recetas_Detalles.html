@@ -13,7 +13,7 @@
 
 <body>
     <header class="Toubu">
-        <h1>Detalles de todas las Recetas</h1>
+        <h1>Detalles de {{ uso }}</h1>
         <div class="como_boton">
             <img src="{% static 'login/resource/salir icon.png' %}" width="36px" height="36px">
             <a href="" class="modificar_login">Salir</a>
@@ -23,12 +23,20 @@
         <table id="dataTable">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th class="Central">Acción</th>
+                    {% if uso != "facturas" %}
+                        <th>ID</th>
+                        <th>Nombre</th>
+                    {% elif uso == "facturas" %}
+                        <th>Fecha</th>
+                        <th>Código</th>
+                    {% endif %}
                     {% if uso == "empleados" %}
                         <th>Activo</th>
                     {% endif %}
+                    {% if uso == "productos" %}
+                        <th>Stock</th>
+                    {% endif %}
+                    <th class="Central">Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,6 +53,18 @@
                     {% endfor %}
                 {% endif %}
                 
+                {% if uso == "facturas" %}
+                    {% for factura in facturas %}
+                        <tr>
+                            <td>{{ factura.fecha }}</td>
+                            <td>{{ factura.codigo }}</td>
+                            <td class="Botones_centrado">
+                                <button id="{{ factura.id }}" type="submit" class="abrir_detalles">Detalles</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                
                 {% if uso == "empleados" %}
                     {% for empleado in empleados %}
                         <tr>
@@ -54,16 +74,32 @@
                             <td class="Botones_centrado">
                                 <form id="activar" action="{% url 'userdata' username=empleado.username %}">
                                     {% csrf_token %}
-                                    <input type="checkbox" hidden>
+                                    <input type="text" value="0" name="is_active" hidden>
                                     <button class="abrir_detalles" type="submit">Desactivar</button>
                                 </form>
                                 <form id="activar" action="{% url 'userdata' username=empleado.username %}">
                                     {% csrf_token %}
-                                    <input type="checkbox" checked hidden>
+                                    <input type="text" value="1" name="is_active" hidden>
                                     <button class="abrir_detalles" type="submit">Activar</button>
                                 </form>
                             <button id="{{ empleado.cedula }}" class="abrir_detalles" onclick="employee_data(event)">Detalles</button>
                             <button id="{{ empleado.username }}" class="eliminar_boton" onclick="delete_employee(event)">Eliminar</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+
+                {% if uso == "productos" %}
+                    {% for producto in productos %}
+                        <tr>
+                            <td>{{ producto.id }}</td>
+                            <td>{{ producto.nombre }} {{ empleado.nombre }}</td>
+                            <td>{{ producto.cantidad_disponible }}</td>
+                            <td class="Botones_centrado">
+                                <form action="{% url 'modify_product' producto_id=producto.id %}">
+                                    <button id="{{ producto.id }}" type="submit" class="abrir_detalles">Modificar</button>
+                                </form>
+                                <button id="{{ producto.id }}" class="eliminar_boton" onclick="delete_product(event)">Eliminar</button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -76,6 +112,9 @@
             <button class="page-button" onclick="changePage(1)">Siguiente</button>
             {% if uso == "empleados" %}
                     <button class="page-button" onclick="window.location.pathname = 'register-employee/'">Agregar empleado</button>
+            {% endif %}
+            {% if uso == "productos" %}
+                    <button class="page-button" onclick="window.location.pathname = 'add-product/'">Agregar producto</button>
             {% endif %}
         </div>
     </div>

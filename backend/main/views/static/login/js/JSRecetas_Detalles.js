@@ -77,6 +77,24 @@ async function delete_employee(e) {
     })
 }
 
+async function delete_product(e) {
+    const csrfToken = getCookie("csrftoken")
+    await fetch(`/ecommerce-api/productos-list/delete/${e.currentTarget.id}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken 
+        },
+    })
+    .then(async (res) => {
+        location.reload();
+        console.log(res)
+    })
+    .catch((err) => {
+        console.error(err)
+    })
+}
+
 function employee_data(e) {
     window.location.pathname = `user-data/${e.currentTarget.id}`
 }
