@@ -81,7 +81,11 @@
                             <div class="col">
                                 
                                 <div class="card shadow-sm">
-                                    <img src="{{ receta.imagen.url }}" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px; object-fit: cover;"> 
+                                    <div class="mainCorazon">
+                                        <img src="{{ receta.imagen.url }}" class="bd-placeholder-img card-img-top logoCorazon" style="width: 100%; height: 225px; object-fit: cover;" data-id="{{ receta.id }}"> 
+                                        <img src="{% static 'corazon/pngwing.com (1).png' %}" class="popCorazon">
+                                    </div>
+                                    
                                     <div class="card-body">
                                         <h5 class="card-title">{{ receta.nombre }}</h5>
                                         <p class="card-text">{{ receta.descripcion }}</p>
@@ -94,7 +98,13 @@
                                                 </a>
                                                 
                                                 <button id="{{ receta.id }}" type="button" class="btn btn-sm btn-outline-secondary" onclick="add_favorite(event)">
-                                                    <i id="heart-icon-{{ receta.id }}" class="fa-regular fa-heart"></i> <!-- Icono de "Edit" -->
+                                                    
+                                                    {% if receta in favoritos %}
+                                                        <i id="heart-icon-{{ receta.id }}" class="fa-solid fa-heart" style="color: red;"></i>
+                                                    {% else %}
+                                                        <i id="heart-icon-{{ receta.id }}" class="fa-regular fa-heart"></i>
+                                                    {% endif %}
+
                                                 </button>
                                             </div>
                                             <i class="fa fa-star" aria-hidden="true"> {{ receta.puntuacion }}</i>

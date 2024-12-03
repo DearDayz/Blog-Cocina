@@ -1,0 +1,15 @@
+.mainCorazon{
+    position:relative;
+}
+.logoCorazon{
+    width: 100%;
+}
+.popCorazon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0%;
+    height: 0%;
+    filter: drop-shadow(.5rem .5rem 1rem black);
+}

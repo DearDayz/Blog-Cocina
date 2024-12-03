@@ -1,5 +1,5 @@
 
- //ver si esta abriendo el script
+//ver si esta abriendo el script
 console.log("script.js cargado");
 console.log("HOLAAAA")
 

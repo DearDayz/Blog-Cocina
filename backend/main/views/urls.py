@@ -17,6 +17,7 @@ urlpatterns = [
     path('cart_update/', cart_update, name="cart_update"),
     path('cart_delete/', cart_delete, name="cart_delete"),
     path('cart_clear/', cart_clear, name="cart_clear"),
+    path('generar-pdf/<int:factura_id>/', generar_pdf, name='generar_pdf'),
 
     # Login
     path('admin-view/', admin_view, name="admin"),

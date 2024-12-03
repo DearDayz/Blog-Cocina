@@ -1,7 +1,7 @@
 #funciones que renderizan los html
 from decimal import Decimal
 from django.shortcuts import render, get_object_or_404, redirect
-from blog.models import Receta, Ingrediente, Category
+from blog.models import Receta, Ingrediente, Category, Favoritos
 from ecommerce.models import Producto
 from .cart import Cart
 from django.http import JsonResponse
@@ -9,12 +9,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from blog.models import Receta, Ingrediente, Category, Valoracion
 from .cart import Cart
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from ecommerce.models import Producto, Factura, ProductoFacturado
 from login3.models import MyUser
 from django.contrib import messages
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from django.utils import timezone
+from reportlab.lib.pagesizes import letter
+
 
 def cart_clear(request):
     if request.method == "POST":
@@ -112,16 +117,24 @@ def create_valoracion(request):
 def search(request, input):
     input = input.replace("-", " ")
     recetas = Receta.objects.filter(Q(nombre__icontains = input) | Q(descripcion__icontains=input) | Q(preparacion__icontains=input))
+    favoritos = []
+    for receta in recetas:
+        if Favoritos.objects.filter(receta=receta, usuario=request.user).exists():
+            favoritos.append(receta)
     if not recetas:
         return render(request, "search.html", {"input": input})
     else:
-        return render(request, 'search.html', { "input": input , "recetas": recetas})
+        return render(request, 'search.html', { "input": input , "recetas": recetas, "favoritos": favoritos})
 
 
 def mostrar_principal(request):
     recetas = Receta.objects.all()
     categorias2 = Category.objects.all()[:3]
-    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2})
+    favoritos = []
+    for receta in recetas:
+        if Favoritos.objects.filter(receta=receta, usuario=request.user).exists():
+            favoritos.append(receta)
+    return render(request, 'index.html', {"recetas": recetas,  "categorias2": categorias2, "favoritos": favoritos})
 
 def mostrar_entry(request, pk):
     receta = Receta.objects.get(id=pk)
@@ -156,19 +169,91 @@ def mostrar_buy(request):
                 request.session.modified = True
                 product_facturados = ProductoFacturado.objects.filter(factura=factura)
                 print(product_facturados[0].subtotal)
-                return render(request, 'buy.html', {'factura': factura, 'product_facturados': product_facturados})
+                #Aqui quiero retornar un pdf con la factura
+                # Renderizamos `buy.html` con la factura
+                return render(request, 'buy.html', {
+                    'factura': factura,
+                    'product_facturados': product_facturados,
+                    'factura_id': factura.id  # Pasamos el ID de la factura al template
+                })
             else:
                 messages.error(request, factura)
                 messages.error(request, "Error al procesar la compra...")
                 return redirect('vista pagina principal')
         else:
-            return render(request, 'buy.html')
+            return render(request, 'buy.html', {"factura_id": ""})
     else:
         messages.success(request, "You Must Be Logged In To View That Page...")
         return redirect("vista pagina principal")
 
+def generar_pdf(request, factura_id):
+    # Verifica que el usuario esté autenticado
+    if not request.user.is_authenticated:
+        return redirect("vista pagina principal")
+
+    # Busca la factura por ID
+    try:
+        factura = Factura.objects.get(pk=factura_id)
+        product_facturados = ProductoFacturado.objects.filter(factura=factura)
+    except Factura.DoesNotExist:
+        return HttpResponse("Factura no encontrada.", status=404)
+
+    # Preparamos el PDF en memoria
+    buffer = BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=letter)
+    width, height = letter  # tamaño de la página (8.5 x 11 pulgadas)
+
+    # Agregar un título
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(100, height - 40, "Factura de Compra")
+    
+    # Información de la factura
+    pdf.setFont("Helvetica", 12)
+    pdf.drawString(100, height - 60, f"Codigo de Factura: {factura.codigo}")
+    pdf.drawString(100, height - 80, f"Fecha: {factura.fecha.strftime('%b. %d, %Y')}")
+    pdf.drawString(100, height - 100, f"Hora: {factura.hora.strftime('%I:%M %p')}")
+    pdf.drawString(100, height - 120, f"Nombre del Cliente: {factura.user.nombre} {factura.user.apellido}")
+    pdf.drawString(100, height - 140, f"Cedula: {factura.user.cedula}")
+
+    # Espacio para los productos
+    pdf.drawString(100, height - 180, "Productos:")
+
+    # Dibujar la tabla para los productos
+    pdf.setFont("Helvetica-Bold", 10)
+    pdf.drawString(100, height - 200, "Producto")
+    pdf.drawString(300, height - 200, "Cantidad")
+    pdf.drawString(400, height - 200, "Precio Unitario")
+    pdf.drawString(500, height - 200, "Total")
+
+    pdf.setFont("Helvetica", 10)
+    y = height - 220
+    for producto in product_facturados:
+        pdf.drawString(100, y, producto.producto.nombre)
+        pdf.drawString(300, y, f"{producto.cantidad} {producto.producto.unidad}")
+        pdf.drawString(400, y, f"${producto.producto.precio:.2f} (c/{producto.producto.unidad})")
+        pdf.drawString(500, y, f"${producto.subtotal:.2f}")
+        y -= 20
+
+    # Dibujar línea de separación
+    pdf.line(100, y, 550, y)
+
+    # Total de la factura
+    y -= 20
+    pdf.setFont("Helvetica-Bold", 12)
+    pdf.drawString(400, y, f"Total de la Factura: ${factura.total:.2f}")
+
+    # Finalizamos el PDF
+    pdf.showPage()
+    pdf.save()
+
+    # Regresamos el archivo PDF como respuesta
+    buffer.seek(0)
+    response = HttpResponse(buffer, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="factura_{factura.id}.pdf"'
+    return response
+
 def cart_add(request):
-    #Obtenemos el cart de la request
+    #Obtenemos el cart de la request    
     cart = Cart(request)
     #verificamos si es post
     if request.POST.get("action") == "post":
@@ -259,7 +344,11 @@ def admin_view_recipes(request):
 def mostrar_catalog(request, input):
     input = input.replace("-" , " ")
     recetas = Receta.objects.filter(category__name= input)
-    return render(request, 'catalog.html', {"recetas": recetas, "input": input})
+    favoritos = []
+    for receta in recetas:
+        if Favoritos.objects.filter(receta=receta, usuario=request.user).exists():
+            favoritos.append(receta)
+    return render(request, 'catalog.html', {"recetas": recetas, "input": input, "favoritos": favoritos})
 
 #rederizar vista chatbot
 
@@ -323,3 +412,4 @@ def es_numerico_y_mayor_que_uno(cadena):
     except ValueError:
         # Si no se puede convertir a float, no es numérico
         return False
+    

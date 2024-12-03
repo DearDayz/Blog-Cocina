@@ -243,6 +243,7 @@
               <p><strong>Código de Factura:</strong> {{ factura.codigo }}</p>
               <p><strong>Fecha:</strong> {{ factura.fecha }} {{ factura.hora }}</p>
               <p><strong>Nombre del Cliente:</strong> {{ user.nombre }} {{ user.apellido }}</p>
+              <p><strong>Cedula:</strong> {{ user.cedula }}</p>
               <hr>
               <table class="table">
                 <thead>
@@ -258,7 +259,7 @@
                     <tr>
                       <td>{{ producto.producto.nombre }}</td>
                       <td>{{ producto.cantidad }} {{ producto.producto.unidad }}</td>
-                      <td>${{ producto.producto.precio }}</td>
+                      <td>${{ producto.producto.precio }} (c/{{ producto.producto.unidad }})</td>
                       <td>${{ producto.subtotal }}</td>
                     </tr>
                   {% endfor %}
@@ -284,6 +285,25 @@
   <script src="{% static 'buy/checkout.js' %}"></script>
   <script src="{% static 'buy/scriptxd.js' %}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script>
+    // Descargar automáticamente el PDF
+    const facturaId = "{{ factura_id }}";  // ID de la factura pasada desde la vista
+    if (facturaId != "") {
+        const pdfUrl = "/generar-pdf/" + facturaId + "/";  // URL de la vista para generar el PDF
+        $.get(pdfUrl, function(data) {
+          console.log("PDF recibido");
+
+// Crear un objeto Blob con el tipo de contenido adecuado
+var blob = new Blob([data], { type: 'application/pdf' });
+
+// Crear un enlace para la descarga del archivo PDF
+var link = document.createElement('a');
+link.href = URL.createObjectURL(blob);
+link.download = 'factura.pdf'; // Nombre del archivo de descarga
+link.click(); // Forzar la descarga
+        });
+    }
+  </script>
   
 
 {% endblock %}
