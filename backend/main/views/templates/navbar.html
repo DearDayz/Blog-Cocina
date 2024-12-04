@@ -32,6 +32,7 @@
                     <a class="nav-link " aria-disabled="true" href="{% url 'logout' %}">Salir</a>
                 </li>
             {% else %}
+            
             <li class="nav-item">
                 <li class="nav-item">
                     <a class="nav-link " aria-disabled="true" href="{% url 'login_view' %}">Iniciar Sesion</a>
@@ -50,12 +51,18 @@
     
             <!-- Iconos -->
             <div style="margin-left: 10px;">
-                <button type="button" class="btn btn-sm btn-outline-secondary">
-                    <i class="fa fa-globe"></i> <!-- Icono de "View" -->
-                </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary" id="profileBtn" onclick="redirigir('/user-data/')">
-                    <i class="fa fa-user"></i> <!-- Icono de "User" -->
-                </button>
+               
+                <div class="btn-group ms-3">
+                    <!-- Botón Dropdown Usuario -->
+                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{% url 'user_view' %}">Ver Usuario</a></li>
+                        <li><a class="dropdown-item" href="{% url 'view_favorites' %}">Favoritos</a></li>
+                        <li><a class="dropdown-item" href="{% url 'invoice-history' %}">Mis Facturas</a></li>
+                    </ul>
+                </div>
                 <!-- Botón para abrir el sidebar del carrito -->
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#cartSidebar" aria-controls="cartSidebar">
                     <i class="fa fa-shopping-cart"></i> <!-- Icono de "Shopping Cart" -->

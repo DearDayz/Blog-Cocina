@@ -10,22 +10,22 @@
             </div>
             <div class="carousel-inner" style="height: 100%;">
                 <div class="carousel-item active">
-                    <img src="{% static 'img/a.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <img src="{% static 'img/m.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
                     <div class="container">
                         <div class="carousel-caption text-start">
                             <h1>Ingredientes Frescos</h1>
-                            <p class="opacity-75">Descubre nuestra selección de ingredientes frescos y orgánicos, perfectos para tus recetas favoritas.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Compra Ahora</a></p>
+                            <p>Descubre nuestra selección de ingredientes frescos y orgánicos, perfectos para tus recetas favoritas.</p>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="{% static 'img/b.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
+                    <img src="{% static 'img/s.jpg' %}" class="bd-placeholder-img d-block w-100" alt="Descripción de la imagen" style="object-fit: cover; height: 100%;">
                     <div class="container">
                         <div class="carousel-caption">
                             <h1>Recetas Deliciosas</h1>
                             <p>Explora nuestras recetas exclusivas que destacan los mejores ingredientes de nuestra tienda. ¡Cocina como un profesional!</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Ver Recetas</a></p>
+                            
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <div class="carousel-caption text-end">
                             <h1>Ofertas Especiales</h1>
                             <p>No te pierdas nuestras ofertas especiales en ingredientes seleccionados. ¡Aprovecha y ahorra en tu próxima compra!</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Ver Ofertas</a></p>
+                            
                         </div>
                     </div>
                 </div>
@@ -56,14 +56,16 @@
         <!-- Wrap the rest of the page in another container to center all the content. -->
 
         <div class="container marketing">
-            <div class="row" style="margin-bottom: 15%;">
+            <div class="row" style="margin-bottom: 20%;">
+
+                <h1 class="text-center display-5 mb-5 fst-italic">--Categorías Destacadas--</h1>
 
                 {% for categoria in categorias2 %}
                     <div class="col-lg-4">
                         <img src="{{ categoria.imagen.url }}" class="bd-placeholder-img rounded-circle" width="140" height="140" alt="Dulces" style="object-fit: cover;">
                         <h2 class="fw-normal">{{ categoria.name }}</h2>
                         <p>{{ categoria.descripcion }}</p>
-                        <p><a class="btn btn-secondary" href="#">Ver recetas &raquo;</a></p>
+                        
                     </div><!-- /.col-lg-4 -->
                 {% endfor %}
 
@@ -71,10 +73,7 @@
 
             <!-- START THE FEATURETTES -->
             <div class="album py-5 bg-body-tertiary">
-                
-
-                
-                
+                <h1 class="text-center display-5 mb-5 fst-italic">--Recetas--</h1>
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         {% for receta in recetas %}

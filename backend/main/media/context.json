@@ -2,24 +2,24 @@
     "instrucciones": "Instrucciones: 1. Eres un chatbot para resolver dudas sobre una tienda de recetas. 2. Solo debes proporcionar informaci\u00f3n sobre recetas disponibles. 3. Si se pregunta sobre algo no mencionado, indica que no tienes esa informaci\u00f3n. Contexto: Ejemplos de preguntas: - \u00bfQu\u00e9 ingredientes lleva la arepa con queso? - \u00bfTienen recetas para postres? ",
     "recetas": {
         "nombres": [
-            "arepa reina pepiada",
-            "arepa con queso",
-            "arepa con carne"
+            "Torta",
+            "Ensalada",
+            "Arepa"
         ],
         "descripciones": [
-            "La arepa reina pepiada es una deliciosa arepa venezolana rellena de pollo desmenuzado, aguacate y mayonesa, perfecta para un almuerzo o cena ligera.",
-            "",
-            ""
+            "Torta de Vainilla Simple",
+            "Ensalada de lechuga y tomate",
+            "Una arepa de toda la vida"
         ],
         "preparaciones": [
-            "Ingredientes: 240 g de harina de ma\u00edz, 480 ml de agua, 2.5 g (1/2 cucharadita) de sal, 200 g de pechuga, de pollo cocida y desmenuzada, 3 cucharadas de mayonesa, 1 aguacate maduro, en rodajas o triturado. Preparaci\u00f3n: Mezcla 240 g de harina, 480 ml de agua y 2.5 g de sal. Amasa. Forma discos de 1 cm de grosor. Asa en sart\u00e9n a fuego medio 5-7 min por lado hasta dorar. Mezcla el pollo con 3 cucharadas de mayonesa y sal al gusto. Abre las arepas, rellena con pollo y a\u00f1ade aguacate. \u00a1Sirve caliente y disfruta!",
-            "",
-            ""
+            "Mezclar huevos, harina, leche y mantequilla en un taz\u00f3n y hornear",
+            "picar lechuga y tomate y colocar en un bol con sal al gusto",
+            "Mezclar harina de Maiz y agua con sal y cocinar"
         ],
-        "disponibilidad": [
-            "Disponible",
-            "No disponible",
-            "No disponible"
+        "ingredientes": [
+            "1.0kg de Harina de Trigo. 1.0l de Leche. 2.0unid de Huevos. 0.5kg de mantequilla. ",
+            "3.0kg de tomate. 2.0kg de Lechuga. ",
+            "1.0kg de Harina de Ma\u00edz. "
         ]
     }
 }

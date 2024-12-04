@@ -12,8 +12,8 @@
         </h3>
 
         <article class="blog-post">
-          <h2 class="display-5 link-body-emphasis mb-1">{{ receta.nombre }}</h2>
-          <img src="{{ receta.imagen.url }}" width="100%" height="300" style="object-fit: cover;" class="mb-4">
+          <h1 class="text-center display-5 mb-3 fst-italic link-body-emphasis">{{ receta.nombre }}</h1>
+          <img src="{{ receta.imagen.url }}" width="100%" height="300" style="object-fit: cover;" class="mb-4 border rounded p-2">
           <small class="text-body-secondary">{{receta.date_modified}}</small>
 
           <p>{{ receta.descripcion }}</p>
@@ -37,11 +37,13 @@
           </button>
           <span class="tooltip-message" id="tooltip-add-to-cart">Guardar ingredientes en carrito</span>
         </div>
-        <span>Personas:</span>
-        <div class="input-container">
-            <button class="button" onclick="funcionDeMierda(-1)">-</button>
-            <input type="text" id="campo" class="input-field" value="1" >
-            <button class="button" onclick="funcionDeMierda(1)">+</button>
+        <h4>Porciones:</h4>
+        <div class="d-flex justify-content-start">
+          <div class="input-group" style="width: auto;">
+              <button class="btn btn-outline-secondary" onclick="funcionDeMierda(-1)">-</button>
+              <input type="text" id="campo" class="form-control text-center" value="1" style="width: 70px;">
+              <button class="btn btn-outline-secondary" onclick="funcionDeMierda(1)">+</button>
+          </div>
         </div>
           
 

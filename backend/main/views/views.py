@@ -19,6 +19,8 @@ from reportlab.pdfgen import canvas
 from io import BytesIO
 from django.utils import timezone
 from reportlab.lib.pagesizes import letter
+import requests
+from chatbot.context import cargar_contexto_json_cliente, contexto_json_a_string
 
 
 def cart_clear(request):
@@ -353,11 +355,9 @@ def mostrar_catalog(request, input):
 #rederizar vista chatbot
 
 def mostrar_chatbot(request):
-    # response = requests.get("http://127.0.0.1:8000/blog-api/recetas/")
-    # print(response.json())
-    # tabla = {"recetas": response.json()}
-    # cargar_contexto_json_cliente(tabla)
-    # contexto_json_a_string()
+    response = requests.get("http://127.0.0.1:8000/blog-api/recetas/")
+    cargar_contexto_json_cliente(response.json())
+    contexto_json_a_string()
     return render(request, 'chatbot.html')
 
 
@@ -412,4 +412,30 @@ def es_numerico_y_mayor_que_uno(cadena):
     except ValueError:
         # Si no se puede convertir a float, no es numérico
         return False
+    
+
+#rederizado de vista favoritos
+
+def view_favorites(request):
+    if request.user.is_authenticated:
+        favoritos = Favoritos.objects.filter(usuario=request.user)
+        recetas = []
+        for favorito in favoritos:
+            recetas.append(favorito.receta)
+        print(recetas)
+        return render(request,'login/favoritos.html', {"recetas": recetas})
+    else:
+        redirect('login')
+    
+
+#Vista historial de facturas
+def invoice_history(request):
+    if request.user.is_authenticated:
+        facturas = Factura.objects.filter(user = request.user)
+        productos_facturados = {}
+        for factura in facturas:
+            productos_facturados[factura.id] = ProductoFacturado.objects.filter(factura=factura)
+        return render(request,'login/historial_facturas.html', {"facturas": facturas, "productos_facturados": productos_facturados})
+    else:
+        redirect('login')
     

@@ -1,46 +1,33 @@
 import json
 import os
+from ecommerce.models import Producto
+from blog.models import Ingrediente
 
-def cargar_contexto_json_cliente(tablas):
+def cargar_contexto_json_cliente(recetas):
     # tablas sería un diccionario de diccionarios con la info de cada tabla
-
-    recetas = tablas["recetas"]
     context_json = {
         "instrucciones": "",
         "recetas": {
             "nombres": [],
             "descripciones": [],
             "preparaciones": [],
-            "disponibilidad": []
+            "ingredientes": [],
         }
     }
-    disponibilidad = context_json["recetas"]["disponibilidad"]
     recetas_json = context_json["recetas"]
 
     for receta in recetas:
-        # listas_ingredientes tiene la lista de ingredientes de todas las recetas
+        ingredientes_str = ""
 
-        disponibilidad.append("Disponible")
-        i = 0
         for ingrediente in receta["ingredientes"]:
-            # receta_ingredientes tiene los ingredientes de una receta
-            # Para cada ingrediente se verifica si hay disponibilidad en base a la cantidad necesaria para la receta  
-            
-            cantidad_ingrediente = receta["cantidades"][i]
-
-            if ingrediente["cantidad_disponible"] < cantidad_ingrediente:
-                disponibilidad.pop()
-                disponibilidad.append("No disponible")
-                break
-            i += 1
+            # Para cada ingrediente se verifica si hay disponibilidad en base a la cantidad necesaria para la receta
+            producto = ingrediente["producto"]
+            ingredientes_str += f'{ingrediente["cantidad"]}{ingrediente["unidad"]} de {producto["nombre"]}. '
         
         recetas_json["nombres"].append(receta["nombre"])
-        if disponibilidad[-1] == "No disponible":
-            recetas_json["descripciones"].append("")
-            recetas_json["preparaciones"].append("")
-        elif disponibilidad[-1] == "Disponible":
-            recetas_json["descripciones"].append(receta["descripcion"])
-            recetas_json["preparaciones"].append(receta["preparacion"])
+        recetas_json["descripciones"].append(receta["descripcion"])
+        recetas_json["preparaciones"].append(receta["preparacion"])
+        recetas_json["ingredientes"].append(ingredientes_str)
             
     context_json["instrucciones"] = (
         "Instrucciones: "
@@ -71,8 +58,8 @@ def contexto_json_a_string():
         contexto_formateado += (
             contexto["recetas"]["nombres"][i] + ": " +
             contexto["recetas"]["descripciones"][i] + " " +
-            contexto["recetas"]["preparaciones"][i] + " " +
-            contexto["recetas"]["disponibilidad"][i] + " "
+            contexto["recetas"]["ingredientes"][i] + " " +
+            contexto["recetas"]["preparaciones"][i] + " "
         )
     
     return contexto_formateado

@@ -31,9 +31,10 @@
     <link href="{% static 'chatbot/style.css' %}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'corazon/styleCorazon.css' %}">
-    
+    <link rel="icon" type="image/jpg" href="{% static 'login/resource/icono supermercado.png' %}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     
     {% include 'navbar.html' %}
     {% if messages %}
@@ -129,17 +130,12 @@
         <!-- Contenido personalizado de cad pagina -->
 
     {% endblock %}
-
+</body>
     <!-- FOOTER -->
-    <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-        </ul>
-        <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
+    <footer class="mt-auto py-3 bg-light position-relative">
+        <div class="container">
+            <p class="text-center text-body-secondary">&copy; 2024 TuTienda Inc</p>
+        </div>
     </footer>
 
     <script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}" ></script>

@@ -28,6 +28,9 @@ urlpatterns = [
     path('logout/', logout_user, name="logout"),
     path('manage-recipes/', manage_recipes, name="manage-recipes"),
     path('admin-view-recipes/', admin_view_recipes, name="admin-view-recipes"),
-    
+    #vista favoritos
+    path('view-favorites/', view_favorites, name="view_favorites"),
+    #vista historial de facturas
+    path('invoice-history/', invoice_history, name="invoice-history")
     
 ]

@@ -10,10 +10,10 @@
             
             
             <!-- START THE FEATURETTES -->
-            <div class="album py-5 bg-body-tertiary mt-5">
+            <div class="album py-5 bg-body-tertiary mt-5" >
             
         
-                <h1>Busqueda: {{ input }}</h1>
+                <h1 class="text-center display-4 mb-5 ms-5">Búsqueda: {{ input }}</h1>
                 
                 <div class="container">
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -52,7 +52,7 @@
                             </div>
                         {% endfor %}
                         {% else %}
-                            <h1>Receta no existe</h1>
+                            <h3>No Coincidencias</h3>
                         {% endif %}
                     </div>
                 </div>

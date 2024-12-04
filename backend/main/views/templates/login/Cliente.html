@@ -10,72 +10,15 @@
 
 <body>
     <div class="contenedor">
-        <div class="Div_caidan">
-
-            <nav class="Caidan">
-
-                <p class="biaoti">Super Calidad Market</p>
-
-                <div class="bloque_opcion">
-
-                    <img src="{% static 'login/resource/icon login.png' %}" alt="icono_login" width="24px" height="24px">
-                    <span>Perfil</span>
-
-                </div>
-
-                {% if user.tipo == "Administrador" %}
-                    <div class="bloque_opcion">
-                        <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
-                        <span>Inventario</span>
-                    </div>
-                    
-                    <div class="bloque_opcion" onclick="window.location.pathname = 'manage-recipes/'">
-                        <img src="{% static 'login/resource/Admin/Inventario.png' %}" alt="icono_login" width="24px" height="24px">
-                        <span>Recetas</span>
-                    </div>
-
-                    <div class="bloque_opcion">
-                        <img src="{% static 'login/resource/Admin/empleado icon.png' %}" alt="icono_login" width="24px" height="24px">
-                        <span>Empleado</span>
-                    </div>
-
-                    <div class="bloque_opcion">
-                        <img src="{% static 'login/resource/Admin/agregar icon.png' %}" alt="icono_login" width="24px" height="24px">
-                        <span>Agregar Empleado</span>
-                    </div>
-                {% endif %}
-
-                <div class="bloque_opcion">
-                    <img src="{% static 'login/resource/Admin/pedido historial icon 2.png' %}" alt="icono_login" width="24px" height="24px">
-                    <span>Pedido</span>
-                </div>
-
-                <div class="bloque_opcion">
-                    <img src="{% static 'login/resource/Admin/pedido historial icon.png' %}" alt="icono_login" width="24px" height="24px">
-                    <span>Historial</span>
-                </div>
-
-                <div class="bloque_opcion">
-                    <img src="{% static 'login/resource/Cliente/favorito icon.png' %}" alt="icono_login" width="24px" height="24px">
-                    <span>Favorito</span>
-                </div>
-
-                <div class="bloque_opcion">
-                    <img src="{% static 'login/resource/Cliente/configuracion icon.png' %}" alt="icono_login" width="24px" height="24px">
-                    <span>Configuración de cuenta</span>
-                </div>
-            </nav>
-
-        </div>
+        
         <div class="Div_otros">
-            <header class="Dingbu">
-                <p>¡Nombre_de_Cliente!</p>
+            
 
-                <div class="como_boton">
-                    <img src="{% static 'login/resource/salir icon.png' %}" width="36px" height="36px">
-                    <a href="" class="modificar_login">Salir</a>
-                </div>
-            </header>
+            <div class="como_boton">
+                <img src="{% static 'login/resource/salir icon.png' %}" width="36px" height="36px">
+                <a href="{% url 'vista pagina principal' %}" class="modificar_login">Salir</a>
+            </div>
+                
             <div class="contenido">
                 <h1>Perfil Personal</h1>
                 <div class="contenido_personal">
