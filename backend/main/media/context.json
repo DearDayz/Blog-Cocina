@@ -4,22 +4,34 @@
         "nombres": [
             "Torta",
             "Ensalada",
-            "Arepa"
+            "Arepa",
+            "Batido de Fresa",
+            "Panqueques con Fresas",
+            "Empanadas de Queso"
         ],
         "descripciones": [
             "Torta de Vainilla Simple",
             "Ensalada de lechuga y tomate",
-            "Una arepa de toda la vida"
+            "Una arepa de toda la vida",
+            "Un batido de fresa delicioso.",
+            "panqueques acompa\u00f1ados de fresas",
+            "Empanadas horneadas con queso"
         ],
         "preparaciones": [
             "Mezclar huevos, harina, leche y mantequilla en un taz\u00f3n y hornear",
             "picar lechuga y tomate y colocar en un bol con sal al gusto",
-            "Mezclar harina de Maiz y agua con sal y cocinar"
+            "Mezclar harina de Maiz y agua con sal y cocinar",
+            "Para preparar un batido de fresa, coloca en una licuadora 1 taza de fresas (frescas o congeladas) y 1/2 taza de leche (puedes usar cualquier tipo de leche). Lic\u00faa hasta que obtengas una mezcla suave y cremosa, luego sirve y disfruta.",
+            "Para preparar los panqueques de harina de trigo con fresas, comienza batiendo 2 huevos en un taz\u00f3n y agregando 100 ml de leche. Luego, a\u00f1ade 150 g de harina de trigo y mezcla bien hasta obtener una masa suave y homog\u00e9nea. Derrite 20 g de mantequilla en una sart\u00e9n a fuego medio y vierte peque\u00f1as porciones de la masa, cocinando cada panqueque por 2-3 minutos por lado hasta que est\u00e9n dorados. Mientras tanto, lava y corta 200 g de fresas en rodajas finas. Sirve los panqueques calientes, decorados con las fresas por encima.",
+            "Para preparar las empanadas, mezcla la harina de trigo y la leche en un bol hasta que obtengas una masa suave y homog\u00e9nea. Amasa hasta que la masa quede manejable y est\u00edrala sobre una superficie plana. Corta la masa en c\u00edrculos de aproximadamente 10 cm de di\u00e1metro. Coloca una cucharada de queso rallado en el centro de cada c\u00edrculo. Cierra las empanadas presionando los bordes con los dedos o un tenedor. Luego horn\u00e9alas a 180\u00b0C durante 20-25 minutos o fr\u00edelas en aceite caliente hasta que est\u00e9n doradas y crujientes. \u00a1Listo!"
         ],
         "ingredientes": [
             "1.0kg de Harina de Trigo. 1.0l de Leche. 2.0unid de Huevos. 0.5kg de mantequilla. ",
             "3.0kg de tomate. 2.0kg de Lechuga. ",
-            "1.0kg de Harina de Ma\u00edz. "
+            "1.0kg de Harina de Ma\u00edz. ",
+            "0.15kg de Fresa. 0.12l de Leche. ",
+            "0.15kg de Harina de Trigo. 0.2kg de Fresa. 0.02kg de mantequilla. 0.1l de Leche. 2.0unid de Huevos. ",
+            "0.5kg de Harina de Ma\u00edz. 0.2kg de Queso. 0.1l de Leche. "
         ]
     }
 }
